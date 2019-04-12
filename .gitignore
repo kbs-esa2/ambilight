@@ -1,3 +1,4 @@
+
 # Prerequisites
 *.d
 
@@ -31,6 +32,14 @@
 *.out
 *.app
 
-#quartus project temp files
+
+
+#quartus project files
 \.metadata
 \RemoteSystemsTempFiles
+*\db\*
+*\incremental_db\*
+*\output_files\*
+*\simulation\*
+*.qpf
+*.qsf
