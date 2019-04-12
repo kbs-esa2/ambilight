@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+#quartus project temp files
+\.metadata
+\RemoteSystemsTempFiles
