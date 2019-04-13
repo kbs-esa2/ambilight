@@ -41,5 +41,12 @@
 *\incremental_db\*
 *\output_files\*
 *\simulation\*
+*\greybox_tmp\*
+*\.qsys_edit\*
+
 *.qpf
 *.qsf
+*.cmp
+*.ppf
+*.nlv
+*.xml

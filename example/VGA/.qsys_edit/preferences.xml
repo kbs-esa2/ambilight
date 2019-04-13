@@ -9,8 +9,8 @@
   </columns>
  </systemtable>
  <library
-   expandedCategories="Library/Interface Protocols/Transceiver PLL,Library/Basic Functions/Clocks; PLLs and Resets,Library/Basic Functions/Clocks; PLLs and Resets/PLL,Library,Library/University Program,Library/Basic Functions,Library/University Program/Clock,Library/Interface Protocols,Project" />
- <window width="1322" height="938" x="483" y="261" />
- <generation synthesis="VERILOG" />
+   expandedCategories="Library/Basic Functions/Clocks; PLLs and Resets,Library/Processors and Peripherals,Library,Library/Basic Functions/Clocks; PLLs and Resets/PLL,Library/Basic Functions,Project" />
+ <window width="1322" height="728" x="44" y="0" />
+ <generation synthesis="VHDL" />
  <hdlexample language="VHDL" />
 </preferences>

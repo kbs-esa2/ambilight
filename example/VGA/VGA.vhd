@@ -16,9 +16,8 @@ SIGNAL VGACLK,RESET: STD_LOGIC:='0';
 --------------------------------------------------------
     component PLL is
         port (
-            clkin_clk   : in  std_logic := 'X'; -- clk
-            reset_reset : in  std_logic := 'X'; -- reset
-            clkout_clk  : out std_logic         -- clk
+            inclk0   : in  std_logic := 'X'; -- clk
+            c0  : out std_logic         -- clk
         );
     end component PLL;
 --------------------------------------------------------
@@ -31,7 +30,7 @@ R,G,B : OUT STD_LOGIC_VECTOR(7 downto 0)
 END COMPONENT SYNC;
 BEGIN
 C1: SYNC PORT MAP(VGACLK,VGA_HS,VGA_VS,VGA_R,VGA_G,VGA_B);
-C2: PLL PORT MAP(CLOCK_24(0),RESET,VGACLK);
+C2: PLL PORT MAP(CLOCK_24(0),VGACLK);
 
 
 
