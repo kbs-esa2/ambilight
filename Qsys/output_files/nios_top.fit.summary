@@ -1,0 +1,16 @@
+Fitter Status : Successful - Wed Apr 17 14:45:19 2019
+Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+Revision Name : nios_top
+Top-level Entity Name : nios_top
+Family : Cyclone IV E
+Device : EP4CE115F29C7
+Timing Models : Final
+Total logic elements : 1,761 / 114,480 ( 2 % )
+    Total combinational functions : 1,638 / 114,480 ( 1 % )
+    Dedicated logic registers : 950 / 114,480 ( < 1 % )
+Total registers : 968
+Total pins : 38 / 529 ( 7 % )
+Total virtual pins : 0
+Total memory bits : 1,059,840 / 3,981,312 ( 27 % )
+Embedded Multiplier 9-bit elements : 0 / 532 ( 0 % )
+Total PLLs : 0 / 4 ( 0 % )
