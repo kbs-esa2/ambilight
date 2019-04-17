@@ -1,0 +1,9 @@
+11:56:22 **** Incremental Build of configuration Nios II for project helloTest ****
+make all 
+Info: Building ../helloTest_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../helloTest_bsp/
+[BSP build complete]
+[helloTest build complete]
+
+11:56:25 Build Finished (took 3s.25ms)
+

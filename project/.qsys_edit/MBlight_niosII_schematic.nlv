@@ -1,0 +1,26 @@
+# # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
+# 
+preplace inst MBlight_niosII.nios2_gen2_0.clock_bridge -pg 1
+preplace inst MBlight_niosII.led_data -pg 1 -lvl 3 -y 430
+preplace inst MBlight_niosII.clk_0 -pg 1 -lvl 1 -y 220
+preplace inst MBlight_niosII.led_control -pg 1 -lvl 3 -y 330
+preplace inst MBlight_niosII.i2c_0 -pg 1 -lvl 3 -y 30
+preplace inst MBlight_niosII.nios2_gen2_0.reset_bridge -pg 1
+preplace inst MBlight_niosII.led_adress -pg 1 -lvl 3 -y 630
+preplace inst MBlight_niosII.jtag_uart_0 -pg 1 -lvl 3 -y 150
+preplace inst MBlight_niosII.onchip_memory2_0 -pg 1 -lvl 3 -y 250
+preplace inst MBlight_niosII.nios2_gen2_0 -pg 1 -lvl 2 -y 200
+preplace inst MBlight_niosII.nios2_gen2_0.cpu -pg 1
+preplace inst MBlight_niosII -pg 1 -lvl 1 -y 40 -regy -20
+preplace netloc EXPORT<net_container>MBlight_niosII</net_container>(SLAVE)MBlight_niosII.clk,(SLAVE)clk_0.clk_in) 1 0 1 NJ
+preplace netloc FAN_OUT<net_container>MBlight_niosII</net_container>(MASTER)nios2_gen2_0.irq,(SLAVE)jtag_uart_0.irq,(SLAVE)i2c_0.interrupt_sender) 1 2 1 690
+preplace netloc EXPORT<net_container>MBlight_niosII</net_container>(SLAVE)led_adress.external_connection,(SLAVE)MBlight_niosII.led_adress) 1 0 3 NJ 660 NJ 660 NJ
+preplace netloc INTERCONNECT<net_container>MBlight_niosII</net_container>(SLAVE)led_control.reset,(MASTER)nios2_gen2_0.debug_reset_request,(SLAVE)led_adress.reset,(SLAVE)led_data.reset,(MASTER)clk_0.clk_reset,(SLAVE)onchip_memory2_0.reset1,(SLAVE)nios2_gen2_0.reset,(SLAVE)jtag_uart_0.reset,(SLAVE)i2c_0.reset_sink) 1 1 2 290 680 730
+preplace netloc EXPORT<net_container>MBlight_niosII</net_container>(SLAVE)MBlight_niosII.led_control,(SLAVE)led_control.external_connection) 1 0 3 NJ 360 NJ 360 NJ
+preplace netloc EXPORT<net_container>MBlight_niosII</net_container>(SLAVE)MBlight_niosII.i2c,(SLAVE)i2c_0.i2c_serial) 1 0 3 NJ 100 NJ 100 NJ
+preplace netloc FAN_OUT<net_container>MBlight_niosII</net_container>(MASTER)clk_0.clk,(SLAVE)nios2_gen2_0.clk,(SLAVE)led_adress.clk,(SLAVE)onchip_memory2_0.clk1,(SLAVE)jtag_uart_0.clk,(SLAVE)i2c_0.clock,(SLAVE)led_data.clk,(SLAVE)led_control.clk) 1 1 2 310 480 750
+preplace netloc EXPORT<net_container>MBlight_niosII</net_container>(SLAVE)clk_0.clk_in_reset,(SLAVE)MBlight_niosII.reset) 1 0 1 NJ
+preplace netloc INTERCONNECT<net_container>MBlight_niosII</net_container>(MASTER)nios2_gen2_0.data_master,(MASTER)nios2_gen2_0.instruction_master,(SLAVE)led_control.s1,(SLAVE)i2c_0.csr,(SLAVE)nios2_gen2_0.debug_mem_slave,(SLAVE)jtag_uart_0.avalon_jtag_slave,(SLAVE)led_data.s1,(SLAVE)onchip_memory2_0.s1,(SLAVE)led_adress.s1) 1 1 2 330 700 710
+preplace netloc EXPORT<net_container>MBlight_niosII</net_container>(SLAVE)MBlight_niosII.led_data,(SLAVE)led_data.external_connection) 1 0 3 NJ 460 NJ 460 NJ
+levelinfo -pg 1 0 80 980
+levelinfo -hier MBlight_niosII 90 120 450 820 970

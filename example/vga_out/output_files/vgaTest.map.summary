@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Fri Apr 12 15:26:38 2019
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : vgaTest
+Top-level Entity Name : selfResetCounter
+Family : Cyclone IV E
+Total logic elements : 52
+    Total combinational functions : 52
+    Dedicated logic registers : 32
+Total registers : 32
+Total pins : 19
+Total virtual pins : 0
+Total memory bits : 0
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0

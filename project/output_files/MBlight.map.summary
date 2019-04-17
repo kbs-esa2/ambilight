@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Tue Apr 16 16:34:16 2019
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : MBlight
+Top-level Entity Name : MBlight
+Family : Cyclone IV E
+Total logic elements : 3,008
+    Total combinational functions : 2,531
+    Dedicated logic registers : 1,643
+Total registers : 1643
+Total pins : 31
+Total virtual pins : 0
+Total memory bits : 273,480
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0
