@@ -35,4 +35,16 @@
 
 
 #quartus project files
-
+*.*
+*\db\*
+!*.vhd
+!*.c
+!*.cpp
+!*.vhdl
+!*.h
+!*.qsys
+!*.amp
+!*.sopc
+!*.vwf
+!*.qsf
+!*.qip
