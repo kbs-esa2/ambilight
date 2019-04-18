@@ -11,7 +11,7 @@ void main(){
 		if(command&1){
 			*SDRAM = value;
 		}
-		else if(command&3){
+		if(command&3){
 			*leds = *SDRAM;
 		}
 		
