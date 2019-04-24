@@ -18,7 +18,7 @@ Qsys/incremental_db/
 
 Qsys/output_files/
 
-*.vhd
+
 
 Qsys/nios2/synthesis/submodules/
 
