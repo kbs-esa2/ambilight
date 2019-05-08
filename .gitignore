@@ -25,37 +25,9 @@ Qsys/nios2/synthesis/submodules/
 
 Qsys/nios2/synthesis/
 
-Qsys/software/HardwareTester/create-this-app
+Qsys/software/*/*
+!Qsys/software/*/.cproject
+!Qsys/software/*/.project
+!Qsys/software/*/.c
+!Qsys/software/*/settings.bsp
 
-Qsys/software/HardwareTester/Makefile
-
-
-
-
-Qsys/software/ucos_test/Makefile
-
-Qsys/software/HardwareTester_bsp/drivers/inc/
-
-Qsys/software/HardwareTester_bsp/drivers/src/
-
-Qsys/software/HardwareTester_bsp/HAL/inc/
-
-Qsys/software/HardwareTester_bsp/HAL/src/
-
-Qsys/software/HardwareTester_bsp/linker\.h
-
-Qsys/software/ucos_test_bsp/alt_sys_init\.c
-
-Qsys/software/ucos_test_bsp/drivers/inc/
-
-Qsys/software/ucos_test_bsp/HAL/inc/
-
-Qsys/software/ucos_test_bsp/HAL/src/
-
-Qsys/software/ucos_test_bsp/UCOSII/inc/os/
-
-Qsys/software/ucos_test_bsp/UCOSII/inc/
-
-Qsys/software/ucos_test_bsp/UCOSII/src/
-
-Qsys/software/ucos_test_bsp/drivers/src/
