@@ -29,9 +29,33 @@ Qsys/software/HardwareTester/create-this-app
 
 Qsys/software/HardwareTester/Makefile
 
-Qsys/software/HardwareTester_bsp/
 
 
-Qsys/software/ucos_test_bsp/
 
 Qsys/software/ucos_test/Makefile
+
+Qsys/software/HardwareTester_bsp/drivers/inc/
+
+Qsys/software/HardwareTester_bsp/drivers/src/
+
+Qsys/software/HardwareTester_bsp/HAL/inc/
+
+Qsys/software/HardwareTester_bsp/HAL/src/
+
+Qsys/software/HardwareTester_bsp/linker\.h
+
+Qsys/software/ucos_test_bsp/alt_sys_init\.c
+
+Qsys/software/ucos_test_bsp/drivers/inc/
+
+Qsys/software/ucos_test_bsp/HAL/inc/
+
+Qsys/software/ucos_test_bsp/HAL/src/
+
+Qsys/software/ucos_test_bsp/UCOSII/inc/os/
+
+Qsys/software/ucos_test_bsp/UCOSII/inc/
+
+Qsys/software/ucos_test_bsp/UCOSII/src/
+
+Qsys/software/ucos_test_bsp/drivers/src/
