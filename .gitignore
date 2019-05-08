@@ -30,4 +30,5 @@ Qsys/software/*/*
 !Qsys/software/*/.project
 !Qsys/software/*/.c
 !Qsys/software/*/settings.bsp
+!Qsys/software/libraries/*
 
