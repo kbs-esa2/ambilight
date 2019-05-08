@@ -11,6 +11,7 @@
 !*.vwf
 !*.qsf
 !*.qip
+!*.bsp
 
 Qsys/db/
 
@@ -29,7 +30,7 @@ Qsys/software/HardwareTester/create-this-app
 Qsys/software/HardwareTester/Makefile
 
 Qsys/software/HardwareTester_bsp/
-!Qsys/software/HardwareTester_bsp/settings.bsp
+
 
 Qsys/software/ucos_test_bsp/
 
