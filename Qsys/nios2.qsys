@@ -34,7 +34,7 @@
    {
       datum _sortIndex
       {
-         value = "9";
+         value = "10";
          type = "int";
       }
    }
@@ -68,7 +68,7 @@
    {
       datum _sortIndex
       {
-         value = "8";
+         value = "9";
          type = "int";
       }
    }
@@ -89,7 +89,7 @@
    {
       datum _sortIndex
       {
-         value = "6";
+         value = "7";
          type = "int";
       }
    }
@@ -110,7 +110,7 @@
    {
       datum _sortIndex
       {
-         value = "7";
+         value = "8";
          type = "int";
       }
    }
@@ -152,7 +152,7 @@
    {
       datum _sortIndex
       {
-         value = "20";
+         value = "21";
          type = "int";
       }
    }
@@ -160,7 +160,7 @@
    {
       datum _sortIndex
       {
-         value = "18";
+         value = "19";
          type = "int";
       }
       datum sopceditor_expanded
@@ -173,7 +173,7 @@
    {
       datum _sortIndex
       {
-         value = "19";
+         value = "20";
          type = "int";
       }
    }
@@ -181,7 +181,7 @@
    {
       datum _sortIndex
       {
-         value = "3";
+         value = "4";
          type = "int";
       }
    }
@@ -202,7 +202,7 @@
    {
       datum _sortIndex
       {
-         value = "16";
+         value = "17";
          type = "int";
       }
    }
@@ -223,7 +223,7 @@
    {
       datum _sortIndex
       {
-         value = "5";
+         value = "6";
          type = "int";
       }
    }
@@ -240,11 +240,27 @@
          type = "String";
       }
    }
+   element ucos_timer
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+   element ucos_timer.s1
+   {
+      datum baseAddress
+      {
+         value = "136314912";
+         type = "String";
+      }
+   }
    element video_clipper_0
    {
       datum _sortIndex
       {
-         value = "13";
+         value = "14";
          type = "int";
       }
    }
@@ -252,7 +268,7 @@
    {
       datum _sortIndex
       {
-         value = "22";
+         value = "23";
          type = "int";
       }
    }
@@ -260,7 +276,7 @@
    {
       datum _sortIndex
       {
-         value = "15";
+         value = "16";
          type = "int";
       }
    }
@@ -281,7 +297,7 @@
    {
       datum _sortIndex
       {
-         value = "10";
+         value = "11";
          type = "int";
       }
    }
@@ -289,7 +305,7 @@
    {
       datum _sortIndex
       {
-         value = "23";
+         value = "24";
          type = "int";
       }
       datum sopceditor_expanded
@@ -302,7 +318,7 @@
    {
       datum _sortIndex
       {
-         value = "17";
+         value = "18";
          type = "int";
       }
    }
@@ -323,7 +339,7 @@
    {
       datum _sortIndex
       {
-         value = "4";
+         value = "5";
          type = "int";
       }
    }
@@ -344,7 +360,7 @@
    {
       datum _sortIndex
       {
-         value = "21";
+         value = "22";
          type = "int";
       }
    }
@@ -352,7 +368,7 @@
    {
       datum _sortIndex
       {
-         value = "14";
+         value = "15";
          type = "int";
       }
    }
@@ -360,7 +376,7 @@
    {
       datum _sortIndex
       {
-         value = "11";
+         value = "12";
          type = "int";
       }
    }
@@ -368,7 +384,7 @@
    {
       datum _sortIndex
       {
-         value = "12";
+         value = "13";
          type = "int";
       }
    }
@@ -698,7 +714,7 @@
   <parameter name="dataAddrWidth" value="28" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram.s1' start='0x0' end='0x8000000' type='altera_avalon_new_sdram_controller.s1' /><slave name='sram_bufer.avalon_sram_slave' start='0x8000000' end='0x8200000' type='altera_up_avalon_sram.avalon_sram_slave' /><slave name='video_pixel_buffer_dma_1.avalon_control_slave' start='0x8200000' end='0x8200010' type='altera_up_avalon_video_pixel_buffer_dma.avalon_control_slave' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8220800' end='0x8221000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='keys.s1' start='0x8221000' end='0x8221010' type='altera_avalon_pio.s1' /><slave name='switches.s1' start='0x8221010' end='0x8221020' type='altera_avalon_pio.s1' /><slave name='leds.s1' start='0x8221020' end='0x8221030' type='altera_avalon_pio.s1' /><slave name='altpll_0.pll_slave' start='0x8221030' end='0x8221040' type='altpll.pll_slave' /><slave name='video_in_dma.avalon_dma_control_slave' start='0x8221040' end='0x8221050' type='altera_up_avalon_video_dma_controller.avalon_dma_control_slave' /><slave name='video_pixel_buffer_dma_0.avalon_control_slave' start='0x8221050' end='0x8221060' type='altera_up_avalon_video_pixel_buffer_dma.avalon_control_slave' /><slave name='audio_and_video_config_0.avalon_av_config_slave' start='0x8221060' end='0x8221070' type='altera_up_avalon_audio_and_video_config.avalon_av_config_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8221070' end='0x8221078' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram.s1' start='0x0' end='0x8000000' type='altera_avalon_new_sdram_controller.s1' /><slave name='sram_bufer.avalon_sram_slave' start='0x8000000' end='0x8200000' type='altera_up_avalon_sram.avalon_sram_slave' /><slave name='video_pixel_buffer_dma_1.avalon_control_slave' start='0x8200000' end='0x8200010' type='altera_up_avalon_video_pixel_buffer_dma.avalon_control_slave' /><slave name='ucos_timer.s1' start='0x8200020' end='0x8200040' type='altera_avalon_timer.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8220800' end='0x8221000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='keys.s1' start='0x8221000' end='0x8221010' type='altera_avalon_pio.s1' /><slave name='switches.s1' start='0x8221010' end='0x8221020' type='altera_avalon_pio.s1' /><slave name='leds.s1' start='0x8221020' end='0x8221030' type='altera_avalon_pio.s1' /><slave name='altpll_0.pll_slave' start='0x8221030' end='0x8221040' type='altpll.pll_slave' /><slave name='video_in_dma.avalon_dma_control_slave' start='0x8221040' end='0x8221050' type='altera_up_avalon_video_dma_controller.avalon_dma_control_slave' /><slave name='video_pixel_buffer_dma_0.avalon_control_slave' start='0x8221050' end='0x8221060' type='altera_up_avalon_video_pixel_buffer_dma.avalon_control_slave' /><slave name='audio_and_video_config_0.avalon_av_config_slave' start='0x8221060' end='0x8221070' type='altera_up_avalon_audio_and_video_config.avalon_av_config_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8221070' end='0x8221078' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -744,7 +760,7 @@
   <parameter name="instruction_master_high_performance_paddr_size" value="0" />
   <parameter name="instruction_master_paddr_base" value="0" />
   <parameter name="instruction_master_paddr_size" value="0" />
-  <parameter name="internalIrqMaskSystemInfo" value="1" />
+  <parameter name="internalIrqMaskSystemInfo" value="3" />
   <parameter name="io_regionbase" value="0" />
   <parameter name="io_regionsize" value="0" />
   <parameter name="master_addr_map" value="false" />
@@ -939,6 +955,22 @@
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="18" />
+ </module>
+ <module
+   name="ucos_timer"
+   kind="altera_avalon_timer"
+   version="16.1"
+   enabled="1">
+  <parameter name="alwaysRun" value="false" />
+  <parameter name="counterSize" value="32" />
+  <parameter name="fixedPeriod" value="false" />
+  <parameter name="period" value="125" />
+  <parameter name="periodUnits" value="MSEC" />
+  <parameter name="resetOutput" value="false" />
+  <parameter name="snapshot" value="true" />
+  <parameter name="systemFrequency" value="50000000" />
+  <parameter name="timeoutPulseOutput" value="false" />
+  <parameter name="watchdogPulse" value="2" />
  </module>
  <module
    name="video_clipper_0"
@@ -1228,6 +1260,15 @@
  <connection
    kind="avalon"
    version="16.1"
+   start="nios2_gen2_0.data_master"
+   end="ucos_timer.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08200020" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.1"
    start="nios2_gen2_0.instruction_master"
    end="nios2_gen2_0.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
@@ -1371,6 +1412,7 @@
    version="16.1"
    start="altpll_0.c0"
    end="video_pixel_buffer_dma_1.clk" />
+ <connection kind="clock" version="16.1" start="altpll_0.c0" end="ucos_timer.clk" />
  <connection
    kind="clock"
    version="16.1"
@@ -1397,6 +1439,13 @@
    start="nios2_gen2_0.irq"
    end="jtag_uart_0.irq">
   <parameter name="irqNumber" value="0" />
+ </connection>
+ <connection
+   kind="interrupt"
+   version="16.1"
+   start="nios2_gen2_0.irq"
+   end="ucos_timer.irq">
+  <parameter name="irqNumber" value="1" />
  </connection>
  <connection
    kind="reset"
@@ -1496,6 +1545,11 @@
    version="16.1"
    start="clk_0.clk_reset"
    end="video_pixel_buffer_dma_1.reset" />
+ <connection
+   kind="reset"
+   version="16.1"
+   start="clk_0.clk_reset"
+   end="ucos_timer.reset" />
  <connection
    kind="reset"
    version="16.1"
@@ -1616,6 +1670,11 @@
    version="16.1"
    start="nios2_gen2_0.debug_reset_request"
    end="video_pixel_buffer_dma_1.reset" />
+ <connection
+   kind="reset"
+   version="16.1"
+   start="nios2_gen2_0.debug_reset_request"
+   end="ucos_timer.reset" />
  <connection
    kind="reset"
    version="16.1"

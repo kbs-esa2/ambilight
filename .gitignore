@@ -23,3 +23,13 @@ Qsys/output_files/
 Qsys/nios2/synthesis/submodules/
 
 Qsys/nios2/synthesis/
+
+Qsys/software/HardwareTester/create-this-app
+
+Qsys/software/HardwareTester/Makefile
+
+Qsys/software/HardwareTester_bsp/
+
+Qsys/software/ucos_test_bsp/
+
+Qsys/software/ucos_test/Makefile
