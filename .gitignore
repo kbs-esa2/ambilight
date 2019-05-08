@@ -12,6 +12,7 @@
 !*.qsf
 !*.qip
 !*.bsp
+!*.txt
 
 Qsys/db/
 

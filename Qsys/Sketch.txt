@@ -1,0 +1,56 @@
+#define frameBlockWidth
+#define frameBlockDepth
+#define ledsTopBot
+#define ledsLeftRight
+
+struct Edges {
+	char	side[10];
+	int	length;
+	int	leds;
+	int	blockSize;
+	int	blockDepth;
+}
+
+void getPixelColour(unsigned short* out,unsigned int X,unsigned int Y){
+	unsigned short R = 0;
+	unsigned short G = 0;
+	unsigned short B = 0;
+	unsigned int offset = (Y*FRAMEWIDTH+X)*3;
+
+	R = *(decoderBuffer+offset);
+	G = *(decoderBuffer+offset+1);
+	B = *(decoderBuffer+offset+2);
+
+	out[0] = R;
+	out[1] = G;
+	out[2] = B;
+}
+
+void getFrameBlockColour{unsigned short* average, unsigned short x, unsigned short y, unsigned short width, unsigned short heigt}(
+	int totalR = 0;
+	int totalG = 0;
+	int totalB = 0;
+	int pixelAmount = 0;
+	int colour[3];
+
+	for(unsigned int i = x; i < width; i++){
+		for(unsigned int j = y; j < height; j++){
+			getPixelColour(colour, i, j);
+			totalR += colour[0];
+			totalG += colour[1];
+			totalB += colour[2];
+			pixelAmount++;
+		}
+	}
+	average[0] = totalR/pixelAmount;
+	average[1] = totalG/pixelAmount;
+	average[2] = totalB/pixelAmount;
+}
+
+void getEdgeArray{}(
+	
+
+)
+
+void getFullArray
+	
