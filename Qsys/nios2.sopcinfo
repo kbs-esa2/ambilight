@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="nios2" kind="nios2" version="1.0" fabric="QSYS">
- <!-- Format version 16.1 196 (Future versions may contain additional information.) -->
- <!-- 2019.05.08.10:53:39 -->
+ <!-- Format version 16.1 203 (Future versions may contain additional information.) -->
+ <!-- 2019.05.10.10:38:03 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1557305618</value>
+  <value>1557477483</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -24379,6 +24379,6 @@ parameters are a RESULT of the module parameters. -->
   <displayName>Reset Connection</displayName>
   <version>16.1</version>
  </plugin>
- <reportVersion>16.1 196</reportVersion>
+ <reportVersion>16.1 203</reportVersion>
  <uniqueIdentifier></uniqueIdentifier>
 </EnsembleReport>

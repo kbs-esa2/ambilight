@@ -1,85 +1,99 @@
-/*************************************************************************
-* Copyright (c) 2004 Altera Corporation, San Jose, California, USA.      *
-* All rights reserved. All use of this software and documentation is     *
-* subject to the License Agreement located at the end of this file below.*
-**************************************************************************
-* Description:                                                           *
-* The following is a simple hello world program running MicroC/OS-II.The * 
-* purpose of the design is to be a very simple application that just     *
-* demonstrates MicroC/OS-II running on NIOS II.The design doesn't account*
-* for issues such as checking system call return codes. etc.             *
-*                                                                        *
-* Requirements:                                                          *
-*   -Supported Example Hardware Platforms                                *
-*     Standard                                                           *
-*     Full Featured                                                      *
-*     Low Cost                                                           *
-*   -Supported Development Boards                                        *
-*     Nios II Development Board, Stratix II Edition                      *
-*     Nios Development Board, Stratix Professional Edition               *
-*     Nios Development Board, Stratix Edition                            *
-*     Nios Development Board, Cyclone Edition                            *
-*   -System Library Settings                                             *
-*     RTOS Type - MicroC/OS-II                                           *
-*     Periodic System Timer                                              *
-*   -Know Issues                                                         *
-*     If this design is run on the ISS, terminal output will take several*
-*     minutes per iteration.                                             *
-**************************************************************************/
-
-
+/* UCOSII for NIOS, KBSESA2, Ambilight-waproject */
 #include <stdio.h>
 #include "includes.h"
 
-/* Definition of Task Stacks */
+/* Define adresses & frame dimensions */
+#define switches (volatile int *)0x08221010
+#define keys (volatile int *)0x08221000
+#define leds (int *)0x08221020
+#define PLLSlave (volatile int *)0x00021050
+
+#define niosMemorySlave (volatile int *)0x18000000
+#define DMAINCONTROL (volatile int *)0x00021060
+#define DMAOUTCONTROL (volatile int *)0x00021070
+#define decoderBuffer (volatile short *)0x08000000
+#define overlayBuffer (volatile long *)0x04000000
+
+#define AVConfigSlave (volatile int *)0x00021080
+#define JtagSlave (volatile int *)0x00021090
+
+#define FRAMEWIDTH 320
+#define FRAMEHEIGHT 240
+
+//!!!1!!1!!! Define voor test
+#define targetX 160
+#define targetY 120
+
+/* Define Task stacksize */
 #define   TASK_STACKSIZE       2048
-OS_STK    task1_stk[TASK_STACKSIZE];
-OS_STK    task2_stk[TASK_STACKSIZE];
+OS_STK    TaskCounter_stk[TASK_STACKSIZE];
+OS_STK    TaskFillSquare_stk[TASK_STACKSIZE];
+OS_STK    TaskGetColor_stk[TASK_STACKSIZE];
 
-/* Definition of Task Priorities */
+/* Define Task priority */
+#define TaskCounter_PRIORITY      1
+#define TaskFillSquare_PRIORITY      2
+#define TaskGetColor_PRIORITY   3
 
-#define TASK1_PRIORITY      1
-#define TASK2_PRIORITY      2
+/* Functions */
+void fillSquare(unsigned char R, unsigned char G, unsigned char B, unsigned char A, unsigned int width, unsigned int height, unsigned int x, unsigned int y);
+void getPixelColor(unsigned short* out,unsigned int X,unsigned int Y);
+void setPixel(unsigned int X, unsigned int Y, unsigned char R, unsigned char G, unsigned char B, unsigned char A);
 
-/* Prints "Hello World" and sleeps for three seconds */
-void task1(void* pdata)
-{
-  while (1)
-  { 
-    printf("Hello from task1\n");
+/* Tasks */
+void TaskCounter(void* pdata) {
+  int counter = 0;
+  while (1) { 
+    printf("Counter: %d\n", counter);
+    counter++;
+    OSTimeDlyHMSM(0, 0, 1, 0);
+  }
+}
+
+void TaskFillSquare(void* pdata) {
+  while (1) { 
+    printf("FillSquareTask\n");
+    OSTimeDlyHMSM(0, 0, 2, 0);
+  }
+}
+
+void TaskGetColor(void* pdata) {
+  while (1) { 
+    printf("Get Color Task\n");
     OSTimeDlyHMSM(0, 0, 3, 0);
   }
 }
-/* Prints "Hello World" and sleeps for three seconds */
-void task2(void* pdata)
-{
-  while (1)
-  { 
-    printf("Hello from task2\n");
-    OSTimeDlyHMSM(0, 0, 3, 0);
-  }
-}
-/* The main function creates two task and starts multi-tasking */
-int main(void)
-{
+
+/* Main function, creates tasks and starts the scheduler */
+int main(void) {
   
-  OSTaskCreateExt(task1,
+  OSTaskCreateExt(TaskCounter,
                   NULL,
-                  (void *)&task1_stk[TASK_STACKSIZE-1],
-                  TASK1_PRIORITY,
-                  TASK1_PRIORITY,
-                  task1_stk,
+                  (void *)&TaskCounter_stk[TASK_STACKSIZE-1],
+                  TaskCounter_PRIORITY,
+                  TaskCounter_PRIORITY,
+                  TaskCounter_stk,
                   TASK_STACKSIZE,
                   NULL,
                   0);
               
                
-  OSTaskCreateExt(task2,
+  OSTaskCreateExt(TaskFillSquare,
                   NULL,
-                  (void *)&task2_stk[TASK_STACKSIZE-1],
-                  TASK2_PRIORITY,
-                  TASK2_PRIORITY,
-                  task2_stk,
+                  (void *)&TaskFillSquare_stk[TASK_STACKSIZE-1],
+                  TaskFillSquare_PRIORITY,
+                  TaskFillSquare_PRIORITY,
+                  TaskFillSquare_stk,
+                  TASK_STACKSIZE,
+                  NULL,
+                  0);
+
+  OSTaskCreateExt(TaskGetColor,
+                  NULL,
+                  (void *)&TaskGetColor_stk[TASK_STACKSIZE-1],
+                  TaskGetColor_PRIORITY,
+                  TaskGetColor_PRIORITY,
+                  TaskGetColor_stk,
                   TASK_STACKSIZE,
                   NULL,
                   0);
@@ -87,33 +101,56 @@ int main(void)
   return 0;
 }
 
-/******************************************************************************
-*                                                                             *
-* License Agreement                                                           *
-*                                                                             *
-* Copyright (c) 2004 Altera Corporation, San Jose, California, USA.           *
-* All rights reserved.                                                        *
-*                                                                             *
-* Permission is hereby granted, free of charge, to any person obtaining a     *
-* copy of this software and associated documentation files (the "Software"),  *
-* to deal in the Software without restriction, including without limitation   *
-* the rights to use, copy, modify, merge, publish, distribute, sublicense,    *
-* and/or sell copies of the Software, and to permit persons to whom the       *
-* Software is furnished to do so, subject to the following conditions:        *
-*                                                                             *
-* The above copyright notice and this permission notice shall be included in  *
-* all copies or substantial portions of the Software.                         *
-*                                                                             *
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  *
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,    *
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE *
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER      *
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING     *
-* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER         *
-* DEALINGS IN THE SOFTWARE.                                                   *
-*                                                                             *
-* This agreement shall be governed in all respects by the laws of the State   *
-* of California and by the laws of the United States of America.              *
-* Altera does not recommend, suggest or require that this reference design    *
-* file be used in conjunction or combination with any other product.          *
-******************************************************************************/
+void fillSquare(unsigned char R, unsigned char G, unsigned char B, unsigned char A, unsigned int width, unsigned int height, unsigned int x, unsigned int y) {
+	for (unsigned int i = 0; i < width; i++) {
+		for (unsigned int j = 0; j < height; j++) {
+			setPixel(x + i, y + j, R, G, B, A);
+		}
+	}
+}
+
+void getPixelColor(unsigned short* out,unsigned int X,unsigned int Y) {
+	unsigned char R = 0;
+	unsigned char G = 0;
+	unsigned char B = 0;
+	unsigned int offset = (Y*FRAMEWIDTH+X)*3;
+
+	R = *(decoderBuffer+offset);
+	G = *(decoderBuffer+offset+1);
+	B = *(decoderBuffer+offset+2);
+
+	out[0] = R;
+	out[1] = G;
+	out[2] = B;
+}
+
+void setPixel(unsigned int X, unsigned int Y, unsigned char R, unsigned char G, unsigned char B, unsigned char A) {
+	unsigned int x = 0;
+	unsigned int y = 0;
+	unsigned int offset = 0;
+	unsigned long pixelData = 0;
+	//clip coordinate values
+	if (X < 0)
+		x = 0;
+	else if (X > (FRAMEWIDTH - 1))
+		x = FRAMEWIDTH - 1;
+	else
+		x = X;
+
+	if (Y < 0)
+		y = 0;
+	else if (Y > (FRAMEHEIGHT - 1))
+		y = FRAMEHEIGHT - 1;
+	else
+		y = Y;
+
+	offset = (y * FRAMEWIDTH) + x;
+
+	pixelData |= B & 0x000000FF;
+	pixelData |= (G & 0x000000FF) << 8;
+	pixelData |= (R & 0x000000FF) << 16;
+	pixelData |= (A & 0x000000FF) << 24;
+
+	//write pixeldata to buffer
+	*(overlayBuffer + offset) = pixelData;
+}

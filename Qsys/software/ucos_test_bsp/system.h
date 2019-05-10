@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'nios2'
  * SOPC Builder design path: ../../nios2.sopcinfo
  *
- * Generated: Wed May 08 11:10:20 CEST 2019
+ * Generated: Fri May 10 11:07:01 CEST 2019
  */
 
 /*
@@ -217,7 +217,7 @@
 #define ALT_INCLUDE_INSTRUCTION_RELATED_EXCEPTION_API
 #define ALT_MAX_FD 32
 #define ALT_SYS_CLK UCOS_TIMER
-#define ALT_TIMESTAMP_CLK none
+#define ALT_TIMESTAMP_CLK UCOS_TIMER
 
 
 /*

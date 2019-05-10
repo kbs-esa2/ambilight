@@ -2,10 +2,10 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>May 8, 2019 11:18:35 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1557307115940</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>May 9, 2019 2:12:42 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1557403962471</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\KBSESA2\ambilight\Qsys\software\HardwareTester_bsp</BspGeneratedLocation>
-        <BspSettingsFile>C:\KBSESA2\ambilight\Qsys\software\HardwareTester_bsp\settings.bsp</BspSettingsFile>
+        <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\nios2.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>
         <Cpu>nios2_gen2_0</Cpu>
