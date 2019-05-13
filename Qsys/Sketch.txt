@@ -1,21 +1,22 @@
-#define frameBlockWidth
 #define frameBlockDepth
 #define ledsTopBot
 #define ledsLeftRight
+#define FRAMEWIDTH
+#define FRAMEHEIGHT
 
 struct Edges {
 	char	side[10];
-	int	length;
-	int	leds;
-	int	blockSize;
-	int	blockDepth;
+	int		length;
+	int		leds;
+	int		blockSize;
+	int		blockDepth;
 }
 
 void getPixelColour(unsigned short* out,unsigned int X,unsigned int Y){
-	unsigned short R = 0;
-	unsigned short G = 0;
-	unsigned short B = 0;
-	unsigned int offset = (Y*FRAMEWIDTH+X)*3;
+	unsigned short 	R = 0;
+	unsigned short 	G = 0;
+	unsigned short 	B = 0;
+	unsigned int 	offset = (Y*FRAMEWIDTH+X)*3;
 
 	R = *(decoderBuffer+offset);
 	G = *(decoderBuffer+offset+1);
@@ -26,7 +27,7 @@ void getPixelColour(unsigned short* out,unsigned int X,unsigned int Y){
 	out[2] = B;
 }
 
-void getFrameBlockColour{unsigned short* average, unsigned short x, unsigned short y, unsigned short width, unsigned short heigt}(
+void getFrameBlockColour(unsigned short* average, unsigned short x, unsigned short y, unsigned short width, unsigned short height){
 	int totalR = 0;
 	int totalG = 0;
 	int totalB = 0;
@@ -47,10 +48,64 @@ void getFrameBlockColour{unsigned short* average, unsigned short x, unsigned sho
 	average[2] = totalB/pixelAmount;
 }
 
-void getEdgeArray{}(
+void getEdgeArray(Edges edge, unsigned short* blocks){
+	int firstBlockStartX;
+	int firstBlockStartY;
+	int frameBlockWidthX = FRAMEWIDTH / ledsTopBot;
+	int frameBlockWidthY = FRAMEHEIGHT / ledsLeftRight;
+	if(edge.side = 'top'){			//van linksboven naar rechtsboven
+		firstBlockStartX = 0;
+		firstBlockStartY = 0;
+		for(int i = 0; i < ledsTopBot; i++){  //voor ieder frameBlock
+			getFrameBlockColour(blocks[i], i * FrameBlockWidthX , firstBlockStartY, frameBlockWidthX, frameBlockDepth);
+		}
+	}else if(edge.side = 'right'){		//van rechtsboven naar rechtsonder
+		firstBlockStartX = FRAMEWIDTH - frameBlockDepth;
+		firstBlockStartY = 0;
+		for(int i = 0; i < ledsLeftRight; i++){  //voor ieder frameBlock
+			getFrameBlockColour(blocks[i], firstBlockStartX , i * frameBlockWidthY, frameBlockDepth, frameBlockWidthY);
+		}
+	}else if(edge.side = 'bot'){		//van rechtsonder naar linksonder
+		firstBlockStartX = ( FRAMEWIDTH - ( FRAMEWIDTH / ledsTopBot );
+		firstBlockStartY = ( FRAMEHEIGHT - frameBlockDepth);
+		for(int i = ledsTopBot - 1; i >= 0; i++){  //voor ieder frameBlock
+			getFrameBlockColour(blocks[(ledsTopBot - 1) - i], i * frameBlockWidthX, firstBlockStartY, frameBlockWidthX, frameBlockDepth);
+		}		
+	}else if(edge.side = 'left'){		//van linksonder naar linksboven
+		firstBlockStartX = 0;
+		firstBlockStartY = FRAMEHEIGHT - frameBlockDepth;
+		for(int i = ledsLeftRight - 1; i >= 0; i++){  //voor ieder frameBlock
+			getFrameBlockColour(blocks[(ledsLeftRight - 1) - i], firstBlockStartX, i * frameBlockWidthY, frameBlockDepth, frameBlockWidthY);
+		}
+	}
+}
+
+void getFullArray(unsigned short* array){
+	int topArray[ledsTopBot][3];
+	int botArray[ledsTopBot][3];
+	int leftArray[ledsLeftRight][3];
+	int rightArray[ledsLeftRight][3];
+	getEdgeArray(topArray, ledsTopBot, top);
+	getEdgeArray(rightArray, ledsLeftRight, right);
+	getEdgeArray(botArray, ledsTopBot, bot);
+	getEdgeArray(leftArray, ledsLeftRight, left);
+	int arrayPos = 0;
+	for(int i = 0; i < ledsTopBot; i++){
+		array[arrayPos] = top[i];
+		arrayPos++;
+	}
+	for(int i = 0; i < ledsLeftRight; i++){
+		array[arrayPos] = right[i];
+		arrayPos++;
+	}
+	for(int i = 0; i < ledsTopBot; i++){
+		array[arrayPos] = bot[i];
+		arrayPos++;
+	}
+	for(int i = 0; i < ledsLeftRight; i++){
+		array[arrayPos] = left[i];
+		arrayPos++;
+	}
 	
-
-)
-
-void getFullArray
+}
 	
