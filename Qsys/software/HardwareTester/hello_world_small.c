@@ -94,6 +94,12 @@
 #define decoderBuffer (volatile short *)0x08000000
 #define overlayBuffer (volatile long *)0x04000000
 
+#define FRAMEWIDTH 320
+#define FRAMEHEIGHT 240
+
+#define LedsTopBot 30
+#define LedsLeftRight 21
+
 #define AVConfigSlave (volatile int *)0x00021080
 #define JtagSlave (volatile int *)0x00021090
 
@@ -105,6 +111,7 @@ void fillSquare(unsigned short R, unsigned short G, unsigned short B, unsigned s
 void fillBlack();
 void fillClear();
 void getPixelColor(unsigned short* out,unsigned int X,unsigned int Y);
+void drawSquare(unsigned int x, unsigned int y);
 
 unsigned short pixel[3];
 
@@ -115,6 +122,19 @@ int main()
 	alt_putstr("Hello from Nios II!\n");
 	while (1)
 	{
+		for(unsigned int xcoordinate = 0; xcoordinate <= FRAMEWIDTH; xcoordinate = xcoordinate + (FRAMEWIDTH/LedsTopBot))
+		      drawSquare(xcoordinate, 0);
+		      printf("for1\n");
+		      for(unsigned int xcoordinate = 0; xcoordinate <= FRAMEWIDTH; xcoordinate = xcoordinate + (FRAMEWIDTH/LedsTopBot))
+		      drawSquare(xcoordinate, 240 -(FRAMEHEIGHT/LedsLeftRight));
+		      printf("for2\n");
+		      for(unsigned int ycoordinate = 0; ycoordinate <= FRAMEHEIGHT; ycoordinate = ycoordinate + (FRAMEHEIGHT/LedsLeftRight))
+		      drawSquare(0, ycoordinate);
+		      printf("for3\n");
+		      for(unsigned int ycoordinate = 0; ycoordinate <= FRAMEHEIGHT; ycoordinate = ycoordinate + (FRAMEHEIGHT/LedsLeftRight))
+		      drawSquare(320 - (FRAMEWIDTH/LedsTopBot), ycoordinate);
+		      printf("for4\n");
+		      printf("drawoverlay\n");
 
 		if ((*switches >> 0) & 1)
 		{
@@ -264,4 +284,15 @@ void getPixelColor(unsigned short* out,unsigned int X,unsigned int Y){
 	out[1] = G;
 	out[2] = B;
 
+}
+
+void drawSquare(unsigned int x, unsigned int y) {   //x & y are coordinates
+  for(unsigned int i; i <= (FRAMEHEIGHT/LedsLeftRight); i++)
+  setPixel(x, y+i, 247, 234, 51, 255);
+  for(unsigned int i; i <= (FRAMEHEIGHT/LedsLeftRight); i++)
+  setPixel(x+(FRAMEWIDTH/LedsTopBot), y+i, 247, 234, 51, 255);
+  for(unsigned int i; i <= (FRAMEWIDTH/LedsTopBot); i++)
+  setPixel(x+i, y, 247, 234, 51, 255);
+  for(unsigned int i; i <= (FRAMEWIDTH/LedsTopBot); i++)
+  setPixel(x+i, y+(FRAMEHEIGHT/LedsLeftRight), 247, 234, 51, 255);
 }
