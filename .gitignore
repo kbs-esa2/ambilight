@@ -13,6 +13,8 @@
 !*.qip
 !*.bsp
 !*.txt
+!*.cproject
+!*.project
 
 Qsys/db/
 
@@ -27,9 +29,4 @@ Qsys/nios2/synthesis/submodules/
 Qsys/nios2/synthesis/
 
 Qsys/software/*/*
-!Qsys/software/*/.cproject
-!Qsys/software/*/.project
-!Qsys/software/*/.c
-!Qsys/software/*/settings.bsp
-!Qsys/software/libraries/*
 
