@@ -1,0 +1,255 @@
+Determining the location of the ModelSim executable...
+
+Using: c:/intelfpga_lite/16.1/modelsim_ase/win32aloem/
+
+To specify a ModelSim executable directory, select: Tools -> Options -> EDA Tool Options
+Note: if both ModelSim-Altera and ModelSim executables are available, ModelSim-Altera will be used.
+
+**** Generating the ModelSim Testbench ****
+
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off MBlight -c nios_top --vector_source="C:/KBSESA2/ambilight/Qsys/ledsimulation.vwf" --testbench_file="C:/KBSESA2/ambilight/Qsys/simulation/qsim/ledsimulation.vwf.vt"
+
+Info: *******************************************************************
+Info: Running Quartus Prime EDA Netlist Writer
+    Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+    Info: Copyright (C) 2016  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and its AMPP partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel MegaCore Function License Agreement, or other 
+    Info: applicable license agreement, including, without limitation, 
+    Info: that your use is for the sole purpose of programming logic 
+    Info: devices manufactured by Intel and sold by Intel or its 
+    Info: authorized distributors.  Please refer to the applicable 
+    Info: agreement for further details.
+    Info: Processing started: Thu May 16 13:28:54 2019
+Info: Command: quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off MBlight -c nios_top --vector_source=C:/KBSESA2/ambilight/Qsys/ledsimulation.vwf --testbench_file=C:/KBSESA2/ambilight/Qsys/simulation/qsim/ledsimulation.vwf.vt
+Warning (20013): Ignored 23 assignments for entity "altera_avalon_sc_fifo" -- entity does not exist in design
+Warning (20013): Ignored 23 assignments for entity "altera_avalon_st_handshake_clock_crosser" -- entity does not exist in design
+Warning (20013): Ignored 43 assignments for entity "altera_merlin_burst_adapter" -- entity does not exist in design
+Warning (20013): Ignored 64 assignments for entity "altera_merlin_master_agent" -- entity does not exist in design
+Warning (20013): Ignored 55 assignments for entity "altera_merlin_master_translator" -- entity does not exist in design
+Warning (20013): Ignored 53 assignments for entity "altera_merlin_slave_agent" -- entity does not exist in design
+Warning (20013): Ignored 68 assignments for entity "altera_merlin_slave_translator" -- entity does not exist in design
+Warning (20013): Ignored 60 assignments for entity "altera_merlin_width_adapter" -- entity does not exist in design
+Warning (20013): Ignored 35 assignments for entity "altera_reset_controller" -- entity does not exist in design
+Warning (20013): Ignored 32 assignments for entity "nios2_avalon_st_adapter" -- entity does not exist in design
+Warning (20013): Ignored 21 assignments for entity "nios2_avalon_st_adapter_channel_adapter_0" -- entity does not exist in design
+Warning (20013): Ignored 14 assignments for entity "nios2_irq_mapper" -- entity does not exist in design
+Warning (20013): Ignored 24 assignments for entity "nios2_jtag_uart_0" -- entity does not exist in design
+Warning (20013): Ignored 23 assignments for entity "nios2_keys" -- entity does not exist in design
+Warning (20013): Ignored 22 assignments for entity "nios2_leds" -- entity does not exist in design
+Warning (20013): Ignored 12 assignments for entity "nios2_mm_interconnect_0" -- entity does not exist in design
+Warning (20013): Ignored 32 assignments for entity "nios2_mm_interconnect_0_avalon_st_adapter" -- entity does not exist in design
+Warning (20013): Ignored 32 assignments for entity "nios2_mm_interconnect_0_avalon_st_adapter_001" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_avalon_st_adapter_001_error_adapter_0" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_avalon_st_adapter_error_adapter_0" -- entity does not exist in design
+Warning (20013): Ignored 17 assignments for entity "nios2_mm_interconnect_0_cmd_demux" -- entity does not exist in design
+Warning (20013): Ignored 17 assignments for entity "nios2_mm_interconnect_0_cmd_demux_002" -- entity does not exist in design
+Warning (20013):
+ Ignored 17 assignments for entity "nios2_mm_interconnect_0_cmd_demux_003" -- entity does not exist in design
+Warning (20013): Ignored 17 assignments for entity "nios2_mm_interconnect_0_cmd_demux_005" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_cmd_mux" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_cmd_mux_001" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_cmd_mux_006" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_cmd_mux_011" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_002" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_003" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_004" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_005" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_006" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_007" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_012" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_017" -- entity does not exist in design
+Warning (20013): Ignored 17 assignments for entity "nios2_mm_interconnect_0_rsp_demux" -- entity does not exist in design
+Warning (20013): Ignored 17 assignments for entity "nios2_mm_interconnect_0_rsp_demux_011" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_rsp_mux" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_rsp_mux_002" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_rsp_mux_003" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_rsp_mux_005" -- entity does not exist in design
+Warning (20013): Ignored 149 assignments for entity "nios2_nios2_gen2_0" -- entity does not exist in design
+Warning (20013): Ignored 179 assignments for entity "nios2_nios2_gen2_0_cpu" -- entity does not exist in design
+Warning (20013): Ignored 34 assignments for entity "nios2_sdram" -- entity does not exist in design
+Warning (20013): Ignored 23 assignments for entity "nios2_switches" -- entity does not exist in design
+Warning (20013): Ignored 26 assignments for entity "nios2_ucos_timer" -- entity does not exist in design
+Info (119006): Selected device EP4CE115F29C7 for design "nios_top"
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+
+'t find port "bitindex[18]" in design
+
+Completed successfully. 
+
+Completed successfully. 
+
+**** Generating the functional simulation netlist ****
+
+quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory="C:/KBSESA2/ambilight/Qsys/simulation/qsim/" MBlight -c nios_top
+
+Info: *******************************************************************
+Info: Running Quartus Prime EDA Netlist Writer
+    Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+    Info: Copyright (C) 2016  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and its AMPP partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel MegaCore Function License Agreement, or other 
+    Info: applicable license agreement, including, without limitation, 
+    Info: that your use is for the sole purpose of programming logic 
+    Info: devices manufactured by Intel and sold by Intel or its 
+    Info: authorized distributors.  Please refer to the applicable 
+    Info: agreement for further details.
+    Info: Processing started: Thu May 16 13:28:56 2019
+Info: Command: quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory=C:/KBSESA2/ambilight/Qsys/simulation/qsim/ MBlight -c nios_top
+Warning (20013): Ignored 23 assignments for entity "altera_avalon_sc_fifo" -- entity does not exist in design
+Warning (20013): Ignored 23 assignments for entity "altera_avalon_st_handshake_clock_crosser" -- entity does not exist in design
+Warning (20013): Ignored 43 assignments for entity "altera_merlin_burst_adapter" -- entity does not exist in design
+Warning (20013): Ignored 64 assignments for entity "altera_merlin_master_agent" -- entity does not exist in design
+Warning (20013): Ignored 55 assignments for entity "altera_merlin_master_translator" -- entity does not exist in design
+Warning (20013): Ignored 53 assignments for entity "altera_merlin_slave_agent" -- entity does not exist in design
+Warning (20013): Ignored 68 assignments for entity "altera_merlin_slave_translator" -- entity does not exist in design
+Warning (20013): Ignored 60 assignments for entity "altera_merlin_width_adapter" -- entity does not exist in design
+Warning (20013): Ignored 35 assignments for entity "altera_reset_controller" -- entity does not exist in design
+Warning (20013): Ignored 32 assignments for entity "nios2_avalon_st_adapter" -- entity does not exist in design
+Warning (20013): Ignored 21 assignments for entity "nios2_avalon_st_adapter_channel_adapter_0" -- entity does not exist in design
+Warning (20013): Ignored 14 assignments for entity "nios2_irq_mapper" -- entity does not exist in design
+Warning (20013): Ignored 24 assignments for entity "nios2_jtag_uart_0" -- entity does not exist in design
+Warning (20013): Ignored 23 assignments for entity "nios2_keys" -- entity does not exist in design
+Warning (20013): Ignored 22 assignments for entity "nios2_leds" -- entity does not exist in design
+Warning (20013): Ignored 12 assignments for entity "nios2_mm_interconnect_0" -- entity does not exist in design
+Warning (20013): Ignored 32 assignments for entity "nios2_mm_interconnect_0_avalon_st_adapter" -- entity does not exist in design
+Warning (20013): Ignored 32 assignments for entity "nios2_mm_interconnect_0_avalon_st_adapter_001" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_avalon_st_adapter_001_error_adapter_0" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_avalon_st_adapter_error_adapter_0" -- entity does not exist in design
+Warning (20013): Ignored 17 assignments for entity "nios2_mm_interconnect_0_cmd_demux" -- entity does not exist in design
+Warning (20013): Ignored 17 assignments for entity "nios2_mm_interconnect_0_cmd_demux_002" -- entity does not exist in design
+Warning (20013): Ignored 17 assignments for entity "nios2_
+mm_interconnect_0_cmd_demux_003" -- entity does not exist in design
+Warning (20013): Ignored 17 assignments for entity "nios2_mm_interconnect_0_cmd_demux_005" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_cmd_mux" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_cmd_mux_001" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_cmd_mux_006" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_cmd_mux_011" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_002" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_003" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_004" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_005" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_006" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_007" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_012" -- entity does not exist in design
+Warning (20013): Ignored 36 assignments for entity "nios2_mm_interconnect_0_router_017" -- entity does not exist in design
+Warning (20013): Ignored 17 assignments for entity "nios2_mm_interconnect_0_rsp_demux" -- entity does not exist in design
+Warning (20013): Ignored 17 assignments for entity "nios2_mm_interconnect_0_rsp_demux_011" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_rsp_mux" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_rsp_mux_002" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_rsp_mux_003" -- entity does not exist in design
+Warning (20013): Ignored 19 assignments for entity "nios2_mm_interconnect_0_rsp_mux_005" -- entity does not exist in design
+Warning (20013): Ignored 149 assignments for entity "nios2_nios2_gen2_0" -- entity does not exist in design
+Warning (20013): Ignored 179 assignments for entity "nios2_nios2_gen2_0_cpu" -- entity does not exist in design
+Warning (20013): Ignored 34 assignments for entity "nios2_sdram" -- entity does not exist in design
+Warning (20013): Ignored 23 assignments for entity "nios2_switches" -- entity does not exist in design
+Warning (20013): Ignored 26 assignments for entity "nios2_ucos_timer" -- entity does not exist in design
+Info (119006): Selected device EP4CE115F29C7 for design "nios_top"
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (204019): Generated file nios_top.vo in folder "C:/KBSESA2/ambilight/Qsys/simulation/qsim//" for EDA simulation tool
+Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 49 warnings
+    Info: Peak virtual memory: 4664 megabytes
+    Info: Processing ended: Thu May 16 13:28:59 2019
+    Info: Elapsed time: 00:00:03
+    Info: Total CPU time (on all processors): 00:00:03
+
+Completed successfully. 
+
+**** Generating the ModelSim .do script ****
+
+C:/KBSESA2/ambilight/Qsys/simulation/qsim/MBlight.do generated.
+
+Completed successfully. 
+
+**** Running the ModelSim simulation ****
+
+c:/intelfpga_lite/16.1/modelsim_ase/win32aloem//vsim -c -do MBlight.do
+
+Reading C:/intelFPGA_lite/16.1/modelsim_ase/tcl/vsim/pref.tcl
+
+# 10.5b
+
+
+# do MBlight.do
+# ** Warning: (vlib-34) Library already exists at "work".
+
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 13:29:00 on May 16,2019
+# vlog -work work nios_top.vo 
+# -- Compiling module ledDriver
+
+# 
+# Top level modules:
+# 	ledDriver
+# End time: 13:29:00 on May 16,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 13:29:00 on May 16,2019
+# vlog -work work ledsimulation.vwf.vt 
+
+# -- Compiling module ledDriver_vlg_vec_tst
+# 
+# Top level modules:
+# 	ledDriver_vlg_vec_tst
+# End time: 13:29:00 on May 16,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+
+# vsim -novopt -c -t 1ps -L cycloneive_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.ledDriver_vlg_vec_tst 
+# Start time: 13:29:00 on May 16,2019
+# Loading work.ledDriver_vlg_vec_tst
+# Loading work.ledDriver
+# Loading altera_ver.dffeas
+# Loading cycloneive_ver.cycloneive_lcell_comb
+# Loading cycloneive_ver.cycloneive_io_obuf
+# Loading cycloneive_ver.cycloneive_io_ibuf
+# Loading cycloneive_ver.cycloneive_jtag
+# Loading cycloneive_ver.cycloneive_ram_block
+# Loading cycloneive_ver.cycloneive_ram_register
+# Loading cycloneive_ver.cycloneive_ram_pulse_generator
+# ** Warning: (vsim-3017) ledsimulation.vwf.vt(44): [TFMPC] - Too few port connections. Expected 12, found 8.
+#    Time: 0 ps  Iteration: 0  Instance: /ledDriver_vlg_vec_tst/i1 File: nios_top.vo
+# ** Warning: (vsim-3722) ledsimulation.vwf.vt(44): [TFMPC] - Missing connection for port 'altera_reserved_tms'.
+# ** Warning: (vsim-3722) ledsimulation.vwf.vt(44): [TFMPC] - Missing connection for port 'altera_reserved_tck'.
+# ** Warning: (vsim-3722) ledsimulation.vwf.vt(44): [TFMPC] - Missing connection for port 'altera_reserved_tdi'.
+# ** Warning: (vsim-3722) ledsimulation.vwf.vt(44): [TFMPC] - Missing connection for port 'altera_reserved_tdo'.
+# Loading altera_ver.PRIM_GDFF_LOW
+# after#25
+
+# ** Note: $finish    : ledsimulation.vwf.vt(57)
+#    Time: 100 us  Iteration: 0  Instance: /ledDriver_vlg_vec_tst
+# End time: 13:29:02 on May 16,2019, Elapsed time: 0:00:02
+# Errors: 0, Warnings: 5
+
+Completed successfully. 
+
+**** Converting ModelSim VCD to vector waveform ****
+
+Reading C:/KBSESA2/ambilight/Qsys/ledsimulation.vwf...
+
+Reading C:/KBSESA2/ambilight/Qsys/simulation/qsim/MBlight.msim.vcd...
+
+Processing channel transitions... 
+
+Warning: current_s - signal not found in VCD.
+
+Writing the resulting VWF to C:/KBSESA2/ambilight/Qsys/simulation/qsim/MBlight_20190516132902.sim.vwf
+
+Finished VCD to VWF conversion.
+
+Completed successfully. 
+
+All completed.

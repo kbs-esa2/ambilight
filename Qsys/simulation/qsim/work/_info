@@ -1,0 +1,288 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/KBSESA2/ambilight/Qsys/simulation/qsim
+vledDriver
+Z1 !s110 1558006140
+!i10b 1
+!s100 9hm=bGWbUWI=1zS;@M9TK3
+IDz3TAAcJOMYBI=N[eejj@1
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1558006139
+Z3 8nios_top.vo
+Z4 Fnios_top.vo
+Z5 L0 32
+Z6 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z7 !s108 1558006140.000000
+Z8 !s107 nios_top.vo|
+Z9 !s90 -work|work|nios_top.vo|
+!i113 1
+Z10 o-work work
+Z11 tCvgOpt 0
+nled@driver
+vledDriver_vlg_vec_tst
+R1
+!i10b 1
+!s100 ;Ca4iO8Z`^<Z33WCol1az2
+I<2l9YHnke57OaXala5Z:A2
+R2
+R0
+w1558006136
+Z12 8ledsimulation.vwf.vt
+Z13 Fledsimulation.vwf.vt
+Z14 L0 30
+R6
+r1
+!s85 0
+31
+R7
+!s107 ledsimulation.vwf.vt|
+Z15 !s90 -work|work|ledsimulation.vwf.vt|
+!i113 1
+R10
+R11
+nled@driver_vlg_vec_tst
+vnios_top
+Z16 !s110 1558005079
+!i10b 1
+!s100 UkQIZi>i^I;:m0FWd6PMY3
+Ie915423ZWHUJoCd@<oMMi2
+R2
+R0
+w1558005076
+R3
+R4
+R5
+R6
+r1
+!s85 0
+31
+!s108 1558005077.000000
+R8
+R9
+!i113 1
+R10
+R11
+vnios_top_vlg_vec_tst
+R16
+!i10b 1
+!s100 eeA6QlSGJ8b:^fVm:jVOL2
+I`cLF2GY2ERb8XRD<4]hEW3
+R2
+R0
+w1558005071
+R12
+R13
+R14
+R6
+r1
+!s85 0
+31
+!s108 1558005079.000000
+!s107 ledsimulation.vwf.vt|
+R15
+!i113 1
+R10
+R11
+Ergbdma
+Z17 w1557911614
+Z18 DPx10 cycloneive 20 cycloneive_atom_pack 0 22 K`kJb<]?z4U5EbkG_:lMO3
+Z19 DPx10 cycloneive 21 cycloneive_components 0 22 HFZ8mBI5?[8TM9e2YGWCa2
+Z20 DPx4 ieee 16 vital_primitives 0 22 G>kiXP8Q9dRClKfK1Zn7j1
+Z21 DPx6 altera 11 dffeas_pack 0 22 zWCf]NF6heG=Dhmc@B0=T2
+Z22 DPx4 ieee 12 vital_timing 0 22 J>EBealN09f8GzldA[z2>3
+Z23 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z24 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z25 DPx6 altera 28 altera_primitives_components 0 22 _Q9E2TD5YB<<@P0[5jYTG0
+R0
+Z26 8nios_top.vho
+Z27 Fnios_top.vho
+l0
+L37
+VLKBafnik:1j;Lj>m?Cn0g3
+!s100 n9NA<^;Od;_;AziGM0n2g3
+Z28 OV;C;10.5b;63
+32
+Z29 !s110 1557911616
+!i10b 1
+Z30 !s108 1557911616.000000
+Z31 !s90 -work|work|nios_top.vho|
+Z32 !s107 nios_top.vho|
+!i113 1
+R10
+Z33 tExplicit 1 CvgOpt 0
+Astructure
+R18
+R19
+R20
+R21
+R22
+R23
+R24
+R25
+DEx4 work 6 rgbdma 0 22 LKBafnik:1j;Lj>m?Cn0g3
+l405
+L54
+V?DMmM_IZEXBZCO;`M6gV_0
+!s100 `jb3D@U_]lD`@9:WCY;N=2
+R28
+32
+R29
+!i10b 1
+R30
+R31
+R32
+!i113 1
+R10
+R33
+Ergbdma_vhd_vec_tst
+Z34 w1557911612
+R23
+R24
+R0
+Z35 8rgbdmasimulation.vwf.vht
+Z36 Frgbdmasimulation.vwf.vht
+l0
+L32
+V`lKh<U]Sc<H[I7_RIlZYI3
+!s100 9Ii7k]nM:lMV3h8Q_hHGa2
+R28
+32
+R29
+!i10b 1
+R30
+Z37 !s90 -work|work|rgbdmasimulation.vwf.vht|
+Z38 !s107 rgbdmasimulation.vwf.vht|
+!i113 1
+R10
+R33
+Argbdma_arch
+R23
+R24
+DEx4 work 18 rgbdma_vhd_vec_tst 0 22 `lKh<U]Sc<H[I7_RIlZYI3
+l65
+L34
+VLXYjcJ]BeWa^QGd3oFlbd1
+!s100 >4<KMcH6=<hE8NMk8GSJT0
+R28
+32
+R29
+!i10b 1
+R30
+R37
+R38
+!i113 1
+R10
+R33
+vrgbdma_vlg_vec_tst
+!s110 1557910556
+!i10b 1
+!s100 8LCgZAJbeUO1O2RD9UM;h0
+IcoomY2=RD]dn8J2ahU7Fh1
+R2
+R0
+w1557910553
+8rgbdmatest.vwf.vt
+Frgbdmatest.vwf.vt
+R14
+R6
+r1
+!s85 0
+31
+!s108 1557910556.000000
+!s107 rgbdmatest.vwf.vt|
+!s90 -work|work|rgbdmatest.vwf.vt|
+!i113 1
+R10
+R11
+vws2812b_dma
+Z39 !s110 1557929926
+!i10b 1
+!s100 KhF:2O^meCQSN6ROCJ_Am0
+I?oT6QlMjS?3BS2NzKJ:<g0
+R2
+R0
+w1557929924
+R3
+R4
+R5
+R6
+r1
+!s85 0
+31
+!s108 1557929925.000000
+R8
+R9
+!i113 1
+R10
+R11
+Ews2812b_dma_vhd_vec_tst
+Z40 w1557929664
+R23
+R24
+R0
+Z41 8output_files/ws2812btester.vwf.vht
+Z42 Foutput_files/ws2812btester.vwf.vht
+l0
+L32
+V6;XcoSmzAd9hBW2>WfFgf3
+!s100 H;BRTTB>KPM0olAz3Ifi60
+R28
+32
+Z43 !s110 1557929670
+!i10b 1
+Z44 !s108 1557929669.000000
+Z45 !s90 -work|work|output_files/ws2812btester.vwf.vht|
+Z46 !s107 output_files/ws2812btester.vwf.vht|
+!i113 1
+R10
+R33
+Aws2812b_dma_arch
+R23
+R24
+DEx4 work 23 ws2812b_dma_vhd_vec_tst 0 22 6;XcoSmzAd9hBW2>WfFgf3
+l61
+L34
+V>hG0joEGVY6KnD9?MOF<13
+!s100 I@CghOE9A6jCS]6I4Z[KO3
+R28
+32
+R43
+!i10b 1
+R44
+R45
+R46
+!i113 1
+R10
+R33
+vws2812b_dma_vlg_vec_tst
+R39
+!i10b 1
+!s100 66kA9K]5XzfdCYAJab=Q12
+I_V>AUjXbOR6:Xd6n9e=[80
+R2
+R0
+w1557929921
+R12
+R13
+R14
+R6
+r1
+!s85 0
+31
+!s108 1557929926.000000
+!s107 ledsimulation.vwf.vt|
+R15
+!i113 1
+R10
+R11
