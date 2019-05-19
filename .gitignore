@@ -28,5 +28,5 @@ Qsys/nios2/synthesis/submodules/
 
 Qsys/nios2/synthesis/
 
-Qsys/software/*/*
+!Qsys/software/*
 
