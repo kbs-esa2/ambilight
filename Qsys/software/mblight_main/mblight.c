@@ -29,7 +29,7 @@ typedef struct
   unsigned int Height;
   unsigned int size;
   unsigned int numLeds;
-  block pixels[50];
+  block frameBlock[50];
 } edge;
 
 /* Define adresses & frame dimensions */
@@ -86,7 +86,7 @@ color colorFromHex(unsigned int in);
 void drawBlockBorder(block b, color c);
 void calculateEdgeBlocks(block frame);
 void calibrate();
-unsigned int getPixelLuminance(color p);
+unsigned char getPixelLuminance(color p);
 
 /* Global variables*/
 color readPixel = {0, 0, 0, 0};
@@ -269,26 +269,26 @@ int main(void)
   calculateEdgeBlocks(inputframe);
   for (unsigned char i = 0; i < topEdge.numLeds; i++)
   {
-    drawBlockBorder(topEdge.pixels[i], colorFromHex(0xff0000ff));
+    drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0xff0000ff));
   }
   for (unsigned char i = 0; i < leftEdge.numLeds; i++)
   {
-    drawBlockBorder(leftEdge.pixels[i], colorFromHex(0x00ff00ff));
+    drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00ff00ff));
   }
   for (unsigned char i = 0; i < bottomEdge.numLeds; i++)
   {
-    drawBlockBorder(bottomEdge.pixels[i], colorFromHex(0x0000ffff));
+    drawBlockBorder(bottomEdge.frameBlock[i], colorFromHex(0x0000ffff));
   }
   for (unsigned char i = 0; i < rightEdge.numLeds; i++)
   {
-    drawBlockBorder(rightEdge.pixels[i], colorFromHex(0xffff00ff));
+    drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0xffff00ff));
   }
 
   //OSStart();
   return 0;
 }
 
-/* Clears the screen of (noise)pixels */
+/* Clears the screen of (noise)frameBlock */
 void fillClear()
 {
   color clear = {0, 0, 0, 0};
@@ -407,7 +407,7 @@ void drawBlockBorder(block b, color c)
 }
 
 /* calculate all the edge blocks sizes */
-//corner pixels (like top left) are included in side edges
+//corner frameBlock (like top left) are included in side edges
 //left and right pixel index is from top to bottom
 void calculateEdgeBlocks(block frame)
 {
@@ -424,11 +424,11 @@ void calculateEdgeBlocks(block frame)
   topEdge.numLeds = LEDSTOP;
   for (unsigned char i = 0; i < topEdge.numLeds; i++)
   {
-    topEdge.pixels[i].id = LEDSLEFT + i + 1;
-    topEdge.pixels[i].X = frame.X + (frame.Width - topBlockSize * LEDSTOP) / 2 + (topBlockSize * i);
-    topEdge.pixels[i].Y = topEdge.Y;
-    topEdge.pixels[i].Width = topBlockSize;
-    topEdge.pixels[i].Height = topEdge.size;
+    topEdge.frameBlock[i].id = LEDSLEFT + i + 1;
+    topEdge.frameBlock[i].X = frame.X + (frame.Width - topBlockSize * LEDSTOP) / 2 + (topBlockSize * i);
+    topEdge.frameBlock[i].Y = topEdge.Y;
+    topEdge.frameBlock[i].Width = topBlockSize;
+    topEdge.frameBlock[i].Height = topEdge.size;
   }
   //calculate left edge
   leftEdge.X = frame.X;
@@ -438,25 +438,25 @@ void calculateEdgeBlocks(block frame)
   leftEdge.numLeds = LEDSLEFT;
   for (unsigned char i = 0; i < leftEdge.numLeds; i++)
   {
-    leftEdge.pixels[i].id = LEDSLEFT - i;
-    leftEdge.pixels[i].X = leftEdge.X;
+    leftEdge.frameBlock[i].id = LEDSLEFT - i;
+    leftEdge.frameBlock[i].X = leftEdge.X;
     if (i == 0)
     {
-      leftEdge.pixels[i].Y = frame.Y;
-      leftEdge.pixels[i].Width = (frame.Width - (topBlockSize * LEDSTOP)) / 2;
-      leftEdge.pixels[i].Height = (leftEdge.Height - leftBlockSize * (LEDSLEFT - 2)) / 2;
+      leftEdge.frameBlock[i].Y = frame.Y;
+      leftEdge.frameBlock[i].Width = (frame.Width - (topBlockSize * LEDSTOP)) / 2;
+      leftEdge.frameBlock[i].Height = (leftEdge.Height - leftBlockSize * (LEDSLEFT - 2)) / 2;
     }
     else if (i == (LEDSLEFT - 1))
     {
-      leftEdge.pixels[i].Y = frame.Y + leftEdge.pixels[0].Height + (leftBlockSize * (i - 1));
-      leftEdge.pixels[i].Width = (frame.Width - (bottomBlockSize * LEDSBOTTOM)) / 2;
-      leftEdge.pixels[i].Height = frame.Height - (leftBlockSize * (LEDSLEFT - 2)) - leftEdge.pixels[0].Height;
+      leftEdge.frameBlock[i].Y = frame.Y + leftEdge.frameBlock[0].Height + (leftBlockSize * (i - 1));
+      leftEdge.frameBlock[i].Width = (frame.Width - (bottomBlockSize * LEDSBOTTOM)) / 2;
+      leftEdge.frameBlock[i].Height = frame.Height - (leftBlockSize * (LEDSLEFT - 2)) - leftEdge.frameBlock[0].Height;
     }
     else
     {
-      leftEdge.pixels[i].Y = frame.Y + leftEdge.pixels[0].Height + (leftBlockSize * (i - 1));
-      leftEdge.pixels[i].Width = leftEdge.size;
-      leftEdge.pixels[i].Height = leftBlockSize;
+      leftEdge.frameBlock[i].Y = frame.Y + leftEdge.frameBlock[0].Height + (leftBlockSize * (i - 1));
+      leftEdge.frameBlock[i].Width = leftEdge.size;
+      leftEdge.frameBlock[i].Height = leftBlockSize;
     }
   }
   //calculate bottom edge
@@ -467,11 +467,11 @@ void calculateEdgeBlocks(block frame)
   bottomEdge.numLeds = LEDSBOTTOM;
   for (unsigned char i = 0; i < bottomEdge.numLeds; i++)
   {
-    bottomEdge.pixels[i].id = (LEDSTOP + LEDSBOTTOM + LEDSLEFT + LEDSRIGHT) - i + 1;
-    bottomEdge.pixels[i].X = frame.X + (frame.Width - bottomBlockSize * LEDSBOTTOM) / 2 + (bottomBlockSize * i);
-    bottomEdge.pixels[i].Y = bottomEdge.Y;
-    bottomEdge.pixels[i].Width = bottomBlockSize;
-    bottomEdge.pixels[i].Height = bottomEdge.size;
+    bottomEdge.frameBlock[i].id = (LEDSTOP + LEDSBOTTOM + LEDSLEFT + LEDSRIGHT) - i + 1;
+    bottomEdge.frameBlock[i].X = frame.X + (frame.Width - bottomBlockSize * LEDSBOTTOM) / 2 + (bottomBlockSize * i);
+    bottomEdge.frameBlock[i].Y = bottomEdge.Y;
+    bottomEdge.frameBlock[i].Width = bottomBlockSize;
+    bottomEdge.frameBlock[i].Height = bottomEdge.size;
   }
   //calculate right edge
   rightEdge.X = frame.X + frame.Width - rightEdge.size;
@@ -481,27 +481,27 @@ void calculateEdgeBlocks(block frame)
   rightEdge.numLeds = LEDSRIGHT;
   for (unsigned char i = 0; i < rightEdge.numLeds; i++)
   {
-    rightEdge.pixels[i].id = LEDSLEFT + LEDSTOP + i;
+    rightEdge.frameBlock[i].id = LEDSLEFT + LEDSTOP + i;
     if (i == 0)
     {
-      rightEdge.pixels[i].X = frame.X + leftEdge.pixels[0].Width + LEDSTOP * topBlockSize;
-      rightEdge.pixels[i].Y = rightEdge.Y;
-      rightEdge.pixels[i].Width = frame.Width - leftEdge.pixels[0].Width - LEDSTOP * topBlockSize;
-      rightEdge.pixels[i].Height = (rightEdge.Height - rightBlockSize * (LEDSRIGHT - 2)) / 2;
+      rightEdge.frameBlock[i].X = frame.X + leftEdge.frameBlock[0].Width + LEDSTOP * topBlockSize;
+      rightEdge.frameBlock[i].Y = rightEdge.Y;
+      rightEdge.frameBlock[i].Width = frame.Width - leftEdge.frameBlock[0].Width - LEDSTOP * topBlockSize;
+      rightEdge.frameBlock[i].Height = (rightEdge.Height - rightBlockSize * (LEDSRIGHT - 2)) / 2;
     }
     else if (i == (LEDSRIGHT - 1))
     {
-      rightEdge.pixels[i].X = frame.X + leftEdge.pixels[LEDSLEFT - 1].Width + LEDSBOTTOM * bottomBlockSize;
-      rightEdge.pixels[i].Y = frame.Y + rightEdge.pixels[0].Height + (rightBlockSize * (i - 1));
-      rightEdge.pixels[i].Width = frame.Width - leftEdge.pixels[LEDSLEFT - 1].Width - bottomBlockSize * LEDSBOTTOM;
-      rightEdge.pixels[i].Height = frame.Height - (rightBlockSize * (LEDSRIGHT - 2)) - rightEdge.pixels[0].Height;
+      rightEdge.frameBlock[i].X = frame.X + leftEdge.frameBlock[LEDSLEFT - 1].Width + LEDSBOTTOM * bottomBlockSize;
+      rightEdge.frameBlock[i].Y = frame.Y + rightEdge.frameBlock[0].Height + (rightBlockSize * (i - 1));
+      rightEdge.frameBlock[i].Width = frame.Width - leftEdge.frameBlock[LEDSLEFT - 1].Width - bottomBlockSize * LEDSBOTTOM;
+      rightEdge.frameBlock[i].Height = frame.Height - (rightBlockSize * (LEDSRIGHT - 2)) - rightEdge.frameBlock[0].Height;
     }
     else
     {
-      rightEdge.pixels[i].X = rightEdge.X;
-      rightEdge.pixels[i].Y = frame.Y + rightEdge.pixels[0].Height + (rightBlockSize * (i - 1));
-      rightEdge.pixels[i].Width = rightEdge.size;
-      rightEdge.pixels[i].Height = rightBlockSize;
+      rightEdge.frameBlock[i].X = rightEdge.X;
+      rightEdge.frameBlock[i].Y = frame.Y + rightEdge.frameBlock[0].Height + (rightBlockSize * (i - 1));
+      rightEdge.frameBlock[i].Width = rightEdge.size;
+      rightEdge.frameBlock[i].Height = rightBlockSize;
     }
   }
 }
@@ -527,19 +527,15 @@ void calibrate(){
   {
     atRight --;
   }
-  unsigned int average = getPixelLuminance(getPixelColor(FRAMEWIDTH/2,FRAMEHEIGHT/2));
-  printf("at %d,%d average color is %d",FRAMEWIDTH/2,FRAMEHEIGHT/2,average);
-  printf("top: %d, bottom: %d\n",atTop,atBottom);
-  printf("left: %d, right: %d\n",atLeft,atRight);
-  inputframe.X = atTop;
-  inputframe.Y = atLeft;
-  inputframe.Width = atRight - atLeft;
-  inputframe.Height = atBottom = atTop;
+  inputframe.X = atLeft;
+  inputframe.Y = atTop;
+  inputframe.Width = atRight - atLeft + 1;
+  inputframe.Height = atBottom - atTop + 1;
   
 }
 
-unsigned int getPixelLuminance(color p){
+unsigned char getPixelLuminance(color p){
   unsigned int total = p.red + p.green + p.blue;
-  return total;
+  return (total/3);
 }
 
