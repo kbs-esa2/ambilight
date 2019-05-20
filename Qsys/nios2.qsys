@@ -1118,7 +1118,7 @@
  </module>
  <module name="ws2812b_dma_0" kind="ws2812b_dma" version="1.0" enabled="1">
   <parameter name="base" value="67436544" />
-  <parameter name="numleds" value="19" />
+  <parameter name="numleds" value="96" />
   <parameter name="returnticks" value="240000" />
  </module>
  <module
