@@ -86,7 +86,7 @@ color colorFromHex(unsigned int in);
 void drawBlockBorder(block b, color c);
 void calculateEdgeBlocks(block frame);
 void calibrate();
-unsigned char getPixelLuminance(color p);
+unsigned int getPixelLuminance(color p);
 
 /* Global variables*/
 color readPixel = {0, 0, 0, 0};
@@ -254,6 +254,12 @@ int main(void)
 
   fillClear();
   calibrate();
+  for (unsigned int i = 0; i < 96; i++)
+  {
+    setLed(i,colorFromHex(0xff0f00ff));
+  }
+  
+
   //drawTaskBar();
   topEdge.size = 15;
   leftEdge.size = 20;
@@ -501,26 +507,30 @@ void calculateEdgeBlocks(block frame)
 }
 
 void calibrate(){
-  unsigned char atTop = 0;
-  unsigned char atBottom = FRAMEHEIGHT - 1;
-  unsigned char atLeft = 0;
-  unsigned char atRight = FRAMEWIDTH - 1;
-  while (getPixelLuminance(getPixelColor(FRAMEWIDTH/2,atTop)) <= 20)
+  unsigned int atTop = 0;
+  unsigned int atBottom = FRAMEHEIGHT - 1;
+  unsigned int atLeft = 0;
+  unsigned int atRight = FRAMEWIDTH - 1;
+  while (getPixelLuminance(getPixelColor(FRAMEWIDTH/2,atTop)) <= 50)
   {
     atTop ++;
   }
-  while (getPixelLuminance(getPixelColor(FRAMEWIDTH/2,atBottom)) <= 20)
+  while (getPixelLuminance(getPixelColor(FRAMEWIDTH/2,atBottom)) <= 50)
   {
     atBottom --;
   }
-  while (getPixelLuminance(getPixelColor(atLeft, FRAMEHEIGHT/2)) <= 20)
+  while (getPixelLuminance(getPixelColor(atLeft, FRAMEHEIGHT/2)) <= 50)
   {
     atLeft ++;
   }
-  while (getPixelLuminance(getPixelColor(atRight, FRAMEHEIGHT/2)) <= 20)
+  while (getPixelLuminance(getPixelColor(atRight, FRAMEHEIGHT/2)) <= 50)
   {
     atRight --;
   }
+  unsigned int average = getPixelLuminance(getPixelColor(FRAMEWIDTH/2,FRAMEHEIGHT/2));
+  printf("at %d,%d average color is %d",FRAMEWIDTH/2,FRAMEHEIGHT/2,average);
+  printf("top: %d, bottom: %d\n",atTop,atBottom);
+  printf("left: %d, right: %d\n",atLeft,atRight);
   inputframe.X = atTop;
   inputframe.Y = atLeft;
   inputframe.Width = atRight - atLeft;
@@ -528,35 +538,8 @@ void calibrate(){
   
 }
 
-unsigned char getPixelLuminance(color p){
+unsigned int getPixelLuminance(color p){
   unsigned int total = p.red + p.green + p.blue;
-  return total/3;
+  return total;
 }
 
-/*
-
-int cornerWidthTop;
-int cornerWidthBot;
-int cornerHeight;
-int frameBlockTopWidth;
-int frameBlockLeftRightHeight;
-int frameBlockBotWidth;
-
-//breedte bovenste hoeken.
-int temp = FRAMEWIDTH / ledsTop;
-temp = FRAMEWIDTH - (temp * 2);
-frameBlockTopWidth = temp % ledsTop;
-cornerWidthTop = (FRAMEWIDTH - ((ledsTop - 2) * frameBlockTopWidth)) / 2;
-
-//hoogte alle hoeken
-temp = FRAMEHEIGHT / ledsLeftRight;
-temp = FRAMEHEIGHT - (temp * 2);
-frameBlockLeftRightHeight = temp % ledsLeftRight;
-cornerHeight = (FRAMEHEIGHT - ((ledsLeftRight - 2) * frameBlockLeftRightHeight)) / 2 ;
-
-//breedte onderste hoeken
-temp = FRAMEWIDTH / ledsBot;
-temp = FRAMEWIDTH - (temp * 2);
-frameBlockBotWidth = temp % ledsTop;
-cornerWidthBot = (FRAMEWIDTH - ((ledsBot - 2) * frameBlockBotWidth)) / 2;
-*/
