@@ -35,18 +35,22 @@ typedef struct
 /* Define adresses & frame dimensions */
 #define switches (volatile int *)0x08221010
 #define keys (volatile int *)0x08221000
-#define leds (int *)0x08221020
-#define PLLSlave (volatile int *)0x00021050
+#define leds (volatile int *)0x08221020
+#define PLLSlave (volatile int *)0x08221030
+#define ucos_timer (volatile int *)0x08200020
 
 #define niosMemorySlave (volatile int *)0x18000000
-#define DMAINCONTROL (volatile int *)0x00021060
-#define DMAOUTCONTROL (volatile int *)0x00021070
+#define callibrationframe (block *)0x040B0000
+#define DMAINCONTROL (volatile int *)0x08221040
+#define DMAOUTCONTROL (volatile int *)0x08221050
 #define decoderBuffer (color *)0x08000000
 #define overlayBuffer (color *)0x04000000
-#define ledBuffer (color *)0x04050000
+#define ledBuffer (color *)0x040A0000
 
-#define AVConfigSlave (volatile int *)0x00021080
-#define JtagSlave (volatile int *)0x00021090
+
+
+#define AVConfigSlave (volatile int *)0x08221060
+#define JtagSlave (volatile int *)0x08221070
 
 //!!!1!!1!!! Define voor test
 #define targetX frameWidth / 2
@@ -252,11 +256,19 @@ int main(void)
                   NULL,
                   0);
 
+  
+  
   fillClear();
-  calibrate();
+  if ((*switches >> 0) & 1) {   
+      calibrate();
+      *callibrationframe = inputframe;
+		} else {
+      inputframe = *callibrationframe;
+		}
+  
   for (unsigned int i = 0; i < 96; i++)
   {
-    setLed(i,colorFromHex(0xff0f00ff));
+    setLed(i,colorFromHex(0xff0400ff));
   }
   
 
@@ -299,11 +311,7 @@ void fillClear()
       setPixel(j, i, clear);
     }
   }
-  for (unsigned int j = 0; j <= 19; j++)
-  {
-    color redish = {255, 20, 0, 0};
-    setLed(j, redish);
-  }
+  
 }
 
 /* Fills a square with RGB values taken from an array */
@@ -539,3 +547,102 @@ unsigned char getPixelLuminance(color p){
   return (total/3);
 }
 
+
+
+
+void getAverages(){
+	unsigned long totalR;
+	unsigned long totalG;
+	unsigned long totalB;
+	color temp;
+
+	for(unsigned int i = 0; i < leftEdge.numLeds; i++){	//i = frameblock nmr
+		for(unsigned int j = 0; j < leftEdge.frameBlock[i].Height; j++){ //j = y waarde
+			for(unsigned int k = 0; k < leftEdge.frameBlock[i].Width; k++){ //k = x waarde
+				temp = getPixelColor(leftEdge.frameBlock[i].X + j,leftEdge.frameBlock[i].Y + k);
+				totalR += temp.red;
+				totalG += temp.green;
+				totalB += temp.blue;
+			}
+		}
+		leftEdge.frameBlock[i].average.red = totalR / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
+		leftEdge.frameBlock[i].average.green = totalG / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
+		leftEdge.frameBlock[i].average.blue = totalB / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
+
+		totalR = 0;
+		totalG = 0;
+		totalB = 0;
+	}
+
+	for(unsigned int i = 0; i < topEdge.numLeds; i++){	//i = frameblock nmr
+		for(unsigned int j = 0; j < topEdge.frameBlock[i].Height; j++){ //j = y waarde
+			for(unsigned int k = 0; k < topEdge.frameBlock[i].Width; k++){ //k = x waarde
+				temp = getPixelColor(topEdge.frameBlock[i].X + j,topEdge.frameBlock[i].Y + k);
+				totalR += temp.red;
+				totalG += temp.green;
+				totalB += temp.blue;
+			}
+		}
+		topEdge.frameBlock[i].average.red = totalR / (topEdge.frameBlock[i].Height * topEdge.frameBlock[i].Width);
+		topEdge.frameBlock[i].average.green = totalG / (topEdge.frameBlock[i].Height * topEdge.frameBlock[i].Width);
+		topEdge.frameBlock[i].average.blue = totalB / (topEdge.frameBlock[i].Height * topEdge.frameBlock[i].Width);
+
+		totalR = 0;
+		totalG = 0;
+		totalB = 0;
+	}
+
+	for(unsigned int i = 0; i < rightEdge.numLeds; i++){	//i = frameblock nmr
+			for(unsigned int j = 0; j < rightEdge.frameBlock[i].Height; j++){ //j = y waarde
+				for(unsigned int k = 0; k < rightEdge.frameBlock[i].Width; k++){ //k = x waarde
+					temp = getPixelColor(rightEdge.frameBlock[i].X + j,rightEdge.frameBlock[i].Y + k);
+					totalR += temp.red;
+					totalG += temp.green;
+					totalB += temp.blue;
+				}
+			}
+			rightEdge.frameBlock[i].average.red = totalR / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
+			rightEdge.frameBlock[i].average.green = totalG / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
+			rightEdge.frameBlock[i].average.blue = totalB / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
+
+			totalR = 0;
+			totalG = 0;
+			totalB = 0;
+		}
+
+	for(unsigned int i = 0; i < bottomEdge.numLeds; i++){	//i = frameblock nmr
+		for(unsigned int j = 0; j < bottomEdge.frameBlock[i].Height; j++){ //j = y waarde
+			for(unsigned int k = 0; k < bottomEdge.frameBlock[i].Width; k++){ //k = x waarde
+				temp = getPixelColor(bottomEdge.frameBlock[i].X + j,bottomEdge.frameBlock[i].Y + k);
+				totalR += temp.red;
+				totalG += temp.green;
+				totalB += temp.blue;
+			}
+		}
+		bottomEdge.frameBlock[i].average.red = totalR / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
+		bottomEdge.frameBlock[i].average.green = totalG / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
+		bottomEdge.frameBlock[i].average.blue = totalB / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
+
+		totalR = 0;
+		totalG = 0;
+		totalB = 0;
+	}
+
+
+}
+
+
+void averageToLeds(){
+	for(unsigned int i = 0 ; i < leftEdge.numLeds; i++ ){
+		setLed( leftEdge.frameBlock[i].id , leftEdge.frameBlock[i].average );
+	}
+	for(unsigned int i = 0 ; i < topEdge.numLeds ; i++ ){
+		setLed( leftEdge.frameBlock[i].id , topEdge.frameBlock[i].average );
+	}
+	for(unsigned int i = 0 ; i < rightEdge.numLeds; i++ ){
+		setLed( rightEdge.frameBlock[i].id , rightEdge.frameBlock[i].average );
+	}
+	for(unsigned int i = 0 ; i < bottomEdge.numLeds; i++ ){
+		setLed( bottomEdge.frameBlock[i].id , bottomEdge.frameBlock[i].average );
+	}
+}
