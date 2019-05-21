@@ -544,7 +544,7 @@ void getAverages(){
 
 void averageToLeds(){
 	for(unsigned int i = 0 ; i < leftEdge.numLeds; i++ ) setLed( leftEdge.frameBlock[i].id , leftEdge.frameBlock[i].average );
-	for(unsigned int i = 0 ; i < topEdge.numLeds; i++ ) setLed( leftEdge.frameBlock[i].id , topEdge.frameBlock[i].average );
+	for(unsigned int i = 0 ; i < topEdge.numLeds; i++ ) setLed( topEdge.frameBlock[i].id , topEdge.frameBlock[i].average );
 	for(unsigned int i = 0 ; i < rightEdge.numLeds; i++ ) setLed( rightEdge.frameBlock[i].id , rightEdge.frameBlock[i].average );
 	for(unsigned int i = 0 ; i < bottomEdge.numLeds; i++ ) setLed( bottomEdge.frameBlock[i].id , bottomEdge.frameBlock[i].average );
 }
