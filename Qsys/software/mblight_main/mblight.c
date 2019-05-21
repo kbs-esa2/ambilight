@@ -45,7 +45,7 @@ typedef struct
 #define DMAOUTCONTROL (volatile int *)0x08221050
 #define decoderBuffer (color *)0x08000000
 #define overlayBuffer (color *)0x04000000
-#define ledBuffer (color *)0x040A0000
+#define ledBuffer (color *)0x04050000
 
 #define AVConfigSlave (volatile int *)0x08221060
 #define JtagSlave (volatile int *)0x08221070
@@ -89,6 +89,8 @@ void drawBlockBorder(block b, color c);
 void calculateEdgeBlocks(block frame);
 void calibrate();
 unsigned char getPixelLuminance(color p);
+void getAverages();
+void averageToLeds();
 
 /* Global variables*/
 color readPixel = {0, 0, 0, 0};
@@ -256,6 +258,12 @@ int main(void) {
   for (unsigned char i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00ff00ff));
   for (unsigned char i = 0; i < bottomEdge.numLeds; i++) drawBlockBorder(bottomEdge.frameBlock[i], colorFromHex(0x0000ffff));
   for (unsigned char i = 0; i < rightEdge.numLeds; i++) drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0xffff00ff));
+
+  getAverages();
+  averageToLeds();
+
+
+
   //OSStart();
   return 0;
 }
