@@ -1,4 +1,4 @@
-/* UCOSII for NIOS, KBSESA2, Ambilight-waproject */
+/* UCOSII for NIOS, KBSESA2, Ambilight-project */
 #include <stdio.h>
 #include "includes.h"
 
@@ -45,7 +45,7 @@ typedef struct
 #define DMAOUTCONTROL (volatile int *)0x08221050
 #define decoderBuffer (color *)0x08000000
 #define overlayBuffer (color *)0x04000000
-#define ledBuffer (color *)0x040A0000
+#define ledBuffer (color *)0x04050000
 
 #define AVConfigSlave (volatile int *)0x08221060
 #define JtagSlave (volatile int *)0x08221070
@@ -71,9 +71,9 @@ OS_STK TaskSetOverlay_stk[TASK_STACKSIZE];
 OS_STK TaskLedRotate_stk[TASK_STACKSIZE];
 
 /* Define Task priority */
-#define TaskCounter_PRIORITY 2
-#define TaskFillSquare_PRIORITY 2
-#define TaskGetColor_PRIORITY 2
+#define TaskCounter_PRIORITY 5
+#define TaskFillSquare_PRIORITY 4
+#define TaskGetColor_PRIORITY 3
 #define TaskSetOverlay_PRIORITY 2
 #define TaskLedRotate_PRIORITY 1
 
@@ -234,16 +234,16 @@ int main(void) {
                   0);
 
   fillClear();
+  for (unsigned int i = 0; i < 96; i++) {
+    setLed(i,colorFromHex(0xffffffff));
+  }
+
   if ((*switches >> 0) & 1) {   
       calibrate();
       *callibrationframe = inputframe;
 		} else {
       inputframe = *callibrationframe;
 		}
-  
-  for (unsigned int i = 0; i < 96; i++) {
-    setLed(i,colorFromHex(0xff0400ff));
-  }
 
   //drawTaskBar();
   topEdge.size = 15;
@@ -272,10 +272,8 @@ void fillClear() {
 
 /* Fills a square with RGB values taken from an array */
 void fillSquare(color pixel, unsigned int width, unsigned int height, unsigned int x, unsigned int y) {
-  for (unsigned int i = 0; i < width; i++)
-  {
-    for (unsigned int j = 0; j < height; j++)
-    {
+  for (unsigned int i = 0; i < width; i++) {
+    for (unsigned int j = 0; j < height; j++) {
       setPixel(x + i, y + j, pixel);
     }
   }
@@ -331,8 +329,7 @@ void drawTaskBar() {
 }
 
 //get an byte array of type color from 32 bit integer
-color colorFromHex(unsigned int in)
-{
+color colorFromHex(unsigned int in) {
   color out = {0, 0, 0, 0};
   out.red |= (in >> 24) & 0xFF;
   out.green |= (in >> 16) & 0xFF;
@@ -441,10 +438,12 @@ void calibrate() {
   unsigned int atBottom = FRAMEHEIGHT - 1;
   unsigned int atLeft = 0;
   unsigned int atRight = FRAMEWIDTH - 1;
+
   while (getPixelLuminance(getPixelColor(FRAMEWIDTH/2,atTop)) <= 50) atTop ++;
   while (getPixelLuminance(getPixelColor(FRAMEWIDTH/2,atBottom)) <= 50) atBottom --;
   while (getPixelLuminance(getPixelColor(atLeft, FRAMEHEIGHT/2)) <= 50) atLeft ++;
   while (getPixelLuminance(getPixelColor(atRight, FRAMEHEIGHT/2)) <= 50) atRight --;
+
   inputframe.X = atLeft;
   inputframe.Y = atTop;
   inputframe.Width = atRight - atLeft + 1;
@@ -455,9 +454,6 @@ unsigned char getPixelLuminance(color p) {
   unsigned int total = p.red + p.green + p.blue;
   return (total/3);
 }
-
-
-
 
 void getAverages(){
 	unsigned long totalR;
@@ -540,7 +536,7 @@ void getAverages(){
 
 void averageToLeds(){
 	for(unsigned int i = 0 ; i < leftEdge.numLeds; i++ ) setLed( leftEdge.frameBlock[i].id , leftEdge.frameBlock[i].average );
-	for(unsigned int i = 0 ; i < topEdge.numLeds ; i++ ) setLed( leftEdge.frameBlock[i].id , topEdge.frameBlock[i].average );
+	for(unsigned int i = 0 ; i < topEdge.numLeds; i++ ) setLed( leftEdge.frameBlock[i].id , topEdge.frameBlock[i].average );
 	for(unsigned int i = 0 ; i < rightEdge.numLeds; i++ ) setLed( rightEdge.frameBlock[i].id , rightEdge.frameBlock[i].average );
 	for(unsigned int i = 0 ; i < bottomEdge.numLeds; i++ ) setLed( bottomEdge.frameBlock[i].id , bottomEdge.frameBlock[i].average );
 }
