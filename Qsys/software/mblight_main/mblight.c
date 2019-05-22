@@ -49,10 +49,6 @@ typedef struct {
 #define AVConfigSlave (volatile int *)0x08221060
 #define JtagSlave (volatile int *)0x08221070
 
-//!!!1!!1!!! Define voor test
-#define targetX frameWidth / 2
-#define targetY frameHeight / 2
-
 /* Dimensions */
 #define FRAMEWIDTH 320
 #define FRAMEHEIGHT 240
@@ -115,13 +111,12 @@ unsigned int emptyWidthLeft = 0;
 unsigned int emptyWidthRight = 0;
 
 /* Tasks */
-void TaskCounter(void *pdata)
-{
+void TaskCounter(void *pdata) {
   int counter = 0;
   while (1) {
     printf("Counter: %d\n", counter);
     counter++;
-    color test = {255,0,0,255};
+    color test = {0,0,255,255};
     	for (byte i = 0; i < 95; i++)
     	    {
     	      setLed(i, test);
@@ -130,8 +125,7 @@ void TaskCounter(void *pdata)
   }
 }
 
-void TaskGetColor(void *pdata)
-{
+void TaskGetColor(void *pdata) {
   while (1)
   {
     getAverages();
@@ -140,8 +134,7 @@ void TaskGetColor(void *pdata)
   }
 }
 
-void TaskWriteLed(void *pdata)
-{
+void TaskWriteLed(void *pdata) {
   while (1)
   {
     averageToLeds();
@@ -178,8 +171,7 @@ void TaskSetOverlay(void *pdata) {
 
 
 /* Main function, creates tasks and starts the scheduler */
-int main(void)
-{
+int main(void) {
 	color test = {255,0,0,255};
 	for (byte i = 0; i < 95; i++)
 	    {
@@ -247,13 +239,10 @@ int main(void)
 }
 
 /* Clears the screen of (noise)frameBlock */
-void fillClear()
-{
+void fillClear() {
   color clear = {0, 0, 0, 0};
-  for (unsigned int i = 0; i <= frameHeight; i++)
-  {
-    for (unsigned int j = 0; j <= frameWidth; j++)
-    {
+  for (unsigned int i = 0; i <= frameHeight; i++) {
+    for (unsigned int j = 0; j <= frameWidth; j++) {
       setPixel(j, i, clear);
     }
   }
@@ -272,8 +261,7 @@ color getPixelColor(unsigned int X, unsigned int Y) {
 }
 
 /* Draw one pixel */
-void setPixel(unsigned int X, unsigned int Y, color pixel)
-{
+void setPixel(unsigned int X, unsigned int Y, color pixel) {
   unsigned int x = 0;
   unsigned int y = 0;
   unsigned int offset = 0;
@@ -360,20 +348,15 @@ void calculateEdgeBlocks(block frame) {
   for (byte i = 0; i < leftEdge.numLeds; i++) {
     leftEdge.frameBlock[i].id = LEDSLEFT - i;
     leftEdge.frameBlock[i].X = leftEdge.X;
-    if (i == 0)
-    {
+    if (i == 0) {
       leftEdge.frameBlock[i].Y = frame.Y;
       leftEdge.frameBlock[i].Width = (frame.Width - (topBlockSize * LEDSTOP)) / 2;
       leftEdge.frameBlock[i].Height = (leftEdge.Height - leftBlockSize * (LEDSLEFT - 2)) / 2;
-    }
-    else if (i == (LEDSLEFT - 1))
-    {
+    } else if (i == (LEDSLEFT - 1)) {
       leftEdge.frameBlock[i].Y = frame.Y + leftEdge.frameBlock[0].Height + (leftBlockSize * (i - 1));
       leftEdge.frameBlock[i].Width = (frame.Width - (bottomBlockSize * LEDSBOTTOM)) / 2;
       leftEdge.frameBlock[i].Height = frame.Height - (leftBlockSize * (LEDSLEFT - 2)) - leftEdge.frameBlock[0].Height;
-    }
-    else
-    {
+    } else {
       leftEdge.frameBlock[i].Y = frame.Y + leftEdge.frameBlock[0].Height + (leftBlockSize * (i - 1));
       leftEdge.frameBlock[i].Width = leftEdge.size;
       leftEdge.frameBlock[i].Height = leftBlockSize;
@@ -424,8 +407,7 @@ void calculateEdgeBlocks(block frame) {
   }
 }
 
-void calibrate()
-{
+void calibrate() {
   unsigned int atTop = 0;
   unsigned int atBottom = FRAMEHEIGHT - 1;
   unsigned int atLeft = 0;
@@ -451,8 +433,7 @@ byte getPixelLuminance(color p) {
   return (total / 3);
 }
 
-void getAverages()
-{
+void getAverages() {
   unsigned long totalR;
   unsigned long totalG;
   unsigned long totalB;
@@ -471,9 +452,9 @@ void getAverages()
 		leftEdge.frameBlock[i].average.green = totalG / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
 		leftEdge.frameBlock[i].average.blue = totalB / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
 
-    totalR = 0;
-    totalG = 0;
-    totalB = 0;
+		totalR = 0;
+		totalG = 0;
+		totalB = 0;
   }
 
 	for(unsigned int i = 0; i < topEdge.numLeds; i++){	// i = frameblock num.
