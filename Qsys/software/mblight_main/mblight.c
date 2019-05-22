@@ -271,7 +271,29 @@ int main(void)
   rightEdge.size = 15;
 
   calculateEdgeBlocks(inputframe);
-  OSStart();
+  for (unsigned char i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0xff0000ff));
+  for (unsigned char i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00ff00ff));
+  for (unsigned char i = 0; i < bottomEdge.numLeds; i++) drawBlockBorder(bottomEdge.frameBlock[i], colorFromHex(0x0000ffff));
+  for (unsigned char i = 0; i < rightEdge.numLeds; i++) drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0xffff00ff));
+
+
+while(1){
+  unsigned char x = 100;
+  unsigned char y = 100;
+  block target;
+  target.X = x;
+  target.Y = y;
+  target.Width = 3;
+  target.Height = 3;
+  drawBlockBorder(target,colorFromHex(0x8f8f8f8f));
+    for (unsigned char i = 0; i < 95; i++)
+  {
+    setLed(i,getPixelColor(x + 1,y + 1));
+  }
+
+}
+
+//OSStart();
   return 0;
 }
 
