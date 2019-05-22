@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>ucosii</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>22-mei-2019 13:19:19</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1558523959494</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>May 22, 2019 1:28:53 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1558524533210</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\KBSESA2\ambilight\Qsys\software\mblight_main_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\nios2.sopcinfo</SopcDesignFile>

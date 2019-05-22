@@ -302,13 +302,14 @@ void fillSquare(color pixel, unsigned int width, unsigned int height, unsigned i
 
 /* Get color of a pixel, put RGB values in array */
 color getPixelColor(unsigned int X, unsigned int Y) {
+  color input;
+  color output = {0,0,0,0};
   unsigned int offset = (Y * frameWidth + X);
   input = *(decoderBuffer + offset);
   output.red = input.blue;
   output.green = input.green;
   output.blue = input.red;
   return output;
-
 }
 
 /* Draw one pixel */
