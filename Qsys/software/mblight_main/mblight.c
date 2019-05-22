@@ -71,11 +71,11 @@ OS_STK TaskSetOverlay_stk[TASK_STACKSIZE];
 OS_STK TaskLedRotate_stk[TASK_STACKSIZE];
 
 /* Define Task priority */
-#define TaskCounter_PRIORITY 5
+#define TaskCounter_PRIORITY 1
 #define TaskFillSquare_PRIORITY 4
 #define TaskGetColor_PRIORITY 3
 #define TaskSetOverlay_PRIORITY 2
-#define TaskLedRotate_PRIORITY 1
+#define TaskLedRotate_PRIORITY 5
 
 /* Functions */
 void fillClear();
@@ -123,7 +123,7 @@ unsigned int emptyWidthRight = 0;
 void TaskCounter(void *pdata) {
   int counter = 0;
   while (1) {
-    //printf("Counter: %d\n", counter);
+    printf("Counter: %d\n", counter);
     counter++;
     OSTimeDlyHMSM(0, 0, 1, 0);
   }
@@ -157,11 +157,19 @@ void TaskSetOverlay(void *pdata) {
     if ((*switches >> 0) & 1) {
       if (!overlayStatus) {
         *leds |= (1 << 0);
+        for (unsigned char i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0xff0000ff));
+        for (unsigned char i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00ff00ff));
+        for (unsigned char i = 0; i < bottomEdge.numLeds; i++) drawBlockBorder(bottomEdge.frameBlock[i], colorFromHex(0x0000ffff));
+        for (unsigned char i = 0; i < rightEdge.numLeds; i++) drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0xffff00ff));
         overlayStatus = 1;
       }
     } else {
       if (overlayStatus) {
         *leds &= ~(1 << 0);
+        for (unsigned char i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0x00000000));
+        for (unsigned char i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00000000));
+        for (unsigned char i = 0; i < bottomEdge.numLeds; i++) drawBlockBorder(bottomEdge.frameBlock[i], colorFromHex(0x00000000));
+        for (unsigned char i = 0; i < rightEdge.numLeds; i++) drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0x00000000));
         overlayStatus = 0;
       }
     }
@@ -236,35 +244,22 @@ int main(void) {
                   0);
 
   fillClear();
-  for (unsigned int i = 0; i < 96; i++) {
-    setLed(i,colorFromHex(0xffffffff));
-  }
 
   if ((*switches >> 0) & 1) {   
-      calibrate();
+	  calibrate();
       *callibrationframe = inputframe;
-		} else {
+  } else {
       inputframe = *callibrationframe;
-		}
+  }
 
   //drawTaskBar();
   topEdge.size = 15;
-  leftEdge.size = 20;
+  leftEdge.size = 15;
   bottomEdge.size = 15;
-  rightEdge.size = 20;
-  drawBlockBorder(inputframe, borderColor);
+  rightEdge.size = 15;
+
   calculateEdgeBlocks(inputframe);
-  for (unsigned char i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0xff0000ff));
-  for (unsigned char i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00ff00ff));
-  for (unsigned char i = 0; i < bottomEdge.numLeds; i++) drawBlockBorder(bottomEdge.frameBlock[i], colorFromHex(0x0000ffff));
-  for (unsigned char i = 0; i < rightEdge.numLeds; i++) drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0xffff00ff));
-
-  getAverages();
-  averageToLeds();
-
-
-
-  //OSStart();
+  OSStart();
   return 0;
 }
 
@@ -287,7 +282,7 @@ void fillSquare(color pixel, unsigned int width, unsigned int height, unsigned i
   }
 }
 
-/* get color of a pixel, put RGB values in array */
+/* Get color of a pixel, put RGB values in array */
 color getPixelColor(unsigned int X, unsigned int Y) {
   unsigned int offset = (Y * frameWidth + X);
   return *(decoderBuffer + offset);
@@ -299,7 +294,7 @@ void setPixel(unsigned int X, unsigned int Y, color pixel) {
   unsigned int y = 0;
   unsigned int offset = 0;
   color pixelData;
-  //clip coordinate values
+  // Clip coordinate values
   if (X < 0)
     return;
   else if (X >= 320)
@@ -314,10 +309,10 @@ void setPixel(unsigned int X, unsigned int Y, color pixel) {
   else
     y = Y;
 
-  //calculate buffer offset
+  // Calculate buffer offset
   offset = (y * 320) + x;
 
-  //write pixelData to buffer
+  // Write pixelData to buffer
   pixelData.alpha = pixel.alpha;
   pixelData.red = pixel.blue;
   pixelData.green = pixel.green;
@@ -330,13 +325,13 @@ void setLed(unsigned char index, color pixel) {
   *(ledBuffer + (index)) = pixel;
 }
 
-/* draw taskbar at top of screen */
+/* Draw taskbar at top of screen */
 void drawTaskBar() {
   color background = colorFromHex(0x8f8f8faf);
   fillSquare(background, frameWidth, 30, 0, 0);
 }
 
-//get an byte array of type color from 32 bit integer
+// Get a byte array of type color from 32 bit integer
 color colorFromHex(unsigned int in) {
   color out = {0, 0, 0, 0};
   out.red |= (in >> 24) & 0xFF;
@@ -347,25 +342,25 @@ color colorFromHex(unsigned int in) {
 }
 
 void drawBlockBorder(block b, color c) {
-  //draw top row
+  // Draw top row
   for (int i = 0; i < b.Width; i++) setPixel((b.X + i), b.Y, c);
-  //draw bottom row
+  // Draw bottom row
   for (int i = 0; i < b.Width; i++) setPixel((b.X + i), (b.Y + b.Height - 1), c);
-  //draw left row
+  // Draw left row
   for (int i = 0; i < b.Height; i++) setPixel(b.X, (b.Y + i), c);
-  //draw right row
+  // Draw right row
   for (int i = 0; i < b.Height; i++) setPixel((b.X + b.Width - 1), (b.Y + i), c);
 }
 
-/* calculate all the edge blocks sizes */
-//corner frameBlock (like top left) are included in side edges
-//left and right pixel index is from top to bottom
+/* Calculate all the edge blocks sizes */
+// Corner frameBlock (like top left) are included in side edges
+// Left and right pixel index is from top to bottom
 void calculateEdgeBlocks(block frame) {
   int topBlockSize = (frame.Width / (LEDSTOP + 2));
   int leftBlockSize = (frame.Height / LEDSLEFT);
   int bottomBlockSize = (frame.Width / (LEDSBOTTOM + 2));
   int rightBlockSize = (frame.Height / LEDSRIGHT);
-  //calculate top edge
+  // Calculate top edge
   topEdge.X = frame.X;
   topEdge.Y = frame.Y;
   topEdge.Width = frame.Width;
@@ -378,7 +373,7 @@ void calculateEdgeBlocks(block frame) {
     topEdge.frameBlock[i].Width = topBlockSize;
     topEdge.frameBlock[i].Height = topEdge.size;
   }
-  //calculate left edge
+  // Calculate left edge
   leftEdge.X = frame.X;
   leftEdge.Y = frame.Y;
   leftEdge.Width = leftEdge.size;
@@ -401,7 +396,7 @@ void calculateEdgeBlocks(block frame) {
       leftEdge.frameBlock[i].Height = leftBlockSize;
     }
   }
-  //calculate bottom edge
+  // Calculate bottom edge
   bottomEdge.X = frame.X + frame.Width - (bottomBlockSize * LEDSBOTTOM);
   bottomEdge.Y = frame.Y + frame.Height - bottomEdge.size;
   bottomEdge.Width = frame.Width - (bottomBlockSize * LEDSBOTTOM);
@@ -414,7 +409,7 @@ void calculateEdgeBlocks(block frame) {
     bottomEdge.frameBlock[i].Width = bottomBlockSize;
     bottomEdge.frameBlock[i].Height = bottomEdge.size;
   }
-  //calculate right edge
+  // Calculate right edge
   rightEdge.X = frame.X + frame.Width - rightEdge.size;
   rightEdge.Y = frame.Y;
   rightEdge.Width = rightEdge.size;
@@ -469,9 +464,9 @@ void getAverages(){
 	unsigned long totalB;
 	color temp;
 
-	for(unsigned int i = 0; i < leftEdge.numLeds; i++){	//i = frameblock nmr
-		for(unsigned int j = 0; j < leftEdge.frameBlock[i].Height; j++){ //j = y waarde
-			for(unsigned int k = 0; k < leftEdge.frameBlock[i].Width; k++){ //k = x waarde
+	for(unsigned int i = 0; i < leftEdge.numLeds; i++){	// i = frameblock nmr
+		for(unsigned int j = 0; j < leftEdge.frameBlock[i].Height; j++){ // j = y waarde
+			for(unsigned int k = 0; k < leftEdge.frameBlock[i].Width; k++){ // k = x waarde
 				temp = getPixelColor(leftEdge.frameBlock[i].X + j,leftEdge.frameBlock[i].Y + k);
 				totalR += temp.red;
 				totalG += temp.green;
@@ -487,9 +482,9 @@ void getAverages(){
 		totalB = 0;
 	}
 
-	for(unsigned int i = 0; i < topEdge.numLeds; i++){	//i = frameblock nmr
-		for(unsigned int j = 0; j < topEdge.frameBlock[i].Height; j++){ //j = y waarde
-			for(unsigned int k = 0; k < topEdge.frameBlock[i].Width; k++){ //k = x waarde
+	for(unsigned int i = 0; i < topEdge.numLeds; i++){	// i = frameblock num.
+		for(unsigned int j = 0; j < topEdge.frameBlock[i].Height; j++){ // j = y value
+			for(unsigned int k = 0; k < topEdge.frameBlock[i].Width; k++){ // k = x value
 				temp = getPixelColor(topEdge.frameBlock[i].X + j,topEdge.frameBlock[i].Y + k);
 				totalR += temp.red;
 				totalG += temp.green;
@@ -506,22 +501,22 @@ void getAverages(){
 	}
 
 	for(unsigned int i = 0; i < rightEdge.numLeds; i++){	//i = frameblock nmr
-			for(unsigned int j = 0; j < rightEdge.frameBlock[i].Height; j++){ //j = y waarde
-				for(unsigned int k = 0; k < rightEdge.frameBlock[i].Width; k++){ //k = x waarde
-					temp = getPixelColor(rightEdge.frameBlock[i].X + j,rightEdge.frameBlock[i].Y + k);
-					totalR += temp.red;
-					totalG += temp.green;
-					totalB += temp.blue;
-				}
+		for(unsigned int j = 0; j < rightEdge.frameBlock[i].Height; j++){ //j = y waarde
+			for(unsigned int k = 0; k < rightEdge.frameBlock[i].Width; k++){ //k = x waarde
+				temp = getPixelColor(rightEdge.frameBlock[i].X + j,rightEdge.frameBlock[i].Y + k);
+				totalR += temp.red;
+				totalG += temp.green;
+				totalB += temp.blue;
 			}
-			rightEdge.frameBlock[i].average.red = totalR / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
-			rightEdge.frameBlock[i].average.green = totalG / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
-			rightEdge.frameBlock[i].average.blue = totalB / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
-
-			totalR = 0;
-			totalG = 0;
-			totalB = 0;
 		}
+		rightEdge.frameBlock[i].average.red = totalR / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
+		rightEdge.frameBlock[i].average.green = totalG / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
+		rightEdge.frameBlock[i].average.blue = totalB / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
+
+		totalR = 0;
+		totalG = 0;
+		totalB = 0;
+	}
 
 	for(unsigned int i = 0; i < bottomEdge.numLeds; i++){	//i = frameblock nmr
 		for(unsigned int j = 0; j < bottomEdge.frameBlock[i].Height; j++){ //j = y waarde
