@@ -36,8 +36,8 @@ begin
 	type state_type is (B0,B1,RET);  --type of state machine.
 	variable current_s,next_s: state_type;
 
-	variable bitindex : integer;
-	variable byteindex : integer;
+	variable bitindex : integer range 0 to 8;
+	variable byteindex : integer range 0 to 4;
 	variable pixelindex : integer;
 	variable currentBit : std_logic;
 	variable lastPixel : std_logic;
@@ -45,6 +45,10 @@ begin
 	variable lastBit : std_logic;
 	
 	variable ticks : integer;
+	 variable redreg : std_logic_vector(7 downto 0);
+	 variable greenreg : std_logic_vector(7 downto 0);
+	 variable bluereg : std_logic_vector(7 downto 0);
+
 
 	begin
 		if (reset='1') then
@@ -60,16 +64,15 @@ begin
 			ticks := ticks + 1;	
 			case( byteindex ) is --case for getting the current bit it has to write
 			
-				when 1 => currentBit := red(bitindex);
-				when 0 => currentBit := green(bitindex);
-				when 2 => currentBit := blue(bitindex);
+				when 1 => currentBit := redreg(bitindex);
+				when 0 => currentBit := greenreg(bitindex);
+				when 2 => currentBit := bluereg(bitindex);
 			
 				when others => currentBit := '0';
 
 			end case ;
 			
 			if (current_s = RET) then
-				
 				if (ticks = returnticks) then
 					ledreturn <= '0';
 					ticks := 0;
@@ -106,9 +109,16 @@ begin
 					end if ;	
 				end if ;
 			end if ;
+			
+			if (ticks >= 24) and (byteindex = 2)  and (bitindex = 7) then
+				redreg := red;
+				greenreg := green;
+				bluereg := blue;
+			end if;
 
 			if (ticks >= 2) and (byteindex = 2)  and (bitindex = 7) then
 				getnext <= '1';
+			
 			else
 			getnext <= '0';
 				
@@ -132,6 +142,8 @@ begin
 
 
 				when RET => --sending 50 ns of nothing to initiate new start of pixel data
+					byteindex := 0;
+					pixelindex := 0;
 					ledout <= '0';
 					ledreturn <= '1';
 			end case;
