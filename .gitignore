@@ -15,6 +15,7 @@
 !*.txt
 !*.cproject
 !*.project
+!*.tcl
 
 Qsys/db/
 
