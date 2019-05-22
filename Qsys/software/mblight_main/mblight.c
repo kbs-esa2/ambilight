@@ -3,16 +3,16 @@
 #include "includes.h"
 
 /* Type definitions */
-typedef struct
-{
-  unsigned char red;
-  unsigned char green;
-  unsigned char blue;
-  unsigned char alpha;
+typedef unsigned char byte;
+
+typedef struct {
+  byte red;
+  byte green;
+  byte blue;
+  byte alpha;
 } color;
 
-typedef struct
-{
+typedef struct {
   unsigned int id;
   unsigned int X;
   unsigned int Y;
@@ -21,8 +21,7 @@ typedef struct
   color average;
 } block;
 
-typedef struct
-{
+typedef struct {
   unsigned int X;
   unsigned int Y;
   unsigned int Width;
@@ -82,13 +81,13 @@ void fillClear();
 void fillSquare(color pixel, unsigned int width, unsigned int height, unsigned int x, unsigned int y);
 color getPixelColor(unsigned int X, unsigned int Y);
 void setPixel(unsigned int X, unsigned int Y, color pixel);
-void setLed(unsigned char index, color pixel);
+void setLed(byte index, color pixel);
 void drawTaskBar();
 color colorFromHex(unsigned int in);
 void drawBlockBorder(block b, color c);
 void calculateEdgeBlocks(block frame);
 void calibrate();
-unsigned char getPixelLuminance(color p);
+byte getPixelLuminance(color p);
 void getAverages();
 void averageToLeds();
 
@@ -152,24 +151,24 @@ void TaskGetColor(void *pdata) {
 }
 
 void TaskSetOverlay(void *pdata) {
-  unsigned char overlayStatus = 0;
+  byte overlayStatus = 0;
   while (1) {
     if ((*switches >> 0) & 1) {
       if (!overlayStatus) {
         *leds |= (1 << 0);
-        for (unsigned char i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0xff0000ff));
-        for (unsigned char i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00ff00ff));
-        for (unsigned char i = 0; i < bottomEdge.numLeds; i++) drawBlockBorder(bottomEdge.frameBlock[i], colorFromHex(0x0000ffff));
-        for (unsigned char i = 0; i < rightEdge.numLeds; i++) drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0xffff00ff));
+        for (byte i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0xff0000ff));
+        for (byte i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00ff00ff));
+        for (byte i = 0; i < bottomEdge.numLeds; i++) drawBlockBorder(bottomEdge.frameBlock[i], colorFromHex(0x0000ffff));
+        for (byte i = 0; i < rightEdge.numLeds; i++) drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0xffff00ff));
         overlayStatus = 1;
       }
     } else {
       if (overlayStatus) {
         *leds &= ~(1 << 0);
-        for (unsigned char i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0x00000000));
-        for (unsigned char i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00000000));
-        for (unsigned char i = 0; i < bottomEdge.numLeds; i++) drawBlockBorder(bottomEdge.frameBlock[i], colorFromHex(0x00000000));
-        for (unsigned char i = 0; i < rightEdge.numLeds; i++) drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0x00000000));
+        for (byte i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0x00000000));
+        for (byte i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00000000));
+        for (byte i = 0; i < bottomEdge.numLeds; i++) drawBlockBorder(bottomEdge.frameBlock[i], colorFromHex(0x00000000));
+        for (byte i = 0; i < rightEdge.numLeds; i++) drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0x00000000));
         overlayStatus = 0;
       }
     }
@@ -321,7 +320,7 @@ void setPixel(unsigned int X, unsigned int Y, color pixel) {
 }
 
 /* Change the color of a led */
-void setLed(unsigned char index, color pixel) {
+void setLed(byte index, color pixel) {
   *(ledBuffer + (index)) = pixel;
 }
 
@@ -366,7 +365,7 @@ void calculateEdgeBlocks(block frame) {
   topEdge.Width = frame.Width;
   topEdge.Height = topEdge.size;
   topEdge.numLeds = LEDSTOP;
-  for (unsigned char i = 0; i < topEdge.numLeds; i++) {
+  for (byte i = 0; i < topEdge.numLeds; i++) {
     topEdge.frameBlock[i].id = LEDSLEFT + i + 1;
     topEdge.frameBlock[i].X = frame.X + (frame.Width - topBlockSize * LEDSTOP) / 2 + (topBlockSize * i);
     topEdge.frameBlock[i].Y = topEdge.Y;
@@ -379,7 +378,7 @@ void calculateEdgeBlocks(block frame) {
   leftEdge.Width = leftEdge.size;
   leftEdge.Height = frame.Height;
   leftEdge.numLeds = LEDSLEFT;
-  for (unsigned char i = 0; i < leftEdge.numLeds; i++) {
+  for (byte i = 0; i < leftEdge.numLeds; i++) {
     leftEdge.frameBlock[i].id = LEDSLEFT - i;
     leftEdge.frameBlock[i].X = leftEdge.X;
     if (i == 0) {
@@ -402,7 +401,7 @@ void calculateEdgeBlocks(block frame) {
   bottomEdge.Width = frame.Width - (bottomBlockSize * LEDSBOTTOM);
   bottomEdge.Height = bottomEdge.size;
   bottomEdge.numLeds = LEDSBOTTOM;
-  for (unsigned char i = 0; i < bottomEdge.numLeds; i++) {
+  for (byte i = 0; i < bottomEdge.numLeds; i++) {
     bottomEdge.frameBlock[i].id = (LEDSTOP + LEDSBOTTOM + LEDSLEFT + LEDSRIGHT) - i + 1;
     bottomEdge.frameBlock[i].X = frame.X + (frame.Width - bottomBlockSize * LEDSBOTTOM) / 2 + (bottomBlockSize * i);
     bottomEdge.frameBlock[i].Y = bottomEdge.Y;
@@ -415,7 +414,7 @@ void calculateEdgeBlocks(block frame) {
   rightEdge.Width = rightEdge.size;
   rightEdge.Height = frame.Height;
   rightEdge.numLeds = LEDSRIGHT;
-  for (unsigned char i = 0; i < rightEdge.numLeds; i++) {
+  for (byte i = 0; i < rightEdge.numLeds; i++) {
     rightEdge.frameBlock[i].id = LEDSLEFT + LEDSTOP + i;
     if (i == 0) {
       rightEdge.frameBlock[i].X = frame.X + leftEdge.frameBlock[0].Width + LEDSTOP * topBlockSize;
@@ -453,7 +452,7 @@ void calibrate() {
   inputframe.Height = atBottom - atTop + 1;
 }
 
-unsigned char getPixelLuminance(color p) {
+byte getPixelLuminance(color p) {
   unsigned int total = p.red + p.green + p.blue;
   return (total/3);
 }
