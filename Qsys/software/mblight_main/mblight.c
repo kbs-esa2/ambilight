@@ -119,7 +119,8 @@ unsigned int emptyWidthLeft = 0;
 unsigned int emptyWidthRight = 0;
 
 /* Tasks */
-void TaskCounter(void *pdata) {
+void TaskCounter(void *pdata)
+{
   int counter = 0;
   while (1) {
     printf("Counter: %d\n", counter);
@@ -128,16 +129,20 @@ void TaskCounter(void *pdata) {
   }
 }
 
-void TaskFillSquare(void *pdata) {
-  while (1) {
+void TaskFillSquare(void *pdata)
+{
+  while (1)
+  {
     readPixel.alpha = 255;
     fillSquare(readPixel, 9, 9, 1, 1);
     OSTimeDlyHMSM(0, 0, 0, 100);
   }
 }
 
-void TaskGetColor(void *pdata) {
-  while (1) {
+void TaskGetColor(void *pdata)
+{
+  while (1)
+  {
     color targetColor = {0, 255, 0, 255};
     setPixel(160 - 1, 120 - 1, targetColor);
     setPixel(160 - 1, 120 + 1, targetColor);
@@ -162,8 +167,11 @@ void TaskSetOverlay(void *pdata) {
         for (byte i = 0; i < rightEdge.numLeds; i++) drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0xffff00ff));
         overlayStatus = 1;
       }
-    } else {
-      if (overlayStatus) {
+    }
+    else
+    {
+      if (overlayStatus)
+      {
         *leds &= ~(1 << 0);
         for (byte i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0x00000000));
         for (byte i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00000000));
@@ -176,12 +184,16 @@ void TaskSetOverlay(void *pdata) {
   }
 }
 
-void TaskLedRotate(void *pdata) {
+void TaskLedRotate(void *pdata)
+{
   color off = {0, 0, 0, 0};
   color on = {255, 255, 255, 255};
-  while (1) {
-    for (unsigned int i = 0; i < 19; i++) {
-      for (unsigned int j = 0; j < 19; j++) {
+  while (1)
+  {
+    for (unsigned int i = 0; i < 19; i++)
+    {
+      for (unsigned int j = 0; j < 19; j++)
+      {
         setLed(j, off);
       }
       setLed(i, on);
@@ -191,7 +203,8 @@ void TaskLedRotate(void *pdata) {
 }
 
 /* Main function, creates tasks and starts the scheduler */
-int main(void) {
+int main(void)
+{
   OSTaskCreateExt(TaskCounter,
                   NULL,
                   (void *)&TaskCounter_stk[TASK_STACKSIZE - 1],
@@ -263,19 +276,25 @@ int main(void) {
 }
 
 /* Clears the screen of (noise)frameBlock */
-void fillClear() {
+void fillClear()
+{
   color clear = {0, 0, 0, 0};
-  for (unsigned int i = 0; i <= frameHeight; i++) {
-    for (unsigned int j = 0; j <= frameWidth; j++) {
+  for (unsigned int i = 0; i <= frameHeight; i++)
+  {
+    for (unsigned int j = 0; j <= frameWidth; j++)
+    {
       setPixel(j, i, clear);
     }
   }
 }
 
 /* Fills a square with RGB values taken from an array */
-void fillSquare(color pixel, unsigned int width, unsigned int height, unsigned int x, unsigned int y) {
-  for (unsigned int i = 0; i < width; i++) {
-    for (unsigned int j = 0; j < height; j++) {
+void fillSquare(color pixel, unsigned int width, unsigned int height, unsigned int x, unsigned int y)
+{
+  for (unsigned int i = 0; i < width; i++)
+  {
+    for (unsigned int j = 0; j < height; j++)
+    {
       setPixel(x + i, y + j, pixel);
     }
   }
@@ -284,11 +303,17 @@ void fillSquare(color pixel, unsigned int width, unsigned int height, unsigned i
 /* Get color of a pixel, put RGB values in array */
 color getPixelColor(unsigned int X, unsigned int Y) {
   unsigned int offset = (Y * frameWidth + X);
-  return *(decoderBuffer + offset);
+  input = *(decoderBuffer + offset);
+  output.red = input.blue;
+  output.green = input.green;
+  output.blue = input.red;
+  return output;
+
 }
 
 /* Draw one pixel */
-void setPixel(unsigned int X, unsigned int Y, color pixel) {
+void setPixel(unsigned int X, unsigned int Y, color pixel)
+{
   unsigned int x = 0;
   unsigned int y = 0;
   unsigned int offset = 0;
@@ -381,15 +406,20 @@ void calculateEdgeBlocks(block frame) {
   for (byte i = 0; i < leftEdge.numLeds; i++) {
     leftEdge.frameBlock[i].id = LEDSLEFT - i;
     leftEdge.frameBlock[i].X = leftEdge.X;
-    if (i == 0) {
+    if (i == 0)
+    {
       leftEdge.frameBlock[i].Y = frame.Y;
       leftEdge.frameBlock[i].Width = (frame.Width - (topBlockSize * LEDSTOP)) / 2;
       leftEdge.frameBlock[i].Height = (leftEdge.Height - leftBlockSize * (LEDSLEFT - 2)) / 2;
-    } else if (i == (LEDSLEFT - 1)) {
+    }
+    else if (i == (LEDSLEFT - 1))
+    {
       leftEdge.frameBlock[i].Y = frame.Y + leftEdge.frameBlock[0].Height + (leftBlockSize * (i - 1));
       leftEdge.frameBlock[i].Width = (frame.Width - (bottomBlockSize * LEDSBOTTOM)) / 2;
       leftEdge.frameBlock[i].Height = frame.Height - (leftBlockSize * (LEDSLEFT - 2)) - leftEdge.frameBlock[0].Height;
-    } else {
+    }
+    else
+    {
       leftEdge.frameBlock[i].Y = frame.Y + leftEdge.frameBlock[0].Height + (leftBlockSize * (i - 1));
       leftEdge.frameBlock[i].Width = leftEdge.size;
       leftEdge.frameBlock[i].Height = leftBlockSize;
@@ -416,17 +446,22 @@ void calculateEdgeBlocks(block frame) {
   rightEdge.numLeds = LEDSRIGHT;
   for (byte i = 0; i < rightEdge.numLeds; i++) {
     rightEdge.frameBlock[i].id = LEDSLEFT + LEDSTOP + i;
-    if (i == 0) {
+    if (i == 0)
+    {
       rightEdge.frameBlock[i].X = frame.X + leftEdge.frameBlock[0].Width + LEDSTOP * topBlockSize;
       rightEdge.frameBlock[i].Y = rightEdge.Y;
       rightEdge.frameBlock[i].Width = frame.Width - leftEdge.frameBlock[0].Width - LEDSTOP * topBlockSize;
       rightEdge.frameBlock[i].Height = (rightEdge.Height - rightBlockSize * (LEDSRIGHT - 2)) / 2;
-    } else if (i == (LEDSRIGHT - 1)) {
+    }
+    else if (i == (LEDSRIGHT - 1))
+    {
       rightEdge.frameBlock[i].X = frame.X + leftEdge.frameBlock[LEDSLEFT - 1].Width + LEDSBOTTOM * bottomBlockSize;
       rightEdge.frameBlock[i].Y = frame.Y + rightEdge.frameBlock[0].Height + (rightBlockSize * (i - 1));
       rightEdge.frameBlock[i].Width = frame.Width - leftEdge.frameBlock[LEDSLEFT - 1].Width - bottomBlockSize * LEDSBOTTOM;
       rightEdge.frameBlock[i].Height = frame.Height - (rightBlockSize * (LEDSRIGHT - 2)) - rightEdge.frameBlock[0].Height;
-    } else {
+    }
+    else
+    {
       rightEdge.frameBlock[i].X = rightEdge.X;
       rightEdge.frameBlock[i].Y = frame.Y + rightEdge.frameBlock[0].Height + (rightBlockSize * (i - 1));
       rightEdge.frameBlock[i].Width = rightEdge.size;
@@ -435,16 +470,21 @@ void calculateEdgeBlocks(block frame) {
   }
 }
 
-void calibrate() {
+void calibrate()
+{
   unsigned int atTop = 0;
   unsigned int atBottom = FRAMEHEIGHT - 1;
   unsigned int atLeft = 0;
   unsigned int atRight = FRAMEWIDTH - 1;
 
-  while (getPixelLuminance(getPixelColor(FRAMEWIDTH/2,atTop)) <= 50) atTop ++;
-  while (getPixelLuminance(getPixelColor(FRAMEWIDTH/2,atBottom)) <= 50) atBottom --;
-  while (getPixelLuminance(getPixelColor(atLeft, FRAMEHEIGHT/2)) <= 50) atLeft ++;
-  while (getPixelLuminance(getPixelColor(atRight, FRAMEHEIGHT/2)) <= 50) atRight --;
+  while (getPixelLuminance(getPixelColor(FRAMEWIDTH / 2, atTop)) <= 50)
+    atTop++;
+  while (getPixelLuminance(getPixelColor(FRAMEWIDTH / 2, atBottom)) <= 50)
+    atBottom--;
+  while (getPixelLuminance(getPixelColor(atLeft, FRAMEHEIGHT / 2)) <= 50)
+    atLeft++;
+  while (getPixelLuminance(getPixelColor(atRight, FRAMEHEIGHT / 2)) <= 50)
+    atRight--;
 
   inputframe.X = atLeft;
   inputframe.Y = atTop;
@@ -454,14 +494,15 @@ void calibrate() {
 
 byte getPixelLuminance(color p) {
   unsigned int total = p.red + p.green + p.blue;
-  return (total/3);
+  return (total / 3);
 }
 
-void getAverages(){
-	unsigned long totalR;
-	unsigned long totalG;
-	unsigned long totalB;
-	color temp;
+void getAverages()
+{
+  unsigned long totalR;
+  unsigned long totalG;
+  unsigned long totalB;
+  color temp;
 
 	for(unsigned int i = 0; i < leftEdge.numLeds; i++){	// i = frameblock nmr
 		for(unsigned int j = 0; j < leftEdge.frameBlock[i].Height; j++){ // j = y waarde
@@ -476,10 +517,10 @@ void getAverages(){
 		leftEdge.frameBlock[i].average.green = totalG / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
 		leftEdge.frameBlock[i].average.blue = totalB / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
 
-		totalR = 0;
-		totalG = 0;
-		totalB = 0;
-	}
+    totalR = 0;
+    totalG = 0;
+    totalB = 0;
+  }
 
 	for(unsigned int i = 0; i < topEdge.numLeds; i++){	// i = frameblock num.
 		for(unsigned int j = 0; j < topEdge.frameBlock[i].Height; j++){ // j = y value
@@ -494,10 +535,10 @@ void getAverages(){
 		topEdge.frameBlock[i].average.green = totalG / (topEdge.frameBlock[i].Height * topEdge.frameBlock[i].Width);
 		topEdge.frameBlock[i].average.blue = totalB / (topEdge.frameBlock[i].Height * topEdge.frameBlock[i].Width);
 
-		totalR = 0;
-		totalG = 0;
-		totalB = 0;
-	}
+    totalR = 0;
+    totalG = 0;
+    totalB = 0;
+  }
 
 	for(unsigned int i = 0; i < rightEdge.numLeds; i++){	//i = frameblock nmr
 		for(unsigned int j = 0; j < rightEdge.frameBlock[i].Height; j++){ //j = y waarde
@@ -530,10 +571,10 @@ void getAverages(){
 		bottomEdge.frameBlock[i].average.green = totalG / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
 		bottomEdge.frameBlock[i].average.blue = totalB / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
 
-		totalR = 0;
-		totalG = 0;
-		totalB = 0;
-	}
+    totalR = 0;
+    totalG = 0;
+    totalB = 0;
+  }
 }
 
 void averageToLeds(){

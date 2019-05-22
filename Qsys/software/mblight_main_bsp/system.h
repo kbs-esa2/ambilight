@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'nios2'
  * SOPC Builder design path: ../../nios2.sopcinfo
  *
- * Generated: Tue May 21 09:49:16 CEST 2019
+ * Generated: Wed May 22 12:29:37 CEST 2019
  */
 
 /*
@@ -477,6 +477,20 @@
 
 
 /*
+ * video_dma_controller_0 configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_video_dma_controller_0 altera_up_avalon_video_dma_controller
+#define VIDEO_DMA_CONTROLLER_0_BASE 0x8200010
+#define VIDEO_DMA_CONTROLLER_0_IRQ -1
+#define VIDEO_DMA_CONTROLLER_0_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define VIDEO_DMA_CONTROLLER_0_NAME "/dev/video_dma_controller_0"
+#define VIDEO_DMA_CONTROLLER_0_SPAN 16
+#define VIDEO_DMA_CONTROLLER_0_TYPE "altera_up_avalon_video_dma_controller"
+
+
+/*
  * video_in_dma configuration
  *
  */
@@ -488,20 +502,6 @@
 #define VIDEO_IN_DMA_NAME "/dev/video_in_dma"
 #define VIDEO_IN_DMA_SPAN 16
 #define VIDEO_IN_DMA_TYPE "altera_up_avalon_video_dma_controller"
-
-
-/*
- * video_pixel_buffer_dma_0 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_video_pixel_buffer_dma_0 altera_up_avalon_video_pixel_buffer_dma
-#define VIDEO_PIXEL_BUFFER_DMA_0_BASE 0x8221050
-#define VIDEO_PIXEL_BUFFER_DMA_0_IRQ -1
-#define VIDEO_PIXEL_BUFFER_DMA_0_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define VIDEO_PIXEL_BUFFER_DMA_0_NAME "/dev/video_pixel_buffer_dma_0"
-#define VIDEO_PIXEL_BUFFER_DMA_0_SPAN 16
-#define VIDEO_PIXEL_BUFFER_DMA_0_TYPE "altera_up_avalon_video_pixel_buffer_dma"
 
 
 /*

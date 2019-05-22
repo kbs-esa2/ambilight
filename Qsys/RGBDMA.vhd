@@ -38,29 +38,33 @@ architecture arch of rgbdma is
         if (reset = '1') then
             atAdress := baseAdress;
         elsif (rising_edge(clk)) then
-            
+            address <= std_logic_vector(to_unsigned((atAdress), address'length));
             current_s := next_s;
             case( current_s ) is
                         
 
                 when idle =>
-                    if (getnext = '1') then
+                    if (ledreturn = '1') then
+                        atAdress := baseAdress;
+                    elsif (getnext = '1') then
                         next_s := setmaster;
                     end if ;
 
                 when setmaster =>
                     read <= '1';
-                    if (waitrequest = '0') then
-                        red <= readdata(7 downto 0);
-                        green <= readdata(15 downto 8);
-                        blue <= readdata(23 downto 16);
                     next_s := reading;
-                    end if ;
+                    
                     
 
                 when reading =>
-                atAdress := atAdress + 4;
+                if (waitrequest = '0') then
+                    red <= readdata(7 downto 0);
+                    green <= readdata(15 downto 8);
+                    blue <= readdata(23 downto 16);
                     next_s := finishread;
+                end if ;
+                
+                    
                 
                     
 
@@ -68,16 +72,14 @@ architecture arch of rgbdma is
                     
                     read <= '0';
                     if (getnext = '0') then
-                        address <= std_logic_vector(to_unsigned((atAdress), address'length));
+                        atAdress := atAdress + 4;
                         next_s := idle;
                     end if ;
                     
                 
             end case ;
         end if ;
-        if (ledreturn = '1') then
-            atAdress := baseAdress;
-        end if ;
+        
     end process ; -- dma
 
 

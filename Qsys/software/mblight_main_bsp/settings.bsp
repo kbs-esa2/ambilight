@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>ucosii</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>May 21, 2019 1:38:51 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1558438731951</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>22-mei-2019 13:19:19</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1558523959494</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\KBSESA2\ambilight\Qsys\software\mblight_main_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\nios2.sopcinfo</SopcDesignFile>
@@ -1757,6 +1757,12 @@
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
+                <slaveDescriptor>video_dma_controller_0</slaveDescriptor>
+                <addressRange>0x08200010 - 0x0820001F</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
                 <slaveDescriptor>ucos_timer</slaveDescriptor>
                 <addressRange>0x08200020 - 0x0820003F</addressRange>
                 <addressSpan>32</addressSpan>
@@ -1789,12 +1795,6 @@
         <MemoryMap>
                 <slaveDescriptor>video_in_dma</slaveDescriptor>
                 <addressRange>0x08221040 - 0x0822104F</addressRange>
-                <addressSpan>16</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>video_pixel_buffer_dma_0</slaveDescriptor>
-                <addressRange>0x08221050 - 0x0822105F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
