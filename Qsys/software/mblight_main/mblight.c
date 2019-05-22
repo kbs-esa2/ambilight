@@ -64,25 +64,21 @@ typedef struct {
 /* Define Task stacksize */
 #define TASK_STACKSIZE 4096
 OS_STK TaskCounter_stk[TASK_STACKSIZE];
-OS_STK TaskFillSquare_stk[TASK_STACKSIZE];
 OS_STK TaskGetColor_stk[TASK_STACKSIZE];
 OS_STK TaskSetOverlay_stk[TASK_STACKSIZE];
-OS_STK TaskLedRotate_stk[TASK_STACKSIZE];
+OS_STK TaskWriteLed_stk[TASK_STACKSIZE];
 
 /* Define Task priority */
-#define TaskCounter_PRIORITY 1
-#define TaskFillSquare_PRIORITY 4
-#define TaskGetColor_PRIORITY 3
-#define TaskSetOverlay_PRIORITY 2
-#define TaskLedRotate_PRIORITY 5
+#define TaskCounter_PRIORITY 4
+#define TaskGetColor_PRIORITY 1
+#define TaskSetOverlay_PRIORITY 3
+#define TaskWriteLed_PRIORITY 2
 
 /* Functions */
 void fillClear();
-void fillSquare(color pixel, unsigned int width, unsigned int height, unsigned int x, unsigned int y);
 color getPixelColor(unsigned int X, unsigned int Y);
 void setPixel(unsigned int X, unsigned int Y, color pixel);
 void setLed(byte index, color pixel);
-void drawTaskBar();
 color colorFromHex(unsigned int in);
 void drawBlockBorder(block b, color c);
 void calculateEdgeBlocks(block frame);
@@ -125,17 +121,12 @@ void TaskCounter(void *pdata)
   while (1) {
     printf("Counter: %d\n", counter);
     counter++;
+    color test = {255,0,0,255};
+    	for (byte i = 0; i < 95; i++)
+    	    {
+    	      setLed(i, test);
+    	    }
     OSTimeDlyHMSM(0, 0, 1, 0);
-  }
-}
-
-void TaskFillSquare(void *pdata)
-{
-  while (1)
-  {
-    readPixel.alpha = 255;
-    fillSquare(readPixel, 9, 9, 1, 1);
-    OSTimeDlyHMSM(0, 0, 0, 100);
   }
 }
 
@@ -143,15 +134,19 @@ void TaskGetColor(void *pdata)
 {
   while (1)
   {
-    color targetColor = {0, 255, 0, 255};
-    setPixel(160 - 1, 120 - 1, targetColor);
-    setPixel(160 - 1, 120 + 1, targetColor);
-    setPixel(160 + 1, 120 - 1, targetColor);
-    setPixel(160 + 1, 120 + 1, targetColor);
-    readPixel = getPixelColor(160, 120);
-    color c = {0, 255, 0, 255};
-    setLed(0, c);
-    OSTimeDlyHMSM(0, 0, 0, 100);
+    getAverages();
+    printf("TaskGetColor!\n");
+    OSTimeDlyHMSM(0, 0, 2, 100);
+  }
+}
+
+void TaskWriteLed(void *pdata)
+{
+  while (1)
+  {
+    averageToLeds();
+    printf("TaskWriteLed!\n");
+    OSTimeDlyHMSM(0, 0, 2, 100);
   }
 }
 
@@ -167,11 +162,8 @@ void TaskSetOverlay(void *pdata) {
         for (byte i = 0; i < rightEdge.numLeds; i++) drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0xffff00ff));
         overlayStatus = 1;
       }
-    }
-    else
-    {
-      if (overlayStatus)
-      {
+    } else {
+      if (overlayStatus) {
         *leds &= ~(1 << 0);
         for (byte i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0x00000000));
         for (byte i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00000000));
@@ -184,43 +176,21 @@ void TaskSetOverlay(void *pdata) {
   }
 }
 
-void TaskLedRotate(void *pdata)
-{
-  color off = {0, 0, 0, 0};
-  color on = {255, 255, 255, 255};
-  while (1)
-  {
-    for (unsigned int i = 0; i < 19; i++)
-    {
-      for (unsigned int j = 0; j < 19; j++)
-      {
-        setLed(j, off);
-      }
-      setLed(i, on);
-      OSTimeDlyHMSM(0, 0, 0, 200);
-    }
-  }
-}
 
 /* Main function, creates tasks and starts the scheduler */
 int main(void)
 {
+	color test = {255,0,0,255};
+	for (byte i = 0; i < 95; i++)
+	    {
+	      setLed(i, test);
+	    }
   OSTaskCreateExt(TaskCounter,
                   NULL,
                   (void *)&TaskCounter_stk[TASK_STACKSIZE - 1],
                   TaskCounter_PRIORITY,
                   TaskCounter_PRIORITY,
                   TaskCounter_stk,
-                  TASK_STACKSIZE,
-                  NULL,
-                  0);
-
-  OSTaskCreateExt(TaskFillSquare,
-                  NULL,
-                  (void *)&TaskFillSquare_stk[TASK_STACKSIZE - 1],
-                  TaskFillSquare_PRIORITY,
-                  TaskFillSquare_PRIORITY,
-                  TaskFillSquare_stk,
                   TASK_STACKSIZE,
                   NULL,
                   0);
@@ -245,12 +215,12 @@ int main(void)
                   NULL,
                   0);
 
-  OSTaskCreateExt(TaskLedRotate,
+  OSTaskCreateExt(TaskWriteLed,
                   NULL,
-                  (void *)&TaskLedRotate_stk[TASK_STACKSIZE - 1],
-                  TaskLedRotate_PRIORITY,
-                  TaskLedRotate_PRIORITY,
-                  TaskLedRotate_stk,
+                  (void *)&TaskWriteLed_stk[TASK_STACKSIZE - 1],
+                  TaskWriteLed_PRIORITY,
+                  TaskWriteLed_PRIORITY,
+                  TaskWriteLed_stk,
                   TASK_STACKSIZE,
                   NULL,
                   0);
@@ -271,29 +241,8 @@ int main(void)
   rightEdge.size = 15;
 
   calculateEdgeBlocks(inputframe);
-  for (unsigned char i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0xff0000ff));
-  for (unsigned char i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00ff00ff));
-  for (unsigned char i = 0; i < bottomEdge.numLeds; i++) drawBlockBorder(bottomEdge.frameBlock[i], colorFromHex(0x0000ffff));
-  for (unsigned char i = 0; i < rightEdge.numLeds; i++) drawBlockBorder(rightEdge.frameBlock[i], colorFromHex(0xffff00ff));
 
-
-while(1){
-  unsigned char x = 100;
-  unsigned char y = 100;
-  block target;
-  target.X = x;
-  target.Y = y;
-  target.Width = 3;
-  target.Height = 3;
-  drawBlockBorder(target,colorFromHex(0x8f8f8f8f));
-    for (unsigned char i = 0; i < 95; i++)
-  {
-    setLed(i,getPixelColor(x + 1,y + 1));
-  }
-
-}
-
-//OSStart();
+  OSStart();
   return 0;
 }
 
@@ -306,18 +255,6 @@ void fillClear()
     for (unsigned int j = 0; j <= frameWidth; j++)
     {
       setPixel(j, i, clear);
-    }
-  }
-}
-
-/* Fills a square with RGB values taken from an array */
-void fillSquare(color pixel, unsigned int width, unsigned int height, unsigned int x, unsigned int y)
-{
-  for (unsigned int i = 0; i < width; i++)
-  {
-    for (unsigned int j = 0; j < height; j++)
-    {
-      setPixel(x + i, y + j, pixel);
     }
   }
 }
@@ -370,12 +307,6 @@ void setPixel(unsigned int X, unsigned int Y, color pixel)
 /* Change the color of a led */
 void setLed(byte index, color pixel) {
   *(ledBuffer + (index)) = pixel;
-}
-
-/* Draw taskbar at top of screen */
-void drawTaskBar() {
-  color background = colorFromHex(0x8f8f8faf);
-  fillSquare(background, frameWidth, 30, 0, 0);
 }
 
 // Get a byte array of type color from 32 bit integer
