@@ -9,6 +9,7 @@ entity nios_top IS     --name of top level entity
 		--clock and reset--
 		CLOCK_50 	: IN STD_LOGIC; 
 		KEY      	: IN STD_LOGIC_VECTOR (3 DOWNTO 0); 
+		HEX0			: OUT std_logic_vector(6 downto 0);
 		--debug io--
 		SW       	: IN STD_LOGIC_VECTOR (17 DOWNTO 0); 
 		LEDR     	: OUT STD_LOGIC_VECTOR (17 DOWNTO 0);
@@ -53,6 +54,8 @@ entity nios_top IS     --name of top level entity
 		
 		--adressable led data--
 		GPIO     	: OUT std_logic_vector(35 downto 0)
+		
+		
 	); 
 END nios_top; 
 
@@ -70,6 +73,8 @@ port (
 		decoder_wire_clk27_reset     : in    std_logic                     := '0';             --               .clk27_reset
 		decoder_wire_TD_RESET        : out   std_logic;                                        --               .TD_RESET
 		decoder_wire_overflow_flag   : out   std_logic;                                        --               .overflow_flag
+		brightness_wire_keys         : in    std_logic_vector(1 downto 0)  := (others => '0'); -- brightness_wire.keys
+		brightness_wire_hex          : out   std_logic_vector(6 downto 0);                     --                .hex
 		keys_export                  : in    std_logic_vector(3 downto 0)  := (others => '0'); --           keys.export
 		led_wire_adressable_led_data : out   std_logic;                                        --       led_wire.adressable_led_data
 		leds_export                  : out   std_logic_vector(17 downto 0);                    --           leds.export
@@ -149,6 +154,10 @@ BEGIN
 			av_config_wire_SDAT => I2C_SDAT,
 			av_config_wire_SCLK => I2C_SCLK,
 			
-			led_wire_adressable_led_data => GPIO(26)
+			led_wire_adressable_led_data => GPIO(26),
+			
+			brightness_wire_keys => KEY(2 downto 1),         
+			brightness_wire_hex => HEX0          
+		
 			); 
  END NiosQsysDemo_rtl;

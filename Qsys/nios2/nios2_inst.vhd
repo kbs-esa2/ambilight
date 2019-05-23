@@ -39,51 +39,55 @@
 			vga_wire_SYNC                : out   std_logic;                                        -- SYNC
 			vga_wire_R                   : out   std_logic_vector(7 downto 0);                     -- R
 			vga_wire_G                   : out   std_logic_vector(7 downto 0);                     -- G
-			vga_wire_B                   : out   std_logic_vector(7 downto 0)                      -- B
+			vga_wire_B                   : out   std_logic_vector(7 downto 0);                     -- B
+			brightness_wire_keys         : in    std_logic_vector(1 downto 0)  := (others => 'X'); -- keys
+			brightness_wire_hex          : out   std_logic_vector(6 downto 0)                      -- hex
 		);
 	end component nios2;
 
 	u0 : component nios2
 		port map (
-			av_config_wire_SDAT          => CONNECTED_TO_av_config_wire_SDAT,          -- av_config_wire.SDAT
-			av_config_wire_SCLK          => CONNECTED_TO_av_config_wire_SCLK,          --               .SCLK
-			clk_clk                      => CONNECTED_TO_clk_clk,                      --            clk.clk
-			decoder_wire_TD_CLK27        => CONNECTED_TO_decoder_wire_TD_CLK27,        --   decoder_wire.TD_CLK27
-			decoder_wire_TD_DATA         => CONNECTED_TO_decoder_wire_TD_DATA,         --               .TD_DATA
-			decoder_wire_TD_HS           => CONNECTED_TO_decoder_wire_TD_HS,           --               .TD_HS
-			decoder_wire_TD_VS           => CONNECTED_TO_decoder_wire_TD_VS,           --               .TD_VS
-			decoder_wire_clk27_reset     => CONNECTED_TO_decoder_wire_clk27_reset,     --               .clk27_reset
-			decoder_wire_TD_RESET        => CONNECTED_TO_decoder_wire_TD_RESET,        --               .TD_RESET
-			decoder_wire_overflow_flag   => CONNECTED_TO_decoder_wire_overflow_flag,   --               .overflow_flag
-			keys_export                  => CONNECTED_TO_keys_export,                  --           keys.export
-			led_wire_adressable_led_data => CONNECTED_TO_led_wire_adressable_led_data, --       led_wire.adressable_led_data
-			leds_export                  => CONNECTED_TO_leds_export,                  --           leds.export
-			reset_reset_n                => CONNECTED_TO_reset_reset_n,                --          reset.reset_n
-			sdram_clk_clk                => CONNECTED_TO_sdram_clk_clk,                --      sdram_clk.clk
-			sdram_wire_addr              => CONNECTED_TO_sdram_wire_addr,              --     sdram_wire.addr
-			sdram_wire_ba                => CONNECTED_TO_sdram_wire_ba,                --               .ba
-			sdram_wire_cas_n             => CONNECTED_TO_sdram_wire_cas_n,             --               .cas_n
-			sdram_wire_cke               => CONNECTED_TO_sdram_wire_cke,               --               .cke
-			sdram_wire_cs_n              => CONNECTED_TO_sdram_wire_cs_n,              --               .cs_n
-			sdram_wire_dq                => CONNECTED_TO_sdram_wire_dq,                --               .dq
-			sdram_wire_dqm               => CONNECTED_TO_sdram_wire_dqm,               --               .dqm
-			sdram_wire_ras_n             => CONNECTED_TO_sdram_wire_ras_n,             --               .ras_n
-			sdram_wire_we_n              => CONNECTED_TO_sdram_wire_we_n,              --               .we_n
-			sram_wire_DQ                 => CONNECTED_TO_sram_wire_DQ,                 --      sram_wire.DQ
-			sram_wire_ADDR               => CONNECTED_TO_sram_wire_ADDR,               --               .ADDR
-			sram_wire_LB_N               => CONNECTED_TO_sram_wire_LB_N,               --               .LB_N
-			sram_wire_UB_N               => CONNECTED_TO_sram_wire_UB_N,               --               .UB_N
-			sram_wire_CE_N               => CONNECTED_TO_sram_wire_CE_N,               --               .CE_N
-			sram_wire_OE_N               => CONNECTED_TO_sram_wire_OE_N,               --               .OE_N
-			sram_wire_WE_N               => CONNECTED_TO_sram_wire_WE_N,               --               .WE_N
-			switches_export              => CONNECTED_TO_switches_export,              --       switches.export
-			vga_wire_CLK                 => CONNECTED_TO_vga_wire_CLK,                 --       vga_wire.CLK
-			vga_wire_HS                  => CONNECTED_TO_vga_wire_HS,                  --               .HS
-			vga_wire_VS                  => CONNECTED_TO_vga_wire_VS,                  --               .VS
-			vga_wire_BLANK               => CONNECTED_TO_vga_wire_BLANK,               --               .BLANK
-			vga_wire_SYNC                => CONNECTED_TO_vga_wire_SYNC,                --               .SYNC
-			vga_wire_R                   => CONNECTED_TO_vga_wire_R,                   --               .R
-			vga_wire_G                   => CONNECTED_TO_vga_wire_G,                   --               .G
-			vga_wire_B                   => CONNECTED_TO_vga_wire_B                    --               .B
+			av_config_wire_SDAT          => CONNECTED_TO_av_config_wire_SDAT,          --  av_config_wire.SDAT
+			av_config_wire_SCLK          => CONNECTED_TO_av_config_wire_SCLK,          --                .SCLK
+			clk_clk                      => CONNECTED_TO_clk_clk,                      --             clk.clk
+			decoder_wire_TD_CLK27        => CONNECTED_TO_decoder_wire_TD_CLK27,        --    decoder_wire.TD_CLK27
+			decoder_wire_TD_DATA         => CONNECTED_TO_decoder_wire_TD_DATA,         --                .TD_DATA
+			decoder_wire_TD_HS           => CONNECTED_TO_decoder_wire_TD_HS,           --                .TD_HS
+			decoder_wire_TD_VS           => CONNECTED_TO_decoder_wire_TD_VS,           --                .TD_VS
+			decoder_wire_clk27_reset     => CONNECTED_TO_decoder_wire_clk27_reset,     --                .clk27_reset
+			decoder_wire_TD_RESET        => CONNECTED_TO_decoder_wire_TD_RESET,        --                .TD_RESET
+			decoder_wire_overflow_flag   => CONNECTED_TO_decoder_wire_overflow_flag,   --                .overflow_flag
+			keys_export                  => CONNECTED_TO_keys_export,                  --            keys.export
+			led_wire_adressable_led_data => CONNECTED_TO_led_wire_adressable_led_data, --        led_wire.adressable_led_data
+			leds_export                  => CONNECTED_TO_leds_export,                  --            leds.export
+			reset_reset_n                => CONNECTED_TO_reset_reset_n,                --           reset.reset_n
+			sdram_clk_clk                => CONNECTED_TO_sdram_clk_clk,                --       sdram_clk.clk
+			sdram_wire_addr              => CONNECTED_TO_sdram_wire_addr,              --      sdram_wire.addr
+			sdram_wire_ba                => CONNECTED_TO_sdram_wire_ba,                --                .ba
+			sdram_wire_cas_n             => CONNECTED_TO_sdram_wire_cas_n,             --                .cas_n
+			sdram_wire_cke               => CONNECTED_TO_sdram_wire_cke,               --                .cke
+			sdram_wire_cs_n              => CONNECTED_TO_sdram_wire_cs_n,              --                .cs_n
+			sdram_wire_dq                => CONNECTED_TO_sdram_wire_dq,                --                .dq
+			sdram_wire_dqm               => CONNECTED_TO_sdram_wire_dqm,               --                .dqm
+			sdram_wire_ras_n             => CONNECTED_TO_sdram_wire_ras_n,             --                .ras_n
+			sdram_wire_we_n              => CONNECTED_TO_sdram_wire_we_n,              --                .we_n
+			sram_wire_DQ                 => CONNECTED_TO_sram_wire_DQ,                 --       sram_wire.DQ
+			sram_wire_ADDR               => CONNECTED_TO_sram_wire_ADDR,               --                .ADDR
+			sram_wire_LB_N               => CONNECTED_TO_sram_wire_LB_N,               --                .LB_N
+			sram_wire_UB_N               => CONNECTED_TO_sram_wire_UB_N,               --                .UB_N
+			sram_wire_CE_N               => CONNECTED_TO_sram_wire_CE_N,               --                .CE_N
+			sram_wire_OE_N               => CONNECTED_TO_sram_wire_OE_N,               --                .OE_N
+			sram_wire_WE_N               => CONNECTED_TO_sram_wire_WE_N,               --                .WE_N
+			switches_export              => CONNECTED_TO_switches_export,              --        switches.export
+			vga_wire_CLK                 => CONNECTED_TO_vga_wire_CLK,                 --        vga_wire.CLK
+			vga_wire_HS                  => CONNECTED_TO_vga_wire_HS,                  --                .HS
+			vga_wire_VS                  => CONNECTED_TO_vga_wire_VS,                  --                .VS
+			vga_wire_BLANK               => CONNECTED_TO_vga_wire_BLANK,               --                .BLANK
+			vga_wire_SYNC                => CONNECTED_TO_vga_wire_SYNC,                --                .SYNC
+			vga_wire_R                   => CONNECTED_TO_vga_wire_R,                   --                .R
+			vga_wire_G                   => CONNECTED_TO_vga_wire_G,                   --                .G
+			vga_wire_B                   => CONNECTED_TO_vga_wire_B,                   --                .B
+			brightness_wire_keys         => CONNECTED_TO_brightness_wire_keys,         -- brightness_wire.keys
+			brightness_wire_hex          => CONNECTED_TO_brightness_wire_hex           --                .hex
 		);
 

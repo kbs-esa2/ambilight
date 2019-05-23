@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'nios2'
  * SOPC Builder design path: ../../nios2.sopcinfo
  *
- * Generated: Wed May 22 12:29:37 CEST 2019
+ * Generated: Thu May 23 09:39:36 CEST 2019
  */
 
 /*
@@ -143,6 +143,7 @@
 #define __ALTERA_UP_AVALON_VIDEO_DMA_CONTROLLER
 #define __ALTERA_UP_AVALON_VIDEO_PIXEL_BUFFER_DMA
 #define __ALTPLL
+#define __BRIGHTNESS
 
 
 /*
@@ -207,6 +208,20 @@
 #define AUDIO_AND_VIDEO_CONFIG_0_NAME "/dev/audio_and_video_config_0"
 #define AUDIO_AND_VIDEO_CONFIG_0_SPAN 16
 #define AUDIO_AND_VIDEO_CONFIG_0_TYPE "altera_up_avalon_audio_and_video_config"
+
+
+/*
+ * brightness_0 configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_brightness_0 brightness
+#define BRIGHTNESS_0_BASE 0x8200040
+#define BRIGHTNESS_0_IRQ 2
+#define BRIGHTNESS_0_IRQ_INTERRUPT_CONTROLLER_ID 0
+#define BRIGHTNESS_0_NAME "/dev/brightness_0"
+#define BRIGHTNESS_0_SPAN 1
+#define BRIGHTNESS_0_TYPE "brightness"
 
 
 /*
