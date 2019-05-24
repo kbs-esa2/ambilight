@@ -61,11 +61,6 @@
    }
    element brightness_0.avalon_slave_0
    {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
       datum baseAddress
       {
          value = "136314944";
@@ -175,27 +170,6 @@
       {
          value = "21";
          type = "int";
-      }
-   }
-   element pio_0
-   {
-      datum _sortIndex
-      {
-         value = "27";
-         type = "int";
-      }
-   }
-   element pio_0.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "136314896";
-         type = "String";
       }
    }
    element rgb_24bit_to_30bit
@@ -323,7 +297,7 @@
    {
       datum baseAddress
       {
-         value = "136314960";
+         value = "136314896";
          type = "String";
       }
    }
@@ -501,11 +475,6 @@
  <interface
    name="switches"
    internal="switches.external_connection"
-   type="conduit"
-   dir="end" />
- <interface
-   name="testkey_wire"
-   internal="pio_0.external_connection"
    type="conduit"
    dir="end" />
  <interface
@@ -780,7 +749,7 @@
   <parameter name="dataAddrWidth" value="28" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram.s1' start='0x0' end='0x8000000' type='altera_avalon_new_sdram_controller.s1' /><slave name='sram_bufer.avalon_sram_slave' start='0x8000000' end='0x8200000' type='altera_up_avalon_sram.avalon_sram_slave' /><slave name='video_pixel_buffer_dma_1.avalon_control_slave' start='0x8200000' end='0x8200010' type='altera_up_avalon_video_pixel_buffer_dma.avalon_control_slave' /><slave name='pio_0.s1' start='0x8200010' end='0x8200020' type='altera_avalon_pio.s1' /><slave name='ucos_timer.s1' start='0x8200020' end='0x8200040' type='altera_avalon_timer.s1' /><slave name='brightness_0.avalon_slave_0' start='0x8200040' end='0x8200041' type='brightness.avalon_slave_0' /><slave name='video_dma_controller_0.avalon_dma_control_slave' start='0x8200050' end='0x8200060' type='altera_up_avalon_video_dma_controller.avalon_dma_control_slave' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8220800' end='0x8221000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='keys.s1' start='0x8221000' end='0x8221010' type='altera_avalon_pio.s1' /><slave name='switches.s1' start='0x8221010' end='0x8221020' type='altera_avalon_pio.s1' /><slave name='leds.s1' start='0x8221020' end='0x8221030' type='altera_avalon_pio.s1' /><slave name='altpll_0.pll_slave' start='0x8221030' end='0x8221040' type='altpll.pll_slave' /><slave name='video_in_dma.avalon_dma_control_slave' start='0x8221040' end='0x8221050' type='altera_up_avalon_video_dma_controller.avalon_dma_control_slave' /><slave name='audio_and_video_config_0.avalon_av_config_slave' start='0x8221060' end='0x8221070' type='altera_up_avalon_audio_and_video_config.avalon_av_config_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8221070' end='0x8221078' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram.s1' start='0x0' end='0x8000000' type='altera_avalon_new_sdram_controller.s1' /><slave name='sram_bufer.avalon_sram_slave' start='0x8000000' end='0x8200000' type='altera_up_avalon_sram.avalon_sram_slave' /><slave name='video_pixel_buffer_dma_1.avalon_control_slave' start='0x8200000' end='0x8200010' type='altera_up_avalon_video_pixel_buffer_dma.avalon_control_slave' /><slave name='video_dma_controller_0.avalon_dma_control_slave' start='0x8200010' end='0x8200020' type='altera_up_avalon_video_dma_controller.avalon_dma_control_slave' /><slave name='ucos_timer.s1' start='0x8200020' end='0x8200040' type='altera_avalon_timer.s1' /><slave name='brightness_0.avalon_slave_0' start='0x8200040' end='0x8200041' type='brightness.avalon_slave_0' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8220800' end='0x8221000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='keys.s1' start='0x8221000' end='0x8221010' type='altera_avalon_pio.s1' /><slave name='switches.s1' start='0x8221010' end='0x8221020' type='altera_avalon_pio.s1' /><slave name='leds.s1' start='0x8221020' end='0x8221030' type='altera_avalon_pio.s1' /><slave name='altpll_0.pll_slave' start='0x8221030' end='0x8221040' type='altpll.pll_slave' /><slave name='video_in_dma.avalon_dma_control_slave' start='0x8221040' end='0x8221050' type='altera_up_avalon_video_dma_controller.avalon_dma_control_slave' /><slave name='audio_and_video_config_0.avalon_av_config_slave' start='0x8221060' end='0x8221070' type='altera_up_avalon_audio_and_video_config.avalon_av_config_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8221070' end='0x8221078' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -826,7 +795,7 @@
   <parameter name="instruction_master_high_performance_paddr_size" value="0" />
   <parameter name="instruction_master_paddr_base" value="0" />
   <parameter name="instruction_master_paddr_size" value="0" />
-  <parameter name="internalIrqMaskSystemInfo" value="15" />
+  <parameter name="internalIrqMaskSystemInfo" value="3" />
   <parameter name="io_regionbase" value="0" />
   <parameter name="io_regionsize" value="0" />
   <parameter name="master_addr_map" value="false" />
@@ -946,20 +915,6 @@
   <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV E" />
   <parameter name="mode" value="Normal" />
- </module>
- <module name="pio_0" kind="altera_avalon_pio" version="16.1" enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="true" />
-  <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Input" />
-  <parameter name="edgeType" value="FALLING" />
-  <parameter name="generateIRQ" value="true" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="1" />
  </module>
  <module
    name="rgb_24bit_to_30bit"
@@ -1270,7 +1225,7 @@
    start="nios2_gen2_0.data_master"
    end="video_dma_controller_0.avalon_dma_control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08200050" />
+  <parameter name="baseAddress" value="0x08200010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1370,15 +1325,6 @@
    end="ucos_timer.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x08200020" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="nios2_gen2_0.data_master"
-   end="pio_0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08200010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1536,7 +1482,6 @@
    version="16.1"
    start="clk_0.clk"
    end="video_dma_controller_0.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="pio_0.clk" />
  <connection
    kind="clock"
    version="16.1"
@@ -1556,13 +1501,6 @@
    kind="interrupt"
    version="16.1"
    start="nios2_gen2_0.irq"
-   end="brightness_0.interrupt_sender">
-  <parameter name="irqNumber" value="2" />
- </connection>
- <connection
-   kind="interrupt"
-   version="16.1"
-   start="nios2_gen2_0.irq"
    end="jtag_uart_0.irq">
   <parameter name="irqNumber" value="0" />
  </connection>
@@ -1572,13 +1510,6 @@
    start="nios2_gen2_0.irq"
    end="ucos_timer.irq">
   <parameter name="irqNumber" value="1" />
- </connection>
- <connection
-   kind="interrupt"
-   version="16.1"
-   start="nios2_gen2_0.irq"
-   end="pio_0.irq">
-  <parameter name="irqNumber" value="3" />
  </connection>
  <connection
    kind="reset"
@@ -1693,7 +1624,6 @@
    version="16.1"
    start="clk_0.clk_reset"
    end="brightness_0.reset" />
- <connection kind="reset" version="16.1" start="clk_0.clk_reset" end="pio_0.reset" />
  <connection
    kind="reset"
    version="16.1"
@@ -1829,11 +1759,6 @@
    version="16.1"
    start="nios2_gen2_0.debug_reset_request"
    end="brightness_0.reset" />
- <connection
-   kind="reset"
-   version="16.1"
-   start="nios2_gen2_0.debug_reset_request"
-   end="pio_0.reset" />
  <connection
    kind="reset"
    version="16.1"
