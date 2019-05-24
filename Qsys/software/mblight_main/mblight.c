@@ -45,6 +45,7 @@ typedef struct {
 #define decoderBuffer (color *)0x08000000
 #define overlayBuffer (color *)0x04000000
 #define ledBuffer (color *)0x04050000
+#define brightnessBuffer (volatile int *)0x08200040
 
 #define AVConfigSlave (volatile int *)0x08221060
 #define JtagSlave (volatile int *)0x08221070
@@ -82,7 +83,6 @@ void getAverages();
 void averageToLeds();
 void averageToBlocks();
 void fillSquare(color pixel, unsigned int x, unsigned int y, unsigned int width, unsigned int height);
-
 /* Global variables*/
 color readPixel = {0, 0, 0, 0};
 edge topEdge;
@@ -438,9 +438,9 @@ void getAverages() {
 				totalB += temp.blue;
 			}
 		}
-		leftEdge.frameBlock[i].average.red = totalR / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
-		leftEdge.frameBlock[i].average.green = totalG / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
-		leftEdge.frameBlock[i].average.blue = totalB / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
+		leftEdge.frameBlock[i].average.red = (totalR * (*(brightnessBuffer) + 1) / 16) / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
+		leftEdge.frameBlock[i].average.green = (totalG * (*(brightnessBuffer) + 1) / 16) / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
+		leftEdge.frameBlock[i].average.blue = (totalB * (*(brightnessBuffer) + 1) / 16) / (leftEdge.frameBlock[i].Height * leftEdge.frameBlock[i].Width);
 
 		totalR = 0;
 		totalG = 0;
@@ -456,9 +456,9 @@ void getAverages() {
 				totalB += temp.blue;
 			}
 		}
-		topEdge.frameBlock[i].average.red = totalR / (topEdge.frameBlock[i].Height * topEdge.frameBlock[i].Width);
-		topEdge.frameBlock[i].average.green = totalG / (topEdge.frameBlock[i].Height * topEdge.frameBlock[i].Width);
-		topEdge.frameBlock[i].average.blue = totalB / (topEdge.frameBlock[i].Height * topEdge.frameBlock[i].Width);
+		topEdge.frameBlock[i].average.red = (totalR * (*(brightnessBuffer) + 1) / 16) / (topEdge.frameBlock[i].Height * topEdge.frameBlock[i].Width);
+		topEdge.frameBlock[i].average.green = (totalG * (*(brightnessBuffer) + 1) / 16) / (topEdge.frameBlock[i].Height * topEdge.frameBlock[i].Width);
+		topEdge.frameBlock[i].average.blue = (totalB * (*(brightnessBuffer) + 1) / 16) / (topEdge.frameBlock[i].Height * topEdge.frameBlock[i].Width);
 
     totalR = 0;
     totalG = 0;
@@ -474,9 +474,9 @@ void getAverages() {
 				totalB += temp.blue;
 			}
 		}
-		rightEdge.frameBlock[i].average.red = totalR / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
-		rightEdge.frameBlock[i].average.green = totalG / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
-		rightEdge.frameBlock[i].average.blue = totalB / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
+		rightEdge.frameBlock[i].average.red = (totalR * (*(brightnessBuffer) + 1) / 16) / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
+		rightEdge.frameBlock[i].average.green = (totalG * (*(brightnessBuffer) + 1) / 16) / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
+		rightEdge.frameBlock[i].average.blue = (totalB * (*(brightnessBuffer) + 1) / 16) / (rightEdge.frameBlock[i].Height * rightEdge.frameBlock[i].Width);
 
 		totalR = 0;
 		totalG = 0;
@@ -492,9 +492,9 @@ void getAverages() {
 				totalB += temp.blue;
 			}
 		}
-		bottomEdge.frameBlock[i].average.red = totalR / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
-		bottomEdge.frameBlock[i].average.green = totalG / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
-		bottomEdge.frameBlock[i].average.blue = totalB / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
+		bottomEdge.frameBlock[i].average.red = (totalR * (*(brightnessBuffer) + 1) / 16) / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
+		bottomEdge.frameBlock[i].average.green = (totalG * (*(brightnessBuffer) + 1) / 16) / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
+		bottomEdge.frameBlock[i].average.blue = (totalB * (*(brightnessBuffer) + 1) / 16) / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
 
     totalR = 0;
     totalG = 0;
