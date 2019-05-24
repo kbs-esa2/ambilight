@@ -83,6 +83,8 @@ byte getPixelLuminance(color p);
 void getAverages();
 void averageToLeds();
 void averageToBlocks();
+void fillSquare(color pixel, unsigned int x, unsigned int y, unsigned int width, unsigned int height);
+
 /* Global variables*/
 color readPixel = {0, 0, 0, 0};
 edge topEdge;
@@ -116,11 +118,6 @@ void TaskCounter(void *pdata) {
   while (1) {
     printf("Counter: %d\n", counter);
     counter++;
-    color test = {0,0,255,255};
-    	for (byte i = 0; i < 95; i++)
-    	    {
-    	      setLed(i, test);
-    	    }
     OSTimeDlyHMSM(0, 0, 1, 0);
   }
 }
@@ -519,7 +516,6 @@ void averageToLeds(){
 	for(unsigned int i = 0 ; i < bottomEdge.numLeds; i++ ) setLed( bottomEdge.frameBlock[i].id , bottomEdge.frameBlock[i].average );
 }
 
-
 void averageToBlocks(){
 	for(unsigned int i = 0 ; i < leftEdge.numLeds; i++ ) {
 		leftEdge.frameBlock[i].average.alpha = 255;
@@ -537,4 +533,12 @@ void averageToBlocks(){
 		bottomEdge.frameBlock[i].average.alpha = 255;
 		fillSquare(bottomEdge.frameBlock[i].average , bottomEdge.frameBlock[i].X + 1, bottomEdge.frameBlock[i].Y + 1, bottomEdge.frameBlock[i].Width - 2, bottomEdge.frameBlock[i].Height - 2);
 	}
+}
+
+void fillSquare(color pixel, unsigned int x, unsigned int y, unsigned int width, unsigned int height) {
+  for (unsigned int i = 0; i < width; i++) {
+    for (unsigned int j = 0; j < height; j++) {
+      setPixel(x + i, y + j, pixel);
+    }
+  }
 }
