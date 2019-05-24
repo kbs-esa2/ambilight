@@ -125,9 +125,22 @@ void TaskCounter(void *pdata) {
 void TaskGetColor(void *pdata) {
   while (1)
   {
-    getAverages();
+
+    /*  TEST */
+    color testc = {129, 171, 239, 255};
+    byte testx = 160;
+    byte testy = 120;
+
+    setPixel(testx-1, testy, testc);
+    setPixel(testx+1, testy, testc);
+    setPixel(testx, testy-1, testc);
+    setPixel(testx, testy+1, testc);
+    readPixel = getPixelColor(testx, testy);
+
+
+    //getAverages();
     printf("TaskGetColor!\n");
-    OSTimeDlyHMSM(0, 0, 2, 100);
+    //OSTimeDlyHMSM(0, 0, 2, 100);
   }
 }
 
