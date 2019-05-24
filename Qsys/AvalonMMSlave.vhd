@@ -9,7 +9,6 @@ entity avalonmmslave is
     clock       : in std_logic;
     reset       : in std_logic;
     --avalon memory mapped slave port
-    irq         : out std_logic;
     readdata    : out std_logic_vector(7 downto 0) := "00000000";
     read        : in std_logic;
     --hardware ports
@@ -60,20 +59,13 @@ begin
 										 reset => reset, 
                                          result => value); 
                                          
-    slave : process( reset,clock,value,read )
+    slave : process( reset,clock,read )
 
-    variable lastValue : std_logic_vector(3 downto 0);
     begin
         if (reset = '1') then
             readdata <= "00000000";
-            irq <= '0';
         elsif (rising_edge(clock)) then
-            if (lastValue /= value) then
-                irq <= '1';
-                lastValue := value;
-            end if;
             if (read = '1') then
-                irq <= '0';
                 readdata(7 downto 4) <= "0000";
                 readdata(3 downto 0) <= value;
             end if ;

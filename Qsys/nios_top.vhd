@@ -75,7 +75,6 @@ port (
 		decoder_wire_overflow_flag   : out   std_logic;                                        --               .overflow_flag
 		brightness_wire_keys         : in    std_logic_vector(1 downto 0)  := (others => '0'); -- brightness_wire.keys
 		brightness_wire_hex          : out   std_logic_vector(6 downto 0);                     --                .hex
-		testkey_wire_export          : in    std_logic                     := '0';             --    testkey_wire.export
 		keys_export                  : in    std_logic_vector(3 downto 0)  := (others => '0'); --           keys.export
 		led_wire_adressable_led_data : out   std_logic;                                        --       led_wire.adressable_led_data
 		leds_export                  : out   std_logic_vector(17 downto 0);                    --           leds.export
@@ -158,8 +157,7 @@ BEGIN
 			led_wire_adressable_led_data => GPIO(26),
 			
 			brightness_wire_keys => KEY(2 downto 1),         
-			brightness_wire_hex => HEX0,
-			testkey_wire_export => KEY(3)			
-		
+			brightness_wire_hex => HEX0
+			
 			); 
  END NiosQsysDemo_rtl;

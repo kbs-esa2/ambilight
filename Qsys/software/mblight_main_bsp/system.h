@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'nios2'
  * SOPC Builder design path: ../../nios2.sopcinfo
  *
- * Generated: Thu May 23 09:39:36 CEST 2019
+ * Generated: Fri May 24 11:44:58 CEST 2019
  */
 
 /*
@@ -217,8 +217,8 @@
 
 #define ALT_MODULE_CLASS_brightness_0 brightness
 #define BRIGHTNESS_0_BASE 0x8200040
-#define BRIGHTNESS_0_IRQ 2
-#define BRIGHTNESS_0_IRQ_INTERRUPT_CONTROLLER_ID 0
+#define BRIGHTNESS_0_IRQ -1
+#define BRIGHTNESS_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define BRIGHTNESS_0_NAME "/dev/brightness_0"
 #define BRIGHTNESS_0_SPAN 1
 #define BRIGHTNESS_0_TYPE "brightness"
