@@ -66,6 +66,7 @@ begin
     begin
         if (reset = '1') then
             readdata <= "00000000";
+            irq <= '0';
         elsif (rising_edge(clock)) then
             if (lastValue /= value) then
                 irq <= '1';
