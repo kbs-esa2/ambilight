@@ -82,7 +82,7 @@ void calibrate();
 byte getPixelLuminance(color p);
 void getAverages();
 void averageToLeds();
-
+void averageToBlocks();
 /* Global variables*/
 color readPixel = {0, 0, 0, 0};
 edge topEdge;
@@ -517,4 +517,24 @@ void averageToLeds(){
 	for(unsigned int i = 0 ; i < topEdge.numLeds; i++ ) setLed( topEdge.frameBlock[i].id , topEdge.frameBlock[i].average );
 	for(unsigned int i = 0 ; i < rightEdge.numLeds; i++ ) setLed( rightEdge.frameBlock[i].id , rightEdge.frameBlock[i].average );
 	for(unsigned int i = 0 ; i < bottomEdge.numLeds; i++ ) setLed( bottomEdge.frameBlock[i].id , bottomEdge.frameBlock[i].average );
+}
+
+
+void averageToBlocks(){
+	for(unsigned int i = 0 ; i < leftEdge.numLeds; i++ ) {
+		leftEdge.frameBlock[i].average.alpha = 255;
+		fillSquare(leftEdge.frameBlock[i].average , leftEdge.frameBlock[i].X  + 1, leftEdge.frameBlock[i].Y + 1, leftEdge.frameBlock[i].Width - 2, leftEdge.frameBlock[i].Height - 2);
+	}
+	for(unsigned int i = 0 ; i < topEdge.numLeds; i++ ){
+		topEdge.frameBlock[i].average.alpha = 255;
+		fillSquare(topEdge.frameBlock[i].average , topEdge.frameBlock[i].X + 1, topEdge.frameBlock[i].Y + 1, topEdge.frameBlock[i].Width - 2, topEdge.frameBlock[i].Height - 2);
+	}
+	for(unsigned int i = 0 ; i < rightEdge.numLeds; i++ ){
+		rightEdge.frameBlock[i].average.alpha = 255;
+		fillSquare(rightEdge.frameBlock[i].average , rightEdge.frameBlock[i].X + 1, rightEdge.frameBlock[i].Y + 1, rightEdge.frameBlock[i].Width - 2, rightEdge.frameBlock[i].Height - 2);
+	}
+	for(unsigned int i = 0 ; i < bottomEdge.numLeds; i++ ){
+		bottomEdge.frameBlock[i].average.alpha = 255;
+		fillSquare(bottomEdge.frameBlock[i].average , bottomEdge.frameBlock[i].X + 1, bottomEdge.frameBlock[i].Y + 1, bottomEdge.frameBlock[i].Width - 2, bottomEdge.frameBlock[i].Height - 2);
+	}
 }
