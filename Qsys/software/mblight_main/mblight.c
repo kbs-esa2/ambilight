@@ -59,13 +59,11 @@ typedef struct {
 
 /* Define Task stacksize */
 #define TASK_STACKSIZE 4096
-OS_STK TaskCounter_stk[TASK_STACKSIZE];
 OS_STK TaskGetColor_stk[TASK_STACKSIZE];
 OS_STK TaskSetOverlay_stk[TASK_STACKSIZE];
 OS_STK TaskWriteLed_stk[TASK_STACKSIZE];
 
 /* Define Task priority */
-#define TaskCounter_PRIORITY 4
 #define TaskGetColor_PRIORITY 1
 #define TaskSetOverlay_PRIORITY 3
 #define TaskWriteLed_PRIORITY 2
@@ -113,18 +111,9 @@ unsigned int emptyWidthLeft = 0;
 unsigned int emptyWidthRight = 0;
 
 /* Tasks */
-void TaskCounter(void *pdata) {
-  int counter = 0;
-  while (1) {
-    printf("Counter: %d\n", counter);
-    counter++;
-    OSTimeDlyHMSM(0, 0, 1, 0);
-  }
-}
-
 void TaskGetColor(void *pdata) {
-  while (1)
-  {
+  color testc2 = {0, 0, 255, 255};
+  while (1) {
 
     /*  TEST */
     color testc = {129, 171, 239, 255};
@@ -136,21 +125,22 @@ void TaskGetColor(void *pdata) {
     setPixel(testx, testy-1, testc);
     setPixel(testx, testy+1, testc);
     readPixel = getPixelColor(testx, testy);
-    for (byte i = 0; i < 96; i++) {
-      setLed(i,readPixel);
-    }
+    for (byte i = 0; i < 96; i++) setLed(i, testc2);
+    //testc2.red++;
+    if(testc2.red == 255) testc2.red = 0;
+    //printf("r:%d, g:%d, b:%d\n", testc2.red, testc2.green, testc2.blue);
+    /* END TEST */
 
     //getAverages();
-    printf("r:%d, g:%d, b:%d\n", readPixel.red, readPixel.green, readPixel.blue);
-    OSTimeDlyHMSM(0, 0, 0, 500);
+    
+    OSTimeDlyHMSM(0, 0, 1, 0);
   }
 }
 
 void TaskWriteLed(void *pdata) {
-  while (1)
-  {
+  while (1) {
     //averageToLeds();
-    printf("TaskWriteLed!\n");
+    //printf("TaskWriteLed!\n");
     OSTimeDlyHMSM(0, 0, 2, 100);
   }
 }
@@ -159,7 +149,7 @@ void TaskSetOverlay(void *pdata) {
   byte overlayStatus = 0;
   while (1) {
     if ((*switches >> 0) & 1) {
-      if (!overlayStatus) {
+      if (!overlayStatus) { //Draw overlay with different colors on each side
         *leds |= (1 << 0);
         for (byte i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0xff0000ff));
         for (byte i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00ff00ff));
@@ -168,7 +158,7 @@ void TaskSetOverlay(void *pdata) {
         overlayStatus = 1;
       }
     } else {
-      if (overlayStatus) {
+      if (overlayStatus) {  //Draw overlay with transparent pixels
         *leds &= ~(1 << 0);
         for (byte i = 0; i < topEdge.numLeds; i++) drawBlockBorder(topEdge.frameBlock[i], colorFromHex(0x00000000));
         for (byte i = 0; i < leftEdge.numLeds; i++) drawBlockBorder(leftEdge.frameBlock[i], colorFromHex(0x00000000));
@@ -185,19 +175,7 @@ void TaskSetOverlay(void *pdata) {
 /* Main function, creates tasks and starts the scheduler */
 int main(void) {
 	color test = {255,0,0,255};
-	for (byte i = 0; i < 95; i++)
-	    {
-	      setLed(i, test);
-	    }
-  OSTaskCreateExt(TaskCounter,
-                  NULL,
-                  (void *)&TaskCounter_stk[TASK_STACKSIZE - 1],
-                  TaskCounter_PRIORITY,
-                  TaskCounter_PRIORITY,
-                  TaskCounter_stk,
-                  TASK_STACKSIZE,
-                  NULL,
-                  0);
+	for (byte i = 0; i < 95; i++) setLed(i, test);
 
   OSTaskCreateExt(TaskGetColor,
                   NULL,
