@@ -136,18 +136,20 @@ void TaskGetColor(void *pdata) {
     setPixel(testx, testy-1, testc);
     setPixel(testx, testy+1, testc);
     readPixel = getPixelColor(testx, testy);
-
+    for (byte i = 0; i < 96; i++) {
+      setLed(i,readPixel);
+    }
 
     //getAverages();
-    printf("TaskGetColor!\n");
-    //OSTimeDlyHMSM(0, 0, 2, 100);
+    printf("r:%d, g:%d, b:%d\n", readPixel.red, readPixel.green, readPixel.blue);
+    OSTimeDlyHMSM(0, 0, 0, 500);
   }
 }
 
 void TaskWriteLed(void *pdata) {
   while (1)
   {
-    averageToLeds();
+    //averageToLeds();
     printf("TaskWriteLed!\n");
     OSTimeDlyHMSM(0, 0, 2, 100);
   }
