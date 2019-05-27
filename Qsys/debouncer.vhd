@@ -15,7 +15,7 @@ end entity;
 
 architecture rtl of debouncer is
 constant 	min_ticks : integer := 0;			
-constant 	max_ticks : integer := 1000;		 
+constant 	max_ticks : integer := 100000;		 
 shared variable ticks : integer range min_ticks to (max_ticks + 1) := 0;	-- integer with range to count
 begin																								-- the ticks
 

@@ -37,7 +37,7 @@ begin
 	variable current_s,next_s: state_type;
 
 	variable bitindex : integer range 0 to 23;
-	variable pixelindex : integer range 0 to numberOfPixels;
+	variable pixelindex : integer;
 	variable currentBit : std_logic;
 	
 	variable ticks : integer;
@@ -49,6 +49,7 @@ begin
 	begin
 		if (reset='1') then
 			bitindex := 0;
+			byteindex := 0;
 			pixelindex := 0;
 			ticks := 0;
 
@@ -67,13 +68,11 @@ begin
 				if (ticks = (returnticks-20)) then--get pixel information from dma controller
 					getnext <= '1';
 				elsif (ticks = returnticks) then--fetch new data and start sending bits
-					ticks := 0;
 					getnext <= '0';
-					ledreturn <= '0';
 					redreg := red;
 					greenreg := green;
 					bluereg := blue;
-					if (greenreg(0) = '1') then
+					if (redreg(0)) then
 						next_s := B1;
 					else
 						next_s := B0;
@@ -95,7 +94,6 @@ begin
 			when BL =>
 			ledout <= '0';
 			if (ticks = 26) then--done sending bit
-			ticks := 0;
 				if (bitindex = 23) then--done sending pixel
 					bitindex := 0;
 					getnext <= '0';
@@ -111,14 +109,14 @@ begin
 				else
 				getnext <= '1';
 				bitindex := bitindex + 1;
-					if (bitindex < 8) then--led pixel data order is GRB
+					if (bitindex < 8) then
 						currentbit := greenreg(bitindex);
 					elsif (bitindex < 16) then
 						currentbit := redreg(bitindex - 8);
 					else
 						currentbit := bluereg(bitindex - 16);
 					end if ;
-					if (currentbit = '1') then
+					if currentbit then
 						next_s := B1;
 					else
 						next_s := B0;
