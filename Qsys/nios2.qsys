@@ -730,8 +730,8 @@
    kind="altera_nios2_gen2"
    version="16.1"
    enabled="1">
-  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
-  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="4" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="4" />
   <parameter name="AUTO_DEVICE" value="EP4CE115F29C7" />
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="bht_ramBlockType" value="Automatic" />
@@ -1409,7 +1409,86 @@
    kind="clock"
    version="16.1"
    start="altpll_0.c0"
+   end="nios2_gen2_0.clk" />
+ <connection kind="clock" version="16.1" start="altpll_0.c0" end="ucos_timer.clk" />
+ <connection kind="clock" version="16.1" start="altpll_0.c0" end="sdram.clk" />
+ <connection kind="clock" version="16.1" start="altpll_0.c0" end="switches.clk" />
+ <connection kind="clock" version="16.1" start="altpll_0.c0" end="keys.clk" />
+ <connection kind="clock" version="16.1" start="altpll_0.c0" end="leds.clk" />
+ <connection kind="clock" version="16.1" start="altpll_0.c0" end="jtag_uart_0.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="audio_and_video_config_0.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="video_scaler_1.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="overlay_blender.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="rgba_32_to_40.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="rgb_24bit_to_30bit.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="video_dma_controller_0.clk" />
+ <connection kind="clock" version="16.1" start="altpll_0.c0" end="sram_bufer.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="video_in_dma.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="video_scaler_2.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="video_clipper_0.clk" />
+ <connection kind="clock" version="16.1" start="altpll_0.c0" end="yuv_to_rgb.clk" />
+ <connection kind="clock" version="16.1" start="altpll_0.c0" end="video_input.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="yuv_422_to_444.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="video_pixel_buffer_dma_1.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
    end="ws2812b_dma_0.clock" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="brightness_0.clock" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="altpll_0.c0"
+   end="video_dual_clock_buffer_0.clock_stream_in" />
  <connection
    kind="clock"
    version="16.1"
@@ -1425,73 +1504,6 @@
    version="16.1"
    start="altpll_0.c3"
    end="ws2812b_dma_0.led_clock" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="nios2_gen2_0.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="ucos_timer.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="sdram.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="clk_0.clk"
-   end="video_pixel_buffer_dma_1.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="switches.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="keys.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="leds.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="jtag_uart_0.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="clk_0.clk"
-   end="audio_and_video_config_0.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="video_input.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="clk_0.clk"
-   end="yuv_422_to_444.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="yuv_to_rgb.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="clk_0.clk"
-   end="video_clipper_0.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="clk_0.clk"
-   end="video_scaler_2.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="video_in_dma.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="sram_bufer.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="clk_0.clk"
-   end="rgb_24bit_to_30bit.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="rgba_32_to_40.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="clk_0.clk"
-   end="overlay_blender.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="clk_0.clk"
-   end="video_scaler_1.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="clk_0.clk"
-   end="video_dma_controller_0.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="clk_0.clk"
-   end="brightness_0.clock" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="clk_0.clk"
-   end="video_dual_clock_buffer_0.clock_stream_in" />
  <connection
    kind="clock"
    version="16.1"
