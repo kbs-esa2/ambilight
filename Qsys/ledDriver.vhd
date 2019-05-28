@@ -62,11 +62,11 @@ begin
 				when RET =>
 				ledout <= '0';
 				ledreturn <= '1';
-				bitindex := 0;
-				pixelindex := 0;
 				if (ticks = (returnticks-20)) then--get pixel information from dma controller
 					getnext <= '1';
 				elsif (ticks = returnticks) then--fetch new data and start sending bits
+					bitindex := 0;
+					pixelindex := 0;
 					ticks := 0;
 					getnext <= '0';
 					ledreturn <= '0';
@@ -102,6 +102,11 @@ begin
 					redreg := red;
 					greenreg := green;
 					bluereg := blue;
+					if (greenreg(0) = '1') then
+						next_s := B1;
+					else
+						next_s := B0;
+					end if ;	
 					if (pixelindex = numberOfPixels-1) then--all pixels sent 
 					pixelindex := 0;
 					next_s := RET;
