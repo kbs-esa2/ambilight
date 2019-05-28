@@ -73,7 +73,7 @@ begin
 					redreg := red;
 					greenreg := green;
 					bluereg := blue;
-					if (greenreg(0) = '1') then
+					if (greenreg(7) = '1') then
 						next_s := B1;
 					else
 						next_s := B0;
@@ -102,7 +102,7 @@ begin
 					redreg := red;
 					greenreg := green;
 					bluereg := blue;
-					if (greenreg(0) = '1') then
+					if (greenreg(7) = '1') then
 						next_s := B1;
 					else
 						next_s := B0;
@@ -116,12 +116,12 @@ begin
 				else
 				getnext <= '1';
 				bitindex := bitindex + 1;
-					if (bitindex < 8) then--led pixel data order is GRB
-						currentbit := greenreg(bitindex);
+					if (bitindex < 8) then--led pixel data order is GRB bit order is high bit first
+						currentbit := greenreg(7 - bitindex);
 					elsif (bitindex < 16) then
-						currentbit := redreg(bitindex - 8);
+						currentbit := redreg(7 - (bitindex - 8));
 					else
-						currentbit := bluereg(bitindex - 16);
+						currentbit := bluereg(7 - (bitindex - 16));
 					end if ;
 					if (currentbit = '1') then
 						next_s := B1;

@@ -2,6 +2,8 @@
 		port (
 			av_config_wire_SDAT          : inout std_logic                     := 'X';             -- SDAT
 			av_config_wire_SCLK          : out   std_logic;                                        -- SCLK
+			brightness_wire_keys         : in    std_logic_vector(1 downto 0)  := (others => 'X'); -- keys
+			brightness_wire_hex          : out   std_logic_vector(6 downto 0);                     -- hex
 			clk_clk                      : in    std_logic                     := 'X';             -- clk
 			decoder_wire_TD_CLK27        : in    std_logic                     := 'X';             -- TD_CLK27
 			decoder_wire_TD_DATA         : in    std_logic_vector(7 downto 0)  := (others => 'X'); -- TD_DATA
@@ -39,9 +41,7 @@
 			vga_wire_SYNC                : out   std_logic;                                        -- SYNC
 			vga_wire_R                   : out   std_logic_vector(7 downto 0);                     -- R
 			vga_wire_G                   : out   std_logic_vector(7 downto 0);                     -- G
-			vga_wire_B                   : out   std_logic_vector(7 downto 0);                     -- B
-			brightness_wire_keys         : in    std_logic_vector(1 downto 0)  := (others => 'X'); -- keys
-			brightness_wire_hex          : out   std_logic_vector(6 downto 0)                      -- hex
+			vga_wire_B                   : out   std_logic_vector(7 downto 0)                      -- B
 		);
 	end component nios2;
 
@@ -49,6 +49,8 @@
 		port map (
 			av_config_wire_SDAT          => CONNECTED_TO_av_config_wire_SDAT,          --  av_config_wire.SDAT
 			av_config_wire_SCLK          => CONNECTED_TO_av_config_wire_SCLK,          --                .SCLK
+			brightness_wire_keys         => CONNECTED_TO_brightness_wire_keys,         -- brightness_wire.keys
+			brightness_wire_hex          => CONNECTED_TO_brightness_wire_hex,          --                .hex
 			clk_clk                      => CONNECTED_TO_clk_clk,                      --             clk.clk
 			decoder_wire_TD_CLK27        => CONNECTED_TO_decoder_wire_TD_CLK27,        --    decoder_wire.TD_CLK27
 			decoder_wire_TD_DATA         => CONNECTED_TO_decoder_wire_TD_DATA,         --                .TD_DATA
@@ -86,8 +88,6 @@
 			vga_wire_SYNC                => CONNECTED_TO_vga_wire_SYNC,                --                .SYNC
 			vga_wire_R                   => CONNECTED_TO_vga_wire_R,                   --                .R
 			vga_wire_G                   => CONNECTED_TO_vga_wire_G,                   --                .G
-			vga_wire_B                   => CONNECTED_TO_vga_wire_B,                   --                .B
-			brightness_wire_keys         => CONNECTED_TO_brightness_wire_keys,         -- brightness_wire.keys
-			brightness_wire_hex          => CONNECTED_TO_brightness_wire_hex           --                .hex
+			vga_wire_B                   => CONNECTED_TO_vga_wire_B                    --                .B
 		);
 

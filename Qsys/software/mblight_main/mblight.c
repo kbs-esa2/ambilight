@@ -118,25 +118,22 @@ void TaskGetColor(void *pdata) {
   color testc2 = {0, 0, 255, 255};
   while (1) {
 
-//    /*  TEST */
-//    color testc = {129, 171, 239, 255};
-//    byte testx = 160;
-//    byte testy = 120;
-//
-//    setPixel(testx-1, testy, testc);
-//    setPixel(testx+1, testy, testc);
-//    setPixel(testx, testy-1, testc);
-//    setPixel(testx, testy+1, testc);
-//    readPixel = getPixelColor(testx, testy);
-//    for (byte i = 0; i < 96; i++) setLed(i, testc2);
-//    //testc2.red++;
-//    if(testc2.red == 255) testc2.red = 0;
-//    //printf("r:%d, g:%d, b:%d\n", testc2.red, testc2.green, testc2.blue);
+    /*  TEST */
+    color testc = {0, 255, 0, 200};
+    byte testx = 160;
+    byte testy = 120;
+
+    setPixel(testx-1, testy, testc);
+    setPixel(testx+1, testy, testc);
+    setPixel(testx, testy-1, testc);
+    setPixel(testx, testy+1, testc);
+    testc2 = getPixelColor(testx, testy);
+   for (byte i = 0; i < 96; i++) setLed(i, testc2);
 //    /* END TEST */
 
     //getAverages();
     
-    OSTimeDlyHMSM(0, 0, 1, 0);
+    OSTimeDlyHMSM(0, 0, 0, 200);
   }
 }
 

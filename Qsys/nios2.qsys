@@ -1144,7 +1144,7 @@
  <module name="ws2812b_dma_0" kind="ws2812b_dma" version="1.0" enabled="1">
   <parameter name="base" value="67436544" />
   <parameter name="numleds" value="96" />
-  <parameter name="returnticks" value="12000" />
+  <parameter name="returnticks" value="120000" />
  </module>
  <module
    name="yuv_422_to_444"
