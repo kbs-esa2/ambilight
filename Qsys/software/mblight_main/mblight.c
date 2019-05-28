@@ -507,9 +507,9 @@ void getAverages() {
 		}
 
     // Colors are written to variable struct
-        bottomEdge.frameBlock[i].average.red = (totalR * (*(brightnessBuffer) + 1) / 16) / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
-        bottomEdge.frameBlock[i].average.green = (totalG * (*(brightnessBuffer) + 1) / 16) / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
-        bottomEdge.frameBlock[i].average.blue = (totalB * (*(brightnessBuffer) + 1) / 16) / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
+        bottomEdge.frameBlock[i].average.red = totalR / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
+        bottomEdge.frameBlock[i].average.green = totalG / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
+        bottomEdge.frameBlock[i].average.blue = totalB / (bottomEdge.frameBlock[i].Height * bottomEdge.frameBlock[i].Width);
 
     // Reset local variables to zero
     totalR = 0;
