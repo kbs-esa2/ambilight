@@ -45,7 +45,7 @@ typedef struct {
 #define decoderBuffer (color *)0x08000000
 #define overlayBuffer (color *)0x04000000
 #define ledBuffer (color *)0x04050000
-#define brightnessBuffer (volatile int *)0x08200040
+#define brightnessBuffer (volatile byte *)0x08200040
 
 #define AVConfigSlave (volatile int *)0x08221060
 #define JtagSlave (volatile int *)0x08221070
@@ -57,6 +57,7 @@ typedef struct {
 #define LEDSBOTTOM 24 //Amount of leds on the bottom side of the screen
 #define LEDSLEFT 20   //Amount of leds on the left side of the screen
 #define LEDSRIGHT 20  //Amount of leds on the left right side of the screen
+#define EDGEDEPTH 3   //Amount of pixels from the edge
 
 /* Define Task stacksize */
 #define TASK_STACKSIZE 4096
@@ -81,10 +82,13 @@ void setPixel(unsigned int X, unsigned int Y, color pixel);
 void setLed(byte index, color pixel);
 color colorFromHex(unsigned int in);
 byte getPixelLuminance(color p);
+color addColorBrightness(color c);
+
+void printEdgeID();
 
 void getAverages();
 void averageToLeds();
-void averageToBlocks();
+void averageToBlocks(byte transparency);
 
 /* Global variables*/
 color readPixel = {0, 0, 0, 0};
@@ -115,38 +119,25 @@ unsigned int emptyWidthRight = 0;
 
 /* Tasks */
 void TaskGetColor(void *pdata) {
-  color testc2 = {0, 0, 255, 255};
   while (1) {
 
-    /*  TEST */
-    color testc = {0, 255, 0, 200};
-    byte testx = 160;
-    byte testy = 120;
 
-    setPixel(testx-1, testy, testc);
-    setPixel(testx+1, testy, testc);
-    setPixel(testx, testy-1, testc);
-    setPixel(testx, testy+1, testc);
-    testc2 = getPixelColor(testx, testy);
-   for (byte i = 0; i < 96; i++) setLed(i, testc2);
-//    /* END TEST */
-
-    //getAverages();
+    getAverages();
     
-    OSTimeDlyHMSM(0, 0, 0, 200);
+    OSTimeDlyHMSM(0, 0, 0, 150);
   }
 }
 
 void TaskWriteLed(void *pdata) {
   while (1) {
-    //averageToLeds();
-    //printf("TaskWriteLed!\n");
-    OSTimeDlyHMSM(0, 0, 2, 100);
+   averageToLeds();
+    OSTimeDlyHMSM(0, 0, 0, 150);
   }
 }
 
 void TaskSetOverlay(void *pdata) {
   byte overlayStatus = 0;
+  byte blockstatus = 0;
   while (1) {
     if ((*switches >> 0) & 1) {
       if (!overlayStatus) { //Draw overlay with different colors on each side
@@ -167,15 +158,27 @@ void TaskSetOverlay(void *pdata) {
         overlayStatus = 0;
       }
     }
-    OSTimeDlyHMSM(0, 0, 0, 300);
+    if ((*switches >> 1) & 1)
+    {
+      *leds |= (1 << 1);
+        averageToBlocks(255);
+        blockstatus = 1;
+    }
+    else{
+      if (blockstatus) {  //Draw overlay with transparent pixels
+        *leds &= ~(1 << 1);
+        averageToBlocks(0);
+        blockstatus = 0;
+      }
+    }
+    
+    OSTimeDlyHMSM(0, 0, 0, 500);
   }
 }
 
 
 /* Main function, creates tasks and starts the scheduler */
 int main(void) {
-	color test = {255,0,0,255};
-	for (byte i = 0; i < 95; i++) setLed(i, test);
 
   OSTaskCreateExt(TaskGetColor,
                   NULL,
@@ -208,23 +211,28 @@ int main(void) {
                   0);
 
   fillClear();
-
+  setLed(96,colorFromHex(0xff0000ff));
   // If switch 1 is set high, calibrate
   if ((*switches >> 0) & 1) {   
+	  printf("calibrating\n");
 	  calibrate();
       *callibrationframe = inputframe;
   } else {
       inputframe = *callibrationframe;
   }
 
-  topEdge.size = 15;
-  leftEdge.size = 15;
-  bottomEdge.size = 15;
-  rightEdge.size = 15;
+  topEdge.size = EDGEDEPTH;
+  leftEdge.size = EDGEDEPTH;
+  bottomEdge.size = EDGEDEPTH;
+  rightEdge.size = EDGEDEPTH;
 
   calculateEdgeBlocks(inputframe);
-
+  printf("calculated edges\n");
+  printf("starting OS\n");
+  //printEdgeID();
+  setLed(96,colorFromHex(0x00ff00ff));
   OSStart();
+
   return 0;
 }
 
@@ -324,7 +332,7 @@ void calculateEdgeBlocks(block frame) {
   topEdge.Height = topEdge.size;
   topEdge.numLeds = LEDSTOP;
   for (byte i = 0; i < topEdge.numLeds; i++) {
-    topEdge.frameBlock[i].id = LEDSLEFT + i + 1;
+    topEdge.frameBlock[i].id = LEDSLEFT + i;
     topEdge.frameBlock[i].X = frame.X + (frame.Width - topBlockSize * LEDSTOP) / 2 + (topBlockSize * i);
     topEdge.frameBlock[i].Y = topEdge.Y;
     topEdge.frameBlock[i].Width = topBlockSize;
@@ -338,7 +346,7 @@ void calculateEdgeBlocks(block frame) {
   leftEdge.Height = frame.Height;
   leftEdge.numLeds = LEDSLEFT;
   for (byte i = 0; i < leftEdge.numLeds; i++) {
-    leftEdge.frameBlock[i].id = LEDSLEFT - i;
+    leftEdge.frameBlock[i].id = LEDSLEFT - i - 1;
     leftEdge.frameBlock[i].X = leftEdge.X;
     if (i == 0) {
       leftEdge.frameBlock[i].Y = frame.Y;
@@ -362,7 +370,7 @@ void calculateEdgeBlocks(block frame) {
   bottomEdge.Height = bottomEdge.size;
   bottomEdge.numLeds = LEDSBOTTOM;
   for (byte i = 0; i < bottomEdge.numLeds; i++) {
-    bottomEdge.frameBlock[i].id = (LEDSTOP + LEDSBOTTOM + LEDSLEFT + LEDSRIGHT) - i + 1;
+    bottomEdge.frameBlock[i].id = (LEDSTOP + LEDSBOTTOM + LEDSLEFT + LEDSRIGHT) - i - 1;
     bottomEdge.frameBlock[i].X = frame.X + (frame.Width - bottomBlockSize * LEDSBOTTOM) / 2 + (bottomBlockSize * i);
     bottomEdge.frameBlock[i].Y = bottomEdge.Y;
     bottomEdge.frameBlock[i].Width = bottomBlockSize;
@@ -376,7 +384,7 @@ void calculateEdgeBlocks(block frame) {
   rightEdge.Height = frame.Height;
   rightEdge.numLeds = LEDSRIGHT;
   for (byte i = 0; i < rightEdge.numLeds; i++) {
-    rightEdge.frameBlock[i].id = LEDSLEFT + LEDSTOP + i;
+    rightEdge.frameBlock[i].id = LEDSLEFT + LEDSTOP + i ;
     if (i == 0) {
       rightEdge.frameBlock[i].X = frame.X + leftEdge.frameBlock[0].Width + LEDSTOP * topBlockSize;
       rightEdge.frameBlock[i].Y = rightEdge.Y;
@@ -521,46 +529,34 @@ void getAverages() {
 /* Writes the average colors to the leds */
 void averageToLeds(){
     for(unsigned int i = 0 ; i < leftEdge.numLeds; i++ ){
-        leftEdge.frameBlock[i].average.red = (leftEdge.frameBlock[i].average.red * (*(brightnessBuffer) + 1)) / 16;
-        leftEdge.frameBlock[i].average.green = (leftEdge.frameBlock[i].average.green * (*(brightnessBuffer) + 1)) / 16;
-        leftEdge.frameBlock[i].average.blue = (leftEdge.frameBlock[i].average.blue * (*(brightnessBuffer) + 1)) / 16;
-        setLed( leftEdge.frameBlock[i].id , leftEdge.frameBlock[i].average );
+        setLed( leftEdge.frameBlock[i].id , addColorBrightness(leftEdge.frameBlock[i].average));
     }
     for(unsigned int i = 0 ; i < topEdge.numLeds; i++ ){
-        topEdge.frameBlock[i].average.red = (topEdge.frameBlock[i].average.red * (*(brightnessBuffer) + 1)) / 16;
-        topEdge.frameBlock[i].average.green = (topEdge.frameBlock[i].average.green * (*(brightnessBuffer) + 1)) / 16;
-        topEdge.frameBlock[i].average.blue = (topEdge.frameBlock[i].average.blue * (*(brightnessBuffer) + 1)) / 16;
-        setLed( topEdge.frameBlock[i].id , topEdge.frameBlock[i].average );
+        setLed( topEdge.frameBlock[i].id , addColorBrightness(topEdge.frameBlock[i].average) );
     }
     for(unsigned int i = 0 ; i < rightEdge.numLeds; i++ ){
-        rightEdge.frameBlock[i].average.red = (rightEdge.frameBlock[i].average.red * (*(brightnessBuffer) + 1)) / 16;
-        rightEdge.frameBlock[i].average.green = (rightEdge.frameBlock[i].average.green * (*(brightnessBuffer) + 1)) / 16;
-        rightEdge.frameBlock[i].average.blue = (rightEdge.frameBlock[i].average.blue * (*(brightnessBuffer) + 1)) / 16;
-        setLed( rightEdge.frameBlock[i].id , rightEdge.frameBlock[i].average );
+        setLed( rightEdge.frameBlock[i].id , addColorBrightness(rightEdge.frameBlock[i].average));
     }
     for(unsigned int i = 0 ; i < bottomEdge.numLeds; i++ ){
-        bottomEdge.frameBlock[i].average.red = (bottomEdge.frameBlock[i].average.red * (*(brightnessBuffer) + 1)) / 16;
-        bottomEdge.frameBlock[i].average.green = (bottomEdge.frameBlock[i].average.green * (*(brightnessBuffer) + 1)) / 16;
-        bottomEdge.frameBlock[i].average.blue = (bottomEdge.frameBlock[i].average.blue * (*(brightnessBuffer) + 1)) / 16;
-        setLed( bottomEdge.frameBlock[i].id , bottomEdge.frameBlock[i].average );
+        setLed( bottomEdge.frameBlock[i].id , addColorBrightness(bottomEdge.frameBlock[i].average));
     }}
 
 /* Writes the average colors to the overlay */
-void averageToBlocks(){
+void averageToBlocks(byte transparency){
 	for(unsigned int i = 0 ; i < leftEdge.numLeds; i++ ) {
-		leftEdge.frameBlock[i].average.alpha = 255;
+		leftEdge.frameBlock[i].average.alpha = transparency;
 		fillSquare(leftEdge.frameBlock[i].average , leftEdge.frameBlock[i].X  + 1, leftEdge.frameBlock[i].Y + 1, leftEdge.frameBlock[i].Width - 2, leftEdge.frameBlock[i].Height - 2);
 	}
 	for(unsigned int i = 0 ; i < topEdge.numLeds; i++ ){
-		topEdge.frameBlock[i].average.alpha = 255;
+		topEdge.frameBlock[i].average.alpha = transparency;
 		fillSquare(topEdge.frameBlock[i].average , topEdge.frameBlock[i].X + 1, topEdge.frameBlock[i].Y + 1, topEdge.frameBlock[i].Width - 2, topEdge.frameBlock[i].Height - 2);
 	}
 	for(unsigned int i = 0 ; i < rightEdge.numLeds; i++ ){
-		rightEdge.frameBlock[i].average.alpha = 255;
+		rightEdge.frameBlock[i].average.alpha = transparency;
 		fillSquare(rightEdge.frameBlock[i].average , rightEdge.frameBlock[i].X + 1, rightEdge.frameBlock[i].Y + 1, rightEdge.frameBlock[i].Width - 2, rightEdge.frameBlock[i].Height - 2);
 	}
 	for(unsigned int i = 0 ; i < bottomEdge.numLeds; i++ ){
-		bottomEdge.frameBlock[i].average.alpha = 255;
+		bottomEdge.frameBlock[i].average.alpha = transparency;
 		fillSquare(bottomEdge.frameBlock[i].average , bottomEdge.frameBlock[i].X + 1, bottomEdge.frameBlock[i].Y + 1, bottomEdge.frameBlock[i].Width - 2, bottomEdge.frameBlock[i].Height - 2);
 	}
 }
@@ -572,4 +568,36 @@ void fillSquare(color pixel, unsigned int x, unsigned int y, unsigned int width,
       setPixel(x + i, y + j, pixel);
     }
   }
+}
+
+color addColorBrightness(color c){
+  color output = {0,0,0,0};
+  output.red = (c.red * *(brightnessBuffer))/15;
+  output.green = (c.green * *(brightnessBuffer))/15;
+  output.blue = (c.blue * *(brightnessBuffer))/15;
+  return output;
+}
+
+void printEdgeID(){
+  printf("topedge\n");
+  for (byte i = 0; i < topEdge.numLeds; i++)
+  {
+    printf("edge led %d has id %d\n",i,topEdge.frameBlock[i].id);
+  }
+  printf("leftedge\n");
+  for (byte i = 0; i < leftEdge.numLeds; i++)
+  {
+    printf("edge led %d has id %d\n",i,leftEdge.frameBlock[i].id);
+  }
+  printf("rightedge\n");
+  for (byte i = 0; i < rightEdge.numLeds; i++)
+  {
+    printf("edge led %d has id %d\n",i,rightEdge.frameBlock[i].id);
+  }
+  printf("bottomedge\n");
+  for (byte i = 0; i < bottomEdge.numLeds; i++)
+  {
+    printf("edge led %d has id %d\n",i,bottomEdge.frameBlock[i].id);
+  }
+  
 }
